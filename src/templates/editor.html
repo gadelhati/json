@@ -1,0 +1,317 @@
+{% extends "base.html" %}
+
+{% block title %}
+Editor JSON
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h1>Editor JSON</h1>
+
+        <div>
+
+            <button
+                type="button"
+                id="newButton"
+                class="btn btn-success"
+            >
+                Novo registro
+            </button>
+
+            <button
+                type="button"
+                id="downloadButton"
+                class="btn btn-primary"
+            >
+                Download JSON
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- FORMULÁRIO -->
+    <!-- ========================================================= -->
+
+    <div class="card mb-4">
+
+        <div class="card-header">
+
+            <h5
+                id="formTitle"
+                class="mb-0"
+            >
+                Novo registro
+            </h5>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <form
+                id="recordForm"
+                onsubmit="return false;"
+            >
+
+                <!-- Índice interno -->
+                <input
+                    type="hidden"
+                    id="index"
+                >
+
+
+                <div class="row">
+
+                    <!-- ID -->
+                    <div class="col-md-2 mb-3">
+
+                        <label
+                            for="id"
+                            class="form-label"
+                        >
+                            ID
+                        </label>
+
+                        <input
+                            type="number"
+                            id="id"
+                            class="form-control"
+                        >
+
+                    </div>
+
+
+                    <!-- Nome -->
+                    <div class="col-md-4 mb-3">
+
+                        <label
+                            for="nome"
+                            class="form-label"
+                        >
+                            Nome
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nome"
+                            class="form-control"
+                        >
+
+                    </div>
+
+
+                    <!-- Data -->
+                    <div class="col-md-3 mb-3">
+
+                        <label
+                            for="data"
+                            class="form-label"
+                        >
+                            Data
+                        </label>
+
+                        <input
+                            type="text"
+                            id="data"
+                            class="form-control"
+                        >
+
+                    </div>
+
+
+                    <!-- Tipo -->
+                    <div class="col-md-3 mb-3">
+
+                        <label
+                            for="tipo"
+                            class="form-label"
+                        >
+                            Tipo
+                        </label>
+
+                        <input
+                            type="text"
+                            id="tipo"
+                            class="form-control"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="mt-2">
+
+                    <button
+                        type="button"
+                        id="saveButton"
+                        class="btn btn-primary"
+                    >
+                        Adicionar
+                    </button>
+
+                    <button
+                        type="button"
+                        id="cancelButton"
+                        class="btn btn-secondary"
+                    >
+                        Limpar
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- TABELA -->
+    <!-- ========================================================= -->
+
+    <div class="card">
+
+        <div class="card-header">
+
+            <h5 class="mb-0">
+                Registros
+            </h5>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table
+                    id="jsonTable"
+                    class="table table-striped table-hover"
+                    style="width:100%"
+                >
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                ID
+                            </th>
+
+                            <th>
+                                Nome
+                            </th>
+
+                            <th>
+                                Data
+                            </th>
+
+                            <th>
+                                Tipo
+                            </th>
+
+                            <th>
+                                Ações
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for item in data %}
+
+                        <tr>
+
+                            <td>
+                                {{ item.id }}
+                            </td>
+
+                            <td>
+                                {{ item.nome }}
+                            </td>
+
+                            <td>
+                                {{ item.data }}
+                            </td>
+
+                            <td>
+                                {{ item.tipo }}
+                            </td>
+
+                            <td>
+
+                                <button
+                                    type="button"
+                                    class="btn btn-sm btn-primary edit-button"
+                                    data-index="{{ loop.index0 }}"
+                                >
+                                    Editar
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="btn btn-sm btn-danger delete-button"
+                                    data-index="{{ loop.index0 }}"
+                                >
+                                    Excluir
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ========================================================= -->
+<!-- DADOS DO JSON PARA O JAVASCRIPT -->
+<!-- ========================================================= -->
+
+<script>
+
+    /*
+     * Dados carregados pelo backend.
+     *
+     * O |tojson transforma o objeto Python em
+     * um objeto JavaScript válido.
+     */
+    const jsonData =
+        {{ data | tojson }};
+
+</script>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<script
+    src="{{ url_for('static', filename='js/editor.js') }}"
+></script>
+
+{% endblock %}
