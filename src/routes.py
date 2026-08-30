@@ -59,9 +59,9 @@ def index(request: Request):
 
 
 @router.get("/map")
-def map_view(request: Request):
+def map_view(request: Request, layer: str | None = None):
     layers = store.feature_collections_by_layer()
-    has_geometries = any(layer["featureCollection"]["features"] for layer in layers)
+    has_geometries = any(l["featureCollection"]["features"] for l in layers)
     return templates.TemplateResponse(
         request,
         "map.html",
@@ -69,6 +69,7 @@ def map_view(request: Request):
             "layers": layers,
             "has_geometries": has_geometries,
             "layers_json": json.dumps(layers, ensure_ascii=False),
+            "selected_layer": layer,
         },
     )
 

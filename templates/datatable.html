@@ -30,7 +30,13 @@
             <td class="geometria">{{ record.get(geometry_field, "") }}</td>
             {% endif %}
             {% if show_layer %}
-            <td class="camada">{{ record.get(layer_field, "") }}</td>
+            <td class="camada">
+                {% if is_geojson and record.get(layer_field) %}
+                <a href="/map?layer={{ record.get(layer_field) | urlencode }}" title="Ver esta camada enquadrada no mapa">{{ record.get(layer_field) }}</a>
+                {% else %}
+                {{ record.get(layer_field, "") }}
+                {% endif %}
+            </td>
             {% endif %}
             <td class="acoes">
                 <a href="/records/{{ record[id_field] }}/edit">Editar</a>
