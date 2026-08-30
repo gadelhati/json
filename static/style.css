@@ -51,6 +51,24 @@ form input[type="text"] {
     box-sizing: border-box;
 }
 
+form textarea {
+    display: block;
+    width: 100%;
+    padding: 0.4rem;
+    margin-top: 0.25rem;
+    box-sizing: border-box;
+    font-family: monospace;
+}
+
+td.geometria {
+    font-family: monospace;
+    font-size: 0.85rem;
+    max-width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 button {
     cursor: pointer;
 }

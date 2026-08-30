@@ -10,6 +10,12 @@
     </label>
     {% endif %}
     {% endfor %}
+    {% if is_geojson %}
+    <label>
+        geometria (GeoJSON)
+        <textarea name="{{ geometry_field }}" rows="6">{{ geometry_value }}</textarea>
+    </label>
+    {% endif %}
     <button type="submit">Salvar</button>
     <a href="/">Cancelar</a>
 </form>

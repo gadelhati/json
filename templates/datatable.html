@@ -11,6 +11,9 @@
             {% for col in columns %}
             <th>{{ col }}</th>
             {% endfor %}
+            {% if is_geojson %}
+            <th>geometria</th>
+            {% endif %}
             <th>Ações</th>
         </tr>
     </thead>
@@ -20,6 +23,9 @@
             {% for col in columns %}
             <td>{{ record.get(col, "") }}</td>
             {% endfor %}
+            {% if is_geojson %}
+            <td class="geometria">{{ record.get(geometry_field, "") }}</td>
+            {% endif %}
             <td class="acoes">
                 <a href="/records/{{ record[id_field] }}/edit">Editar</a>
                 <form method="post" action="/records/{{ record[id_field] }}/delete">

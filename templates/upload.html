@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Importar JSON</h2>
+<h2>Importar JSON ou GeoJSON</h2>
 <form method="post" action="/import" enctype="multipart/form-data">
-    <input type="file" name="file" accept="application/json,.json" required>
+    <input type="file" name="file" accept="application/json,application/geo+json,.json,.geojson" required>
     <button type="submit">Importar</button>
 </form>
 {% endblock %}
