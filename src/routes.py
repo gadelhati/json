@@ -1,7 +1,7 @@
 import json
 import shutil
 
-from fastapi import APIRouter, File, HTTPException, Request, UploadFile
+from fastapi import APIRouter, File, Form, HTTPException, Request, UploadFile
 from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
@@ -52,22 +52,33 @@ def index(request: Request):
             "id_field": settings.id_field,
             "is_geojson": store.source_format == "geojson",
             "geometry_field": store.GEOMETRY_FIELD,
+            "show_layer": store.has_multiple_sources,
+            "layer_field": store.SOURCE_FIELD,
         },
     )
 
 
 @router.get("/import")
 def import_form(request: Request):
-    return templates.TemplateResponse(request, "upload.html", {})
+    return templates.TemplateResponse(
+        request,
+        "upload.html",
+        {
+            "has_data": bool(store.records),
+            "current_format": store.source_format,
+            "source_filenames": store.source_filenames,
+        },
+    )
 
 
 @router.post("/import")
-async def import_json(file: UploadFile = File(...)):
+async def import_json(file: UploadFile = File(...), concatenar: bool = Form(False)):
     dest = settings.upload_dir / file.filename
     with open(dest, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
+    mode = "append" if concatenar else "replace"
     try:
-        store.load(dest)
+        store.load(dest, mode=mode)
     except (ValueError, Exception) as exc:  # json.JSONDecodeError herda de ValueError
         raise HTTPException(status_code=400, detail=f"Falha ao importar JSON/GeoJSON: {exc}") from exc
     return RedirectResponse("/", status_code=303)

@@ -14,6 +14,9 @@
             {% if is_geojson %}
             <th>geometria</th>
             {% endif %}
+            {% if show_layer %}
+            <th>camada</th>
+            {% endif %}
             <th>Ações</th>
         </tr>
     </thead>
@@ -25,6 +28,9 @@
             {% endfor %}
             {% if is_geojson %}
             <td class="geometria">{{ record.get(geometry_field, "") }}</td>
+            {% endif %}
+            {% if show_layer %}
+            <td class="camada">{{ record.get(layer_field, "") }}</td>
             {% endif %}
             <td class="acoes">
                 <a href="/records/{{ record[id_field] }}/edit">Editar</a>

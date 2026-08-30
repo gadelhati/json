@@ -1,8 +1,29 @@
 {% extends "base.html" %}
 {% block content %}
 <h2>Importar JSON ou GeoJSON</h2>
+
+{% if has_data %}
+<p class="import-info">
+    Já há dados carregados no formato <strong>{{ current_format }}</strong>
+    {% if source_filenames %}(arquivo{{ "s" if source_filenames|length > 1 else "" }}: {{ source_filenames | join(", ") }}){% endif %}.
+</p>
+{% endif %}
+
 <form method="post" action="/import" enctype="multipart/form-data">
     <input type="file" name="file" accept="application/json,application/geo+json,.json,.geojson" required>
+
+    {% if has_data %}
+    <label class="import-concat">
+        <input type="checkbox" name="concatenar" value="true">
+        Concatenar com os dados já carregados, em vez de substituí-los
+        (só funciona se o novo arquivo for do mesmo formato: {{ current_format }})
+    </label>
+    {% endif %}
+
     <button type="submit">Importar</button>
 </form>
+
+{% if has_data %}
+<p><a href="/">Cancelar e voltar aos dados atuais</a></p>
+{% endif %}
 {% endblock %}
