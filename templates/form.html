@@ -11,12 +11,40 @@
     {% endif %}
     {% endfor %}
     {% if is_geojson %}
-    <label>
-        geometria (GeoJSON)
-        <textarea name="{{ geometry_field }}" rows="6">{{ geometry_value }}</textarea>
-    </label>
+    <fieldset class="geom-editor" data-geom-root>
+        <legend>Geometria (GeoJSON)</legend>
+
+        <label>
+            Tipo
+            <select data-geom-type>
+                {% for t in geometry_types %}
+                <option value="{{ t }}">{{ t }}</option>
+                {% endfor %}
+            </select>
+        </label>
+
+        <div data-geom-editor class="geom-coords"></div>
+
+        <div data-geom-raw hidden>
+            <label>
+                Geometria (JSON bruto)
+                <textarea data-geom-raw-textarea rows="6"></textarea>
+            </label>
+        </div>
+
+        <button type="button" data-geom-toggle-raw class="geom-toggle-raw">Editar como JSON bruto</button>
+
+        <input type="hidden" name="{{ geometry_field }}" data-geom-hidden>
+        <script type="application/json" id="geom-initial-data">{{ (geometry_value or "{}") | safe }}</script>
+    </fieldset>
     {% endif %}
     <button type="submit">Salvar</button>
     <a href="/">Cancelar</a>
 </form>
+{% endblock %}
+
+{% block scripts %}
+{% if is_geojson %}
+<script src="/static/geometry.js"></script>
+{% endif %}
 {% endblock %}

@@ -13,6 +13,17 @@ templates = Jinja2Templates(directory="templates")
 
 GEOMETRY_PLACEHOLDER = '{\n  "type": "Point",\n  "coordinates": [0, 0]\n}'
 
+# Tipos de geometria previstos pela especificação GeoJSON (RFC 7946, seção 3.1).
+GEOMETRY_TYPES = [
+    "Point",
+    "LineString",
+    "Polygon",
+    "MultiPoint",
+    "MultiLineString",
+    "MultiPolygon",
+    "GeometryCollection",
+]
+
 
 def _display_records() -> list[dict]:
     """Cópia dos registros para exibição na tabela, com a geometria (se houver)
@@ -76,6 +87,7 @@ def new_form(request: Request):
             "is_geojson": is_geojson,
             "geometry_field": store.GEOMETRY_FIELD,
             "geometry_value": GEOMETRY_PLACEHOLDER if is_geojson else "",
+            "geometry_types": GEOMETRY_TYPES,
         },
     )
 
@@ -114,6 +126,7 @@ def edit_form(request: Request, record_id: str):
             "is_geojson": is_geojson,
             "geometry_field": store.GEOMETRY_FIELD,
             "geometry_value": geometry_value,
+            "geometry_types": GEOMETRY_TYPES,
         },
     )
 
