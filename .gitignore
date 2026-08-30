@@ -1,2 +1,16 @@
-/uploads
+# Ambiente virtual
+venv/
+.venv/
+
+# Bytecode / cache do Python
+__pycache__/
+*.pyc
+
+# Variáveis de ambiente
 .env
+
+# Dados gerados em tempo de execução (uploads e exports)
+data/uploads/*
+data/exports/*
+!data/uploads/.gitkeep
+!data/exports/.gitkeep

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="toolbar">
+    <a href="/records/new">+ Novo registro</a>
+    <a href="/export">Exportar JSON</a>
+    <a href="/import">Importar outro arquivo</a>
+</div>
+<table>
+    <thead>
+        <tr>
+            {% for col in columns %}
+            <th>{{ col }}</th>
+            {% endfor %}
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for record in records %}
+        <tr>
+            {% for col in columns %}
+            <td>{{ record.get(col, "") }}</td>
+            {% endfor %}
+            <td class="acoes">
+                <a href="/records/{{ record[id_field] }}/edit">Editar</a>
+                <form method="post" action="/records/{{ record[id_field] }}/delete">
+                    <button type="submit" onclick="return confirm('Excluir este registro?')">Excluir</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

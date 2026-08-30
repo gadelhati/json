@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>{{ "Novo registro" if is_new else "Editar registro" }}</h2>
+<form method="post" action="{{ '/records/new' if is_new else '/records/' + record[id_field] + '/edit' }}">
+    {% for col in columns %}
+    {% if col != id_field %}
+    <label>
+        {{ col }}
+        <input type="text" name="{{ col }}" value="{{ record.get(col, '') }}">
+    </label>
+    {% endif %}
+    {% endfor %}
+    <button type="submit">Salvar</button>
+    <a href="/">Cancelar</a>
+</form>
+{% endblock %}

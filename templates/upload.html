@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Importar JSON</h2>
+<form method="post" action="/import" enctype="multipart/form-data">
+    <input type="file" name="file" accept="application/json,.json" required>
+    <button type="submit">Importar</button>
+</form>
+{% endblock %}

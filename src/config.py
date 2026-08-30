@@ -1,24 +1,26 @@
-"""
-Configurações da aplicação.
-"""
-
-import os
 from pathlib import Path
 
-from dotenv import load_dotenv
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-load_dotenv()
+class Settings(BaseSettings):
+    """Configurações da aplicação. Pode ser sobrescrita por variáveis de ambiente ou .env."""
+
+    app_name: str = "JSON CRUD"
+    data_dir: Path = Path("data")
+    upload_dir: Path = Path("data/uploads")
+    export_dir: Path = Path("data/exports")
+    # Nome do campo usado como identificador único de cada registro.
+    # Se o JSON importado não tiver esse campo, ele é gerado automaticamente.
+    id_field: str = "id"
+
+    # extra="ignore": variáveis desconhecidas em .env (ex.: sobras de outro projeto)
+    # são simplesmente ignoradas em vez de derrubar a aplicação.
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+settings = Settings()
 
-UPLOAD_FOLDER = BASE_DIR / os.getenv(
-    "UPLOAD_FOLDER",
-    "uploads",
-)
-
-UPLOAD_FOLDER.mkdir(
-    parents=True,
-    exist_ok=True,
-)
+# Garante que os diretórios de trabalho existam antes de qualquer import/export.
+for directory in (settings.data_dir, settings.upload_dir, settings.export_dir):
+    directory.mkdir(parents=True, exist_ok=True)
