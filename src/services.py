@@ -121,6 +121,40 @@ class JsonStore:
         sources = {r.get(self.SOURCE_FIELD) for r in self.records if r.get(self.SOURCE_FIELD)}
         return len(sources) > 1
 
+    def feature_collections_by_layer(self) -> list[dict[str, Any]]:
+        """Agrupa os registros que têm geometria por arquivo de origem, devolvendo
+        uma FeatureCollection por camada (uma por arquivo importado). Usado para
+        exibir as camadas no mapa, cada uma com sua própria cor."""
+        if self.source_format != "geojson":
+            return []
+
+        grouped: dict[str, list[dict[str, Any]]] = {}
+        for record in self.records:
+            if record.get(self.GEOMETRY_FIELD) is None:
+                continue
+            layer_name = record.get(self.SOURCE_FIELD) or "dados"
+            grouped.setdefault(layer_name, []).append(record)
+
+        layers = []
+        for name, records in grouped.items():
+            features = []
+            for record in records:
+                properties = {
+                    k: v for k, v in record.items()
+                    if k not in (settings.id_field, self.GEOMETRY_FIELD, self.SOURCE_FIELD)
+                }
+                features.append({
+                    "type": "Feature",
+                    "id": record.get(settings.id_field),
+                    "geometry": record.get(self.GEOMETRY_FIELD),
+                    "properties": properties,
+                })
+            layers.append({
+                "name": name,
+                "featureCollection": {"type": "FeatureCollection", "features": features},
+            })
+        return layers
+
     def get_all(self) -> list[dict[str, Any]]:
         return self.records
 

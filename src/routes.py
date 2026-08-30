@@ -58,6 +58,21 @@ def index(request: Request):
     )
 
 
+@router.get("/map")
+def map_view(request: Request):
+    layers = store.feature_collections_by_layer()
+    has_geometries = any(layer["featureCollection"]["features"] for layer in layers)
+    return templates.TemplateResponse(
+        request,
+        "map.html",
+        {
+            "layers": layers,
+            "has_geometries": has_geometries,
+            "layers_json": json.dumps(layers, ensure_ascii=False),
+        },
+    )
+
+
 @router.get("/import")
 def import_form(request: Request):
     return templates.TemplateResponse(

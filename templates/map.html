@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Mapa das camadas</h2>
+
+{% if not has_geometries %}
+<p>
+    Nenhuma geometria para exibir ainda. Importe um arquivo GeoJSON (com
+    <code>geometry</code> preenchida) em <a href="/import">Importar</a> para
+    visualizar as camadas aqui.
+</p>
+{% else %}
+<div class="map-layers-toggle">
+    {% for layer in layers %}
+    <label>
+        <input type="checkbox" class="layer-toggle" data-layer="{{ layer.name }}" checked>
+        <span class="layer-swatch" data-layer-swatch="{{ layer.name }}"></span>
+        {{ layer.name }} ({{ layer.featureCollection.features | length }})
+    </label>
+    {% endfor %}
+</div>
+<div id="map" class="map-container"></div>
+
+<script type="application/json" id="map-layers-data">{{ layers_json | safe }}</script>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+{% if has_geometries %}
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+/>
+<script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin="">
+</script>
+<script src="/static/map.js"></script>
+{% endif %}
+{% endblock %}
