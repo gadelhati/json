@@ -39,3 +39,13 @@ git config --global http.proxy http://user:password@proxy.fqdn:6060
 - [ ] NetCDF(Network Common Data Form) > xarray > Zarr
 - [ ] Chunking - Divisão dos dados multidimensionais em blocos menores.
 - [ ] Dask > Object Storage
+
+---
+
+- [ ] NumPy
+- [ ] dados multidimensionais
+- [ ] Xarray DataArray
+- [ ] Xarray Dataset
+- [ ] NetCDF
+- [ ] Dask
+- [ ] Zarr
