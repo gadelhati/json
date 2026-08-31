@@ -26,8 +26,16 @@ git config --global http.proxy http://user:password@proxy.fqdn:6060
 ```
 
 ## Roadmap
-- [ ] Upload .json
-- [ ] Show .json in form
-- [ ] Show .json in datatable
-- [ ] Update .json
-- [ ] Donwload .json
+- [x] Upload .json
+- [x] Crud .json
+- [x] Donwload .json
+- [x] Upload .geojson
+- [x] Crud .geojson
+- [x] Donwload .geojson
+- [x] Upload .tiff
+- [ ] Crud .tiff
+- [ ] Donwload .tiff
+- [ ] Dataset > DataArray
+- [ ] NetCDF(Network Common Data Form) > xarray > Zarr
+- [ ] Chunking - Divisão dos dados multidimensionais em blocos menores.
+- [ ] Dask > Object Storage
