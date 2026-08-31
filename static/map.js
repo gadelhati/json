@@ -63,6 +63,8 @@
             attribution: "&copy; colaboradores do OpenStreetMap",
         }).addTo(map);
 
+        window.map = map; // sobrescreve o global acidental (id="map") pelo mapa real
+
         var leafletLayersByName = {};
         var boundsByName = {};
         var overallBounds = L.latLngBounds([]);

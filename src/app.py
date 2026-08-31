@@ -10,7 +10,7 @@ from fastapi.staticfiles import StaticFiles
 
 from .config import settings
 from .routes import router
-
+from .routes_geotiff import routers_geotiff
 
 # Criação da aplicação
 app = FastAPI(title=settings.app_name)
@@ -25,3 +25,4 @@ app.mount(
 
 # Rotas
 app.include_router(router)
+app.include_router(routers_geotiff)

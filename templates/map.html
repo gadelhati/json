@@ -2,6 +2,20 @@
 {% block content %}
 <h2>Mapa das camadas</h2>
 
+<div class="geotiff-import">
+    <input type="file" id="geotiffInput" accept=".tif,.tiff" />
+    <button id="btnUploadGeotiff">Importar GeoTIFF</button>
+
+    <div id="metadataTabs" class="sub-tabs" style="display:none;">
+        <button class="sub-tab-btn active" data-target="meta-geo">Geoespaciais (GeoKeys)</button>
+        <button class="sub-tab-btn" data-target="meta-sensor">Dados e Sensores</button>
+        <button class="sub-tab-btn" data-target="meta-desc">Descritivos (GDAL/TIFF)</button>
+    </div>
+    <pre id="meta-geo" class="sub-tab-pane"></pre>
+    <pre id="meta-sensor" class="sub-tab-pane" style="display:none;"></pre>
+    <pre id="meta-desc" class="sub-tab-pane" style="display:none;"></pre>
+</div>
+
 {% if not has_geometries %}
 <p>
     Nenhuma geometria para exibir ainda. Importe um arquivo GeoJSON (com
@@ -28,16 +42,16 @@
     </div>
     {% endfor %}
 </div>
+{% endif %}
+
 <div id="map" class="map-container" data-selected-layer="{{ selected_layer or '' }}"></div>
 
 <script type="application/json" id="map-layers-data">{{ layers_json | safe }}</script>
-{% endif %}
 {% endblock %}
 
 {% block scripts %}
-{% if has_geometries %}
 <link rel="stylesheet" href="/static/vendor/leaflet/leaflet.css" />
+<script src="/static/geotiff.js"></script>
 <script src="/static/vendor/leaflet/leaflet.js"></script>
 <script src="/static/map.js"></script>
-{% endif %}
 {% endblock %}
