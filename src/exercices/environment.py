@@ -1,15 +1,43 @@
-import numpy as np
-import pandas as pd
-import xarray as xr
+import numpy
+import pandas
+import xarray
+import s3fs
 import dask
-import matplotlib
-import netCDF4
+import dask_gateway
 import zarr
+import netCDF4
+import matplotlib
+import cartopy
+import fsspec
+import icechunk
+import virtualizarr
+import pystac
+import topozarr
+import boto3
+import shapely
+import obstore
+import eccodes
+import cfgrib
+import OceanDataStore
 
-print("NumPy:", np.__version__)
-print("Pandas:", pd.__version__)
-print("Xarray:", xr.__version__)
-print("Dask:", dask.__version__)
-print("Matplotlib:", matplotlib.__version__)
-print("NetCDF4:", netCDF4.__version__)
-print("Zarr:", zarr.__version__)
+print("numpy:", numpy.__version__)
+print("pandas:", pandas.__version__)
+print("xarray:", xarray.__version__)
+print("s3fs:", s3fs.__version__)
+print("dask:", dask.__version__)
+print("dask_gateway:", dask_gateway.__version__)
+print("zarr:", zarr.__version__)
+print("netCDF4:", netCDF4.__version__)
+print("matplotlib:", matplotlib.__version__)
+print("cartopy:", cartopy.__version__)
+print("fsspec:", fsspec.__version__)
+print("icechunk:", icechunk.__version__)
+print("virtualizarr:", virtualizarr.__version__)
+print("pystac:", pystac.__version__)
+print("topozarr:", topozarr.__version__)
+print("boto3:", boto3.__version__)
+print("shapely:", shapely.__version__)
+print("obstore:", obstore.__version__)
+print("eccodes:", eccodes.__version__)
+print("cfgrib:", cfgrib.__version__)
+print("OceanDataStore:", OceanDataStore.__version__)
