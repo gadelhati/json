@@ -7,6 +7,10 @@ CPU
         PROCESS
             THRED
 
+AW3
+    BUCKET
+        ZARR
+
 Posix != Object Store
 
 Formato - 
