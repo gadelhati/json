@@ -1,4 +1,11 @@
-# Pré-curso prático — Python para dados meteoceanográficos
+# Arq-Cloud
+
+Python em Arquiteturas Cloud-Native para dados científicos n-dimensionais utilizados em  com Oceanografia Operacional, Clima e Meteorologia em Escala de Múltiplos Terabytes
+
+- Migrar dados de formatos NetCDF e GRIB, para formatos cloud-native Zarr e VirtualiZarr, permitindo acesso eficiente e escalável a dados em escala de múltiplos terabytes
+- Armazenamento em object storage;
+- Conversão de dados;
+- Processamento paralelo utilizando ferramentas como Dask.
 
 ## Objetivo
 
@@ -9,11 +16,10 @@ Este pré-curso foi pensado como uma preparação prática para o curso de trata
 1. NumPy
 2. Pandas
 3. Dados multidimensionais
-4. Xarray
-5. NetCDF
-6. Dask e chunking
-7. Zarr
-8. Noções de dados geoespaciais e visualização
+4. Xarray: abertura, fatiamento, plotagem e processamento de dados NetCDF
+5. Dask e chunking
+6. Zarr
+7. Noções de dados geoespaciais e visualização
 
 > **Estratégia:** entender os conceitos e executar pequenos exercícios. Não é necessário decorar APIs.
 
@@ -49,10 +55,9 @@ print("Zarr:", zarr.__version__)
 
 ### Checklist
 
-- [ ] Ambiente Python funcionando
-- [ ] Imports funcionando
-- [ ] Versões conferidas
-- [ ] Jupyter/IDE funcionando
+- [x] Ambiente Python funcionando
+- [x] Imports funcionando
+- [x] Versões conferidas
 
 ---
 

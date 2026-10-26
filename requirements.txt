@@ -1,15 +1,43 @@
-fastapi==0.141.1
-uvicorn[standard]==0.52.4
-python-multipart==0.0.32
-pydantic-settings==2.15.0
-jinja2==3.1.6
-rasterio==1.5.1
-pillow==12.3.0
-numpy==2.4.3
+# --- Infraestrutura Web e API ---
+fastapi==0.141.1            # Framework web moderno e rápido para construção de APIs.
+uvicorn[standard]==0.52.4   # Servidor ASGI de alta performance para rodar o FastAPI.
+python-multipart==0.0.32    # Suporte para processamento de arquivos e formulários HTTP.
+pydantic-settings==2.15.0   # Gerenciamento de configurações e variáveis de ambiente.
+jinja2==3.1.6               # Motor de templates para renderização de páginas HTML.
 
-pandas==3.0.2
-xarray==2026.7.0
-dask==2026.3.0
-matplotlib==3.11.1
-netCDF4==1.7.4
-zarr==3.2.1
+# --- Manipulação de Imagens e Dados Matriciais ---
+rasterio==1.5.1             # Acesso e leitura de formatos de dados raster (ex: GeoTIFF).
+pillow==12.3.0              # Biblioteca para processamento e manipulação de imagens.
+numpy==2.4.3                # Computação numérica e manipulação de arrays multidimensionais.
+
+# --- Ciência de Dados e Análise Multidimensional ---
+pandas==3.0.2               # Manipulação e análise de dados tabulares (DataFrames).
+xarray==2026.7.0            # Manipulação de arrays multidimensionais com rótulos (metadados).
+
+# --- Acesso ao Armazenamento em Nuvem ---
+fsspec==2026.4.0            # Interface unificada para sistemas de arquivos (local e nuvem).
+s3fs==2026.4.0              # Extensão do fsspec especificamente para o Amazon S3.
+boto3==1.43.46              # SDK oficial da AWS para integração com serviços como S3.
+obstore==0.11.0             # Armazenamento de objetos otimizado em Rust para Python.
+
+# --- Computação Distribuída e Formatos de Dados ---
+dask==2026.3.0              # Computação paralela e escalonamento de dados em cluster.
+dask_gateway==2026.3.0      # Gerenciamento seguro de clusters Dask em ambientes compartilhados.
+zarr==3.2.1                 # Formato de armazenamento de arrays numéricos compactados em blocos.
+netCDF4==1.7.4              # Interface para leitura e escrita de arquivos meteorológicos netCDF.
+
+# --- Plotagem e Visualização Geográfica ---
+matplotlib==3.11.1          # Biblioteca base para criação de gráficos e visualizações.
+cartopy==0.25.0             # Suporte a mapas e projeções geográficas para o Matplotlib.
+
+# --- Dados Geoespaciais Avançados e Catalogação ---
+icechunk==2.1.1             # Sistema de controle de versão (estilo Git) para repositórios Zarr.
+virtualizarr==2.7.1         # Criação de stores virtuais Zarr a partir de arquivos netCDF/GRIB.
+pystac==1.15.2              # Criação e manipulação de catálogos de dados espaciais (STAC).
+topozarr==0.1.2             # Visualização e pirâmides multi-escala para dados Zarr.
+shapely==2.1.2              # Manipulação e análise de estruturas geométricas planas.
+
+# --- Dados Meteorológicos e Oceanográficos ---
+eccodes==2.48.0             # API da ECMWF para decodificar formatos GRIB e BUFR.
+cfgrib==0.9.15.1            # Driver do xarray para mapear arquivos GRIB usando ecCodes.
+OceanDataStore==0.3.0       # Utilitário para acesso a repositórios de dados oceanográficos.
