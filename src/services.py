@@ -105,7 +105,7 @@ class JsonStore:
         """Lista de colunas 'normais' para exibição na tabela: união das chaves de
         todos os registros (exceto id, geometria e arquivo de origem, tratados à
         parte), com o campo de id sempre em primeiro lugar."""
-        cols: list[str] = [settings.id_field]
+        cols: list[str] = []
         for record in self.records:
             for key in record:
                 if key in (settings.id_field, self.GEOMETRY_FIELD, self.SOURCE_FIELD):
