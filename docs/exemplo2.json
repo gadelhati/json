@@ -1,0 +1,22 @@
+[
+    {
+        "nome": "Maria Silva",
+        "idade": 28,
+        "ativo": true,
+        "habilidades": ["JavaScript", "Python", "JSON"],
+        "endereco": {
+            "cidade": "São Paulo",
+            "estado": "SP"
+        }
+    },
+    {
+        "nome": "Maria Silva",
+        "idade": 28,
+        "ativo": true,
+        "habilidades": ["JavaScript", "Python", "JSON"],
+        "endereco": {
+            "cidade": "São Paulo",
+            "estado": "SP"
+        }
+    }
+]

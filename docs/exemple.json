@@ -1,12 +1,10 @@
 [
   {
-    "id": 1,
     "nome": "Carta Sinótica",
     "data": "2026-08-28",
     "tipo": "meteorologia"
   },
   {
-    "id": 2,
     "nome": "Carta de Ondas",
     "data": "2026-08-28",
     "tipo": "oceanografia"
