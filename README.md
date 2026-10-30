@@ -33,6 +33,7 @@ git config --global http.proxy http://user:password@proxy.fqdn:6060
 - [x] Crud .geojson
 - [x] Donwload .geojson
 - [x] Upload .tiff
+- [x] Donwload .csv
 - [ ] Crud .tiff
 - [ ] Donwload .tiff
 - [ ] Dataset > DataArray
