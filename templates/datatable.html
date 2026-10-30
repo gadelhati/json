@@ -4,28 +4,50 @@
 <div class="toolbar">
     <a href="/records/new">+ Novo registro</a>
     <a href="/export">Exportar JSON</a>
+    <a href="/export/csv">Exportar CSV</a>
     <a href="/import">Importar outro arquivo</a>
 </div>
-<table>
+<div class="dashboard-controls">
+    <label for="record-search">Buscar nos registros</label>
+    <input type="search" id="record-search" placeholder="Digite para filtrar...">
+    <span id="record-count" role="status" aria-live="polite"></span>
+</div>
+<div class="table-wrap">
+<table id="records-table">
     <thead>
         <tr>
             {% for col in columns %}
-            <th>{{ col }}</th>
+            <th scope="col" aria-sort="none">
+                <button type="button" class="sort-button" data-sort-column>
+                    <span class="sort-indicator" aria-hidden="true">↕</span>
+                    <span>{{ col }}</span>
+                </button>
+            </th>
             {% endfor %}
             {% if is_geojson %}
-            <th>geometria</th>
+            <th scope="col" aria-sort="none">
+                <button type="button" class="sort-button" data-sort-column>
+                    <span class="sort-indicator" aria-hidden="true">↕</span>
+                    <span>geometria</span>
+                </button>
+            </th>
             {% endif %}
             {% if show_layer %}
-            <th>camada</th>
+            <th scope="col" aria-sort="none">
+                <button type="button" class="sort-button" data-sort-column>
+                    <span class="sort-indicator" aria-hidden="true">↕</span>
+                    <span>camada</span>
+                </button>
+            </th>
             {% endif %}
-            <th>Ações</th>
+            <th scope="col">Ações</th>
         </tr>
     </thead>
     <tbody>
         {% for record in records %}
         <tr>
             {% for col in columns %}
-            <td>{{ record.get(col, "") }}</td>
+            <td><div class="cell">{{ record.get(col, "") }}</div></td>
             {% endfor %}
             {% if is_geojson %}
             <td class="geometria">{{ record.get(geometry_field, "") }}</td>
@@ -40,13 +62,25 @@
             </td>
             {% endif %}
             <td class="acoes">
-                <a href="/records/{{ record[id_field] }}/edit">Editar</a>
-                <form method="post" action="/records/{{ record[id_field] }}/delete">
-                    <button type="submit" onclick="return confirm('Excluir este registro?')">Excluir</button>
-                </form>
+                <div class="action-controls">
+                    <a href="/records/{{ record[id_field] }}/edit">Editar</a>
+                    <form method="post" action="/records/{{ record[id_field] }}/delete">
+                        <button type="submit" onclick="return confirm('Excluir este registro?')">Excluir</button>
+                    </form>
+                </div>
             </td>
         </tr>
         {% endfor %}
+        <tr id="no-records-match" hidden>
+            <td colspan="{{ columns|length + (1 if is_geojson else 0) + (1 if show_layer else 0) + 1 }}">
+                Nenhum registro corresponde à busca.
+            </td>
+        </tr>
     </tbody>
 </table>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/dashboard.js"></script>
 {% endblock %}

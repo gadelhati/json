@@ -13,8 +13,32 @@ header h1 a {
 
 .toolbar {
     display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
     margin-bottom: 1rem;
+}
+
+.dashboard-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.dashboard-controls input {
+    max-width: 24rem;
+    padding: 0.4rem;
+}
+
+#record-count {
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.table-wrap {
+    width: 100%;
+    overflow-x: auto;
 }
 
 table {
@@ -26,16 +50,58 @@ th, td {
     border: 1px solid #ddd;
     padding: 0.5rem;
     text-align: left;
+    max-width: 18rem;
+    overflow-wrap: anywhere;
 }
 
 th {
     background: #f5f5f5;
+    white-space: nowrap;
+    overflow-wrap: normal;
 }
 
 td.acoes {
+    white-space: nowrap;
+}
+
+td {
+    vertical-align: top;
+}
+
+.cell {
+    max-height: 8rem;
+    overflow-y: auto;
+}
+
+.sort-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-weight: 600;
+    padding: 0;
+}
+
+.sort-indicator {
+    flex: 0 0 auto;
+}
+
+.sort-button:hover {
+    color: #1a5fb4;
+}
+
+td.acoes .action-controls {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.5rem;
     align-items: center;
+}
+
+td.acoes form {
+    margin: 0;
 }
 
 form label {

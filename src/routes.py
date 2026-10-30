@@ -1,10 +1,12 @@
 """Rotas web para importar, editar, exibir e exportar dados JSON e GeoJSON."""
 
+import csv
+import io
 import json
 import shutil
 
 from fastapi import APIRouter, File, Form, HTTPException, Request, UploadFile
-from fastapi.responses import FileResponse, RedirectResponse
+from fastapi.responses import FileResponse, RedirectResponse, StreamingResponse
 from fastapi.templating import Jinja2Templates
 
 from .config import settings
@@ -197,3 +199,36 @@ def export_json():
     path = store.export()
     media_type = "application/geo+json" if store.source_format == "geojson" else "application/json"
     return FileResponse(path, filename=path.name, media_type=media_type)
+
+
+@router.get("/export/csv")
+def export_csv():
+    """Exporta todos os registros atuais como arquivo CSV."""
+    if not store.records:
+        raise HTTPException(status_code=400, detail="Nenhum dado importado para exportar")
+
+    fieldnames = [settings.id_field, *store.columns]
+    if store.source_format == "geojson":
+        fieldnames.append("geometry")
+    if store.has_multiple_sources:
+        fieldnames.append("source")
+
+    output = io.StringIO(newline="")
+    writer = csv.DictWriter(output, fieldnames=fieldnames, extrasaction="ignore")
+    writer.writeheader()
+    for record in store.get_all():
+        row = dict(record)
+        if store.source_format == "geojson":
+            geometry = row.pop(store.GEOMETRY_FIELD, None)
+            row["geometry"] = (
+                json.dumps(geometry, ensure_ascii=False) if geometry is not None else ""
+            )
+        if store.has_multiple_sources:
+            row["source"] = row.pop(store.SOURCE_FIELD, "")
+        writer.writerow(row)
+
+    return StreamingResponse(
+        iter([output.getvalue()]),
+        media_type="text/csv; charset=utf-8",
+        headers={"Content-Disposition": 'attachment; filename="export.csv"'},
+    )
