@@ -1,3 +1,5 @@
+"""Rotas web para importar, editar, exibir e exportar dados JSON e GeoJSON."""
+
 import json
 import shutil
 
@@ -41,6 +43,7 @@ def _display_records() -> list[dict]:
 
 @router.get("/")
 def index(request: Request):
+    """Exibe a tabela de registros ou redireciona para a importação se vazia."""
     if not store.records:
         return RedirectResponse("/import")
     return templates.TemplateResponse(
@@ -60,6 +63,7 @@ def index(request: Request):
 
 @router.get("/map")
 def map_view(request: Request, layer: str | None = None):
+    """Renderiza o mapa com as camadas GeoJSON disponíveis."""
     layers = store.feature_collections_by_layer()
     has_geometries = any(l["featureCollection"]["features"] for l in layers)
     return templates.TemplateResponse(
@@ -76,6 +80,7 @@ def map_view(request: Request, layer: str | None = None):
 
 @router.get("/import")
 def import_form(request: Request):
+    """Exibe o formulário de importação e o estado atual dos dados."""
     return templates.TemplateResponse(
         request,
         "upload.html",
@@ -89,6 +94,7 @@ def import_form(request: Request):
 
 @router.post("/import")
 async def import_json(file: UploadFile = File(...), concatenar: bool = Form(False)):
+    """Salva e carrega um JSON/GeoJSON, substituindo ou concatenando registros."""
     dest = settings.upload_dir / file.filename
     with open(dest, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
@@ -102,6 +108,7 @@ async def import_json(file: UploadFile = File(...), concatenar: bool = Form(Fals
 
 @router.get("/records/new")
 def new_form(request: Request):
+    """Exibe o formulário para criar um registro."""
     is_geojson = store.source_format == "geojson"
     return templates.TemplateResponse(
         request,
@@ -121,6 +128,7 @@ def new_form(request: Request):
 
 @router.post("/records/new")
 async def create_record(request: Request):
+    """Cria um registro a partir do formulário e retorna à tabela."""
     form = await request.form()
     data = {k: v for k, v in form.items() if k != settings.id_field}
     try:
@@ -133,6 +141,7 @@ async def create_record(request: Request):
 
 @router.get("/records/{record_id}/edit")
 def edit_form(request: Request, record_id: str):
+    """Exibe o formulário preenchido para editar o registro indicado."""
     record = store.get(record_id)
     if record is None:
         raise HTTPException(status_code=404, detail="Registro não encontrado")
@@ -160,6 +169,7 @@ def edit_form(request: Request, record_id: str):
 
 @router.post("/records/{record_id}/edit")
 async def update_record(request: Request, record_id: str):
+    """Valida e salva as alterações do registro indicado."""
     form = await request.form()
     data = {k: v for k, v in form.items() if k != settings.id_field}
     try:
@@ -173,6 +183,7 @@ async def update_record(request: Request, record_id: str):
 
 @router.post("/records/{record_id}/delete")
 def delete_record(record_id: str):
+    """Exclui o registro indicado e retorna à tabela."""
     if not store.delete(record_id):
         raise HTTPException(status_code=404, detail="Registro não encontrado")
     return RedirectResponse("/", status_code=303)
@@ -180,6 +191,7 @@ def delete_record(record_id: str):
 
 @router.get("/export")
 def export_json():
+    """Exporta os dados atuais como JSON ou GeoJSON para download."""
     if not store.records:
         raise HTTPException(status_code=400, detail="Nenhum dado importado para exportar")
     path = store.export()

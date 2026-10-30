@@ -1,3 +1,5 @@
+"""Endpoints de upload de GeoTIFF e consulta dos metadados processados."""
+
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from .geotiff_service import store
 
@@ -6,6 +8,7 @@ _layers: dict[str, dict] = {}
 
 @routers_geotiff.post("/upload")
 async def upload_geotiff(file: UploadFile = File(...)):
+    """Processa um GeoTIFF e retorna seu identificador, prévia e metadados."""
     if not file.filename.lower().endswith((".tif", ".tiff")):
         raise HTTPException(400, "Envie um arquivo .tif ou .tiff")
 
@@ -24,6 +27,7 @@ async def upload_geotiff(file: UploadFile = File(...)):
 
 @routers_geotiff.get("/{file_id}/metadata")
 async def get_metadata(file_id: str):
+    """Retorna os metadados da camada ou HTTP 404 se ela não existir."""
     layer = _layers.get(file_id)
     if not layer:
         raise HTTPException(404, "Camada não encontrada")

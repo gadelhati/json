@@ -1,3 +1,5 @@
+"""Define as configurações da aplicação e prepara os diretórios de trabalho."""
+
 from pathlib import Path
 
 from pydantic_settings import BaseSettings, SettingsConfigDict

@@ -1,3 +1,5 @@
+"""Processa arquivos GeoTIFF e prepara metadados e prévias para o mapa."""
+
 import os
 os.environ.pop("PROJ_LIB", None)
 os.environ.pop("PROJ_DATA", None)
@@ -14,7 +16,10 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 os.makedirs(PREVIEW_DIR, exist_ok=True)
 
 class TiffStore:
+    """Salva GeoTIFFs e extrai informações para visualização geográfica."""
+
     def save_geotiff(self, file_bytes: bytes, filename: str) -> tuple[str, str]:
+        """Salva o arquivo com um identificador único e retorna ID e caminho."""
         file_id = str(uuid.uuid4())
         path = os.path.join(UPLOAD_DIR, f"{file_id}_{filename}")
         with open(path, "wb") as f:
@@ -22,7 +27,7 @@ class TiffStore:
         return file_id, path
 
     def extract_geospatial_metadata(self, ds: rasterio.DatasetReader) -> dict:
-        """Aba 1: GeoKeys (CRS/transform derivados pelo GDAL a partir das GeoKeys)."""
+        """Extrai CRS, transformação, limites, resolução e pontos de controle."""
         crs, transform = ds.crs, ds.transform
         gcps, _ = ds.get_gcps()
         return {
@@ -38,7 +43,7 @@ class TiffStore:
         }
 
     def extract_data_sensor_metadata(self, ds: rasterio.DatasetReader) -> dict:
-        """Aba 2: bandas, dtype, nodata, estatísticas, tags de sensor."""
+        """Extrai informações, estatísticas e tags de cada banda e do sensor."""
         bands = []
         for i in range(1, ds.count + 1):
             arr = ds.read(i, masked=True)
@@ -63,7 +68,7 @@ class TiffStore:
         }
 
     def extract_descriptive_metadata(self, ds: rasterio.DatasetReader) -> dict:
-        """Aba 3: metadados padrão do GDAL + tags TIFF."""
+        """Extrai metadados descritivos do GDAL e tags padrão do TIFF."""
         tags = ds.tags()
         return {
             "driver": ds.driver,
@@ -77,6 +82,7 @@ class TiffStore:
         }
 
     def extract_all_metadata(self, path: str) -> dict:
+        """Agrupa metadados geoespaciais, de bandas e descritivos do arquivo."""
         with rasterio.open(path) as ds:
             return {
                 "geoespacial": self.extract_geospatial_metadata(ds),
@@ -85,7 +91,11 @@ class TiffStore:
             }
 
     def generate_leaflet_preview(self, path: str, file_id: str) -> dict:
-        """Reprojeta para EPSG:4326 e gera PNG + bounds para L.imageOverlay."""
+        """Reprojeta o raster para EPSG:4326 e gera PNG e limites para o Leaflet.
+
+        Retorna a URL da prévia e os limites no formato aceito por
+        ``L.imageOverlay``.
+        """
         dst_crs = "EPSG:4326"
         with rasterio.open(path) as src:
             transform, width, height = calculate_default_transform(

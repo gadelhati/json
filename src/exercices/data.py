@@ -1,3 +1,5 @@
+"""Demonstra a abertura e a inspeção de dados NetCDF usando xarray."""
+
 import xarray as xr
 
 # Abrindo um conjunto de dados NetCDF

@@ -1,3 +1,5 @@
+"""Demonstra a criação e a inspeção de uma matriz NumPy bidimensional."""
+
 import numpy as np
 
 # objeto criado pelo NumPy, numpy.ndarray bidimensional com valores de temperatura

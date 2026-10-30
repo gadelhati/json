@@ -1,3 +1,5 @@
+"""Armazena, transforma e exporta registros JSON e GeoJSON em memória."""
+
 import json
 import uuid
 from pathlib import Path
@@ -24,6 +26,7 @@ class JsonStore:
     SOURCE_FIELD = "_source"
 
     def __init__(self) -> None:
+        """Inicializa o armazenamento sem registros carregados."""
         self.records: list[dict[str, Any]] = []
         self.source_filenames: list[str] = []
         self.source_format: str = "json"  # "json" ou "geojson"
@@ -90,6 +93,11 @@ class JsonStore:
         return records, fmt
 
     def _features_to_records(self, features: list[Any]) -> list[dict[str, Any]]:
+        """Converte features GeoJSON em registros editáveis do armazenamento.
+
+        A geometria e o identificador são preservados em campos próprios; as
+        propriedades da feature permanecem disponíveis como colunas.
+        """
         records = []
         for feature in features:
             if not isinstance(feature, dict):
@@ -156,9 +164,11 @@ class JsonStore:
         return layers
 
     def get_all(self) -> list[dict[str, Any]]:
+        """Retorna a lista atual de registros."""
         return self.records
 
     def get(self, record_id: str) -> Optional[dict[str, Any]]:
+        """Busca um registro pelo campo configurado como identificador."""
         return next((r for r in self.records if r.get(settings.id_field) == record_id), None)
 
     def prepare_incoming(self, data: dict[str, Any]) -> dict[str, Any]:
@@ -174,11 +184,13 @@ class JsonStore:
         return data
 
     def create(self, data: dict[str, Any]) -> dict[str, Any]:
+        """Adiciona um registro e gera um identificador quando necessário."""
         data.setdefault(settings.id_field, str(uuid.uuid4()))
         self.records.append(data)
         return data
 
     def update(self, record_id: str, data: dict[str, Any]) -> Optional[dict[str, Any]]:
+        """Atualiza um registro existente e retorna-o, ou retorna ``None``."""
         record = self.get(record_id)
         if record is None:
             return None
@@ -187,6 +199,7 @@ class JsonStore:
         return record
 
     def delete(self, record_id: str) -> bool:
+        """Remove um registro pelo identificador e informa se foi encontrado."""
         record = self.get(record_id)
         if record is None:
             return False

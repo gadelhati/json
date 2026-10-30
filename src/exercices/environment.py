@@ -1,3 +1,5 @@
+"""Verifica e exibe as versões das bibliotecas científicas instaladas."""
+
 import numpy
 import pandas
 import xarray
