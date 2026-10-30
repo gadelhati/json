@@ -1,671 +1,867 @@
 [
-    {
-      "sistema_operacional": "Oracle Linux 7 (64-bit)",
-      "nome_servidor": "ACAMAR",
-      "nome_dns": "app_backend_desenv",
-      "ip": "10.5.201.40",
-      "virtual_hosts": [
-        "10.5.201.40"
-      ],
-      "servicos": [
-        {
-          "nome": "AVISO RADIO",
-          "url": null
-        }
-      ],
-      "urls": [
-        {
-          "nome": "",
-          "url": "http://"
-        }
-      ]
-    },
-    {
-      "sistema_operacional": "Oracle Linux 7 (64-bit)",
-      "nome_servidor": "ACHERNAR",
-      "nome_dns": "app_frontend_desenv",
-      "ip": "10.5.201.41",
-      "virtual_hosts": [
-        "10.5.201.41"
-      ],
-      "servicos": [
-        {
-          "nome": "Apache HTTP",
-          "url": null
-        }
-      ],
-      "urls": [
-        {
-          "nome": "",
-          "url": "http://"
-        }
-      ]
-    },
-    {
-      "sistema_operacional": "Oracle Linux 7 (64-bit)",
-      "nome_servidor": "ALTAIR",
-      "nome_dns": "altair",
-      "ip": "10.5.192.200",
-      "virtual_hosts": [
-        "10.5.192.200"
-      ],
-      "servicos": [
-        {
-          "nome": "QUANTUM",
-          "url": null
-        }
-      ],
-      "urls": [
-        {
-          "nome": "quantum.dhn.mb",
-          "url": "https://quantum.dhn.mb/"
-        }
-      ]
-    },
-    {
-      "sistema_operacional": "Oracle Linux 7 (64-bit)",
-      "nome_servidor": "APP_BACKEND",
-      "nome_dns": "app_backend",
-      "ip": "10.5.201.26",
-      "virtual_hosts": [
-        "10.5.201.26"
-      ],
-      "servicos": [
-        {
-          "nome": "Apache HTTP",
-          "url": null
-        }
-      ],
-      "urls": [
-        {
-          "nome": "",
-          "url": "http://"
-        }
-      ]
-    },
-    {
-      "sistema_operacional": "Oracle Linux 7 (64-bit)",
-      "nome_servidor": "APP_FRONTEND",
-      "nome_dns": "app_frontend",
-      "ip": "10.5.201.25",
-      "virtual_hosts": [
-        "10.5.201.25"
-      ],
-      "servicos": [
-        {
-          "nome": "Apache HTTP",
-          "url": null
-        }
-      ],
-      "urls": [
-        {
-          "nome": "",
-          "url": "http://"
-        }
-      ]
-    },
-    {
-      "sistema_operacional": "Oracle Linux 7 (64-bit)",
-      "nome_servidor": "CLONE_NASHIRA",
-      "nome_dns": "nashira.chm",
-      "ip": "10.5.201.30",
-      "virtual_hosts": [
-        "10.5.201.30"
-      ],
-      "servicos": [
-        {
-          "nome": "Apache HTTP",
-          "url": null
-        }
-      ],
-      "urls": [
-        {
-          "nome": "",
-          "url": "http://"
-        }
-      ]
-    },
-    {
-      "sistema_operacional": "Oracle Linux 7 (64-bit)",
-      "nome_servidor": "DOCKER_PROD",
-      "nome_dns": "localhost.localdomain",
-      "ip": "10.5.192.36",
-      "virtual_hosts": [
-        "10.5.192.36"
-      ],
-      "servicos": [
-        {
-          "nome": "DOCKER",
-          "url": null
-        }
-      ],
-      "urls": [
-        {
-          "nome": "",
-          "url": "http://"
-        }
-      ]
-    },
-    {
-      "sistema_operacional": "Oracle Linux 9 (64-bit)",
-      "nome_servidor": "draco",
-      "nome_dns": "draco.chm.mb",
-      "ip": "10.5.201.80",
-      "virtual_hosts": [
-        "10.5.201.90",
-        "10.5.201.91",
-        "10.5.201.92",
-        "10.5.201.93",
-        "10.5.201.94",
-        "10.5.201.95",
-        "10.5.201.96",
-        "10.5.201.97",
-        "10.5.201.98",
-        "10.5.201.124"
-      ],
-      "servicos": [
-        {
-          "nome": "MAPS",
-          "url": null
-        },
-        {
-          "nome": "AVISORADIO",
-          "url": null
-        },
-        {
-          "nome": "SHIPSYNOP",
-          "url": null
-        },
-        {
-          "nome": "SCMETMAR",
-          "url": null
-        },
-        {
-          "nome": "SISTUF",
-          "url": null
-        },
-        {
-          "nome": "GEOSERVER",
-          "url": null
-        },
-        {
-          "nome": "GEONETWORK",
-          "url": null
-        },
-        {
-          "nome": "HIDROS",
-          "url": null
-        },
-        {
-          "nome": "PREVISAOSISMARE",
-          "url": null
-        },
-        {
-          "nome": "PACMARE",
-          "url": null
-        }
-      ],
-      "urls": [
-        {
-          "nome": "dev.api.maps.chm.mbr",
-          "url": "https://dev.api.maps.chm.mb"
-        },
-        {
-          "nome": "dev.api.avisoradio.chm.br",
-          "url": "https://dev.api.avisoradio.chm.mb"
-        },
-        {
-          "nome": "dev.api.shipsynop.chm.mb",
-          "url": "https://api.shipsynop.chm.mb"
-        },
-        {
-          "nome": "dev.api.scmetmar.chm.mb",
-          "url": "http://dev.api.scmetmar.chm.mb"
-        },
-        {
-          "nome": "dev.api.sistuf.chm.mb",
-          "url": "https://dev.api.sistuf.chm.mb"
-        },
-        {
-          "nome": "dev.api.geoserver.chm.mb",
-          "url": "https://dev.api.geoserver.chm.mb"
-        },
-        {
-          "nome": "dev.api.geonetwork.chm.mb",
-          "url": "https://dev.api.geonetwork.chm.mb"
-        },
-        {
-          "nome": "dev.api.hidros.chm.mb",
-          "url": "https://www.dev.api.hidros.chm.mb"
-        },
-        {
-          "nome": "dev.api.previsaosismare.chm.mb",
-          "url": "https://dev.api.previsaosismare"
-        },
-        {
-          "nome": "dev.api.pacmare.chm.mb",
-          "url": "https://dev.api.pacmare.chm.mb"
-        }
-      ]
-    },
-    {
-      "sistema_operacional": "Oracle Linux 7 (64-bit)",
-      "nome_servidor": "GITLAB_CHM",
-      "nome_dns": "sirius.chm",
-      "ip": "10.5.193.26",
-      "virtual_hosts": [
-        "10.5.193.26"
-      ],
-      "servicos": [
-        {
-          "nome": "GIT",
-          "url": null
-        }
-      ],
-      "urls": []
-    },
-    {
-      "sistema_operacional": "Oracle Linux 7 (64-bit)",
-      "nome_servidor": "HADAR",
-      "nome_dns": "hadar",
-      "ip": "10.5.193.200",
-      "virtual_hosts": [
-        "10.5.193.200"
-      ],
-      "servicos": [
-        {
-          "nome": "Apache HTTP",
-          "url": null
-        }
-      ],
-      "urls": []
-    },
-    {
-      "sistema_operacional": "Oracle Linux 7 (64-bit)",
-      "nome_servidor": "IDEM_DHN_DESENV",
-      "nome_dns": "merak.chm",
-      "ip": "10.5.201.25",
-      "virtual_hosts": [
-        "10.5.193.3"
-      ],
-      "servicos": [
-        {
-          "nome": "Apache TOMCAT",
-          "url": null
-        }
-      ],
-      "urls": []
-    },
-    {
-      "sistema_operacional": "Oracle Linux 7 (64-bit)",
-      "nome_servidor": "KEYCLOAK",
-      "nome_dns": "keycloak",
-      "ip": "10.5.192.40",
-      "virtual_hosts": [
-        "10.5.192.40"
-      ],
-      "servicos": [
-        {
-          "nome": "Apache HTTP",
-          "url": null
-        }
-      ],
-      "urls": []
-    },
-    {
-      "sistema_operacional": "Oracle Linux 7 (64-bit)",
-      "nome_servidor": "NASHIRA",
-      "nome_dns": "nashira.chm",
-      "ip": "10.5.193.43",
-      "virtual_hosts": [
-        "10.5.193.43"
-      ],
-      "servicos": [
-        {
-          "nome": "Apache HTTP",
-          "url": null
-        }
-      ],
-      "urls": []
-    },
-    {
-      "sistema_operacional": "Oracle Linux 7 (64-bit)",
-      "nome_servidor": "REDMINE_CHM",
-      "nome_dns": "asterion",
-      "ip": "10.5.193.133",
-      "virtual_hosts": [
-        "10.5.193.133"
-      ],
-      "servicos": [
-        {
-          "nome": "Apache HTTP",
-          "url": null
-        }
-      ],
-      "urls": []
-    },
-    {
-      "sistema_operacional": "Oracle Linux 7 (64-bit)",
-      "nome_servidor": "SDQ",
-      "nome_dns": "canis.cltipa.ad",
-      "ip": "10.5.193.141",
-      "virtual_hosts": [
-        "10.5.193.141"
-      ],
-      "servicos": [
-        {
-          "nome": "Apache HTTP",
-          "url": null
-        }
-      ],
-      "urls": []
-    },
-    {
-      "sistema_operacional": "Oracle Linux 7 (64-bit)",
-      "nome_servidor": "SIGBASE",
-      "nome_dns": "dubhe.chm",
-      "ip": "10.5.193.19",
-      "virtual_hosts": [
-        "10.5.193.19"
-      ],
-      "servicos": [
-        {
-          "nome": "Apache TOMCAT",
-          "url": null
-        }
-      ],
-      "urls": []
-    },
-    {
-      "sistema_operacional": "Oracle Linux 7 (64-bit)",
-      "nome_servidor": "SISGENEROS",
-      "nome_dns": "sigma",
-      "ip": "10.5.193.168",
-      "virtual_hosts": [
-        "10.5.193.168"
-      ],
-      "servicos": [
-        {
-          "nome": "Apache HTTP",
-          "url": null
-        }
-      ],
-      "urls": []
-    },
-    {
-      "sistema_operacional": "Oracle Linux 4/5/6/7 (64-bit)",
-      "nome_servidor": "SISGEODEF",
-      "nome_dns": "zion",
-      "ip": "10.5.193.245",
-      "virtual_hosts": [
-        "10.5.193.245"
-      ],
-      "servicos": [
-        {
-          "nome": "Apache HTTP",
-          "url": null
-        }
-      ],
-      "urls": []
-    },
-    {
-      "sistema_operacional": "Oracle Linux 7 (64-bit)",
-      "nome_servidor": "SISTUF_API_DESENV",
-      "nome_dns": "sigma",
-      "ip": "10.5.193.169",
-      "virtual_hosts": [
-        "10.5.193.169"
-      ],
-      "servicos": [
-        {
-          "nome": "Apache HTTP",
-          "url": null
-        }
-      ],
-      "urls": []
-    },
-    {
-      "sistema_operacional": "Oracle Linux 9 (64-bit)",
-      "nome_servidor": "SPICA",
-      "nome_dns": "spica.chm.mb",
-      "ip": "10.5.201.24",
-      "virtual_hosts": [
-        "10.5.201.70",
-        "10.5.201.71",
-        "10.5.201.72",
-        "10.5.201.73",
-        "10.5.201.74",
-        "10.5.201.75",
-        "10.5.201.76"
-      ],
-      "servicos": [
-        {
-          "nome": "maps.chm.mb",
-          "url": "http://maps.chm.mb"
-        },
-        {
-          "nome": "dev.avisoradio.chm.mb",
-          "url": "https://dev.avisoradio.chm.mb"
-        },
-        {
-          "nome": "~~dev.limesurvey.chm.mb~~",
-          "url": "http://dev.limesurvey.chm.mb"
-        },
-        {
-          "nome": "dev.shipsynop.chm.mb",
-          "url": "https://dev.shipsynop.chm.mb"
-        },
-        {
-          "nome": "dev.scmetmar.chm.mb",
-          "url": "http://dev.scmetmar.chm.mb"
-        },
-        {
-          "nome": "dev.sistuf.chm.mb",
-          "url": "https://dev.sistuf.chm.mb"
-        },
-        {
-          "nome": "dev.hidros.chm.mb",
-          "url": "https://dev.hidros.chm.mb"
-        }
-      ],
-      "urls": []
-    },
-    {
-      "sistema_operacional": "Oracle Linux 7 (64-bit)",
-      "nome_servidor": "WEB02",
-      "nome_dns": "www.smm.mil.br",
-      "ip": "172.16.13.13",
-      "virtual_hosts": [
-        "172.16.13.13"
-      ],
-      "servicos": [
-        {
-          "nome": "Apache HTTP",
-          "url": null
-        }
-      ],
-      "urls": []
-    },
-    {
-      "sistema_operacional": "Oracle Linux 9 (64-bit)",
-      "nome_servidor": "SIRIUS",
-      "nome_dns": "sirius",
-      "ip": "10.5.201.119",
-      "virtual_hosts": [
-        "10.5.193.42",
-        "10.5.201.105",
-        "10.5.201.106",
-        "10.5.201.107",
-        "10.5.201.108",
-        "10.5.201.109",
-        "10.5.201.110",
-        "10.5.201.111",
-        "10.5.201.112",
-        "10.5.201.113",
-        "10.5.201.114"
-      ],
-      "servicos": [
-        {
-          "nome": "dev.clti.chm.mb",
-          "url": "http://dev.clti.chm.mb"
-        },
-        {
-          "nome": "dev.chm.mb",
-          "url": "https://dev.chm.mb"
-        },
-        {
-          "nome": "vago",
-          "url": null
-        },
-        {
-          "nome": "150anos.dhn.mb",
-          "url": null
-        },
-        {
-          "nome": "vago",
-          "url": null
-        },
-        {
-          "nome": "vago",
-          "url": null
-        },
-        {
-          "nome": "vago",
-          "url": null
-        },
-        {
-          "nome": "vago",
-          "url": null
-        },
-        {
-          "nome": "vago",
-          "url": null
-        },
-        {
-          "nome": "vago",
-          "url": null
-        },
-        {
-          "nome": "vago",
-          "url": null
-        }
-      ],
-      "urls": []
-    },
-    {
-      "sistema_operacional": "Oracle Linux 4/5/6/7 (64-bit)",
-      "nome_servidor": "IDEM_APP",
-      "nome_dns": "idem_app",
-      "ip": "192.168.29.58",
-      "virtual_hosts": [
-        {
-          "nome": "idem :8080/geoserver",
-          "url": "http://idem.dhn.mar.mil.br/geoserver"
-        },
-        {
-          "nome": "idem :8081/geonetwork",
-          "url": "http://idem.dhn.mar.mil.br/geonetwork"
-        }
-      ],
-      "servicos": [
-        {
-          "nome": "GEOSERVER",
-          "url": null
-        },
-        {
-          "nome": "GEONETWORK",
-          "url": null
-        }
-      ],
-      "urls": []
-    },
-    {
-      "sistema_operacional": "Oracle Linux 7 (64-bit)",
-      "nome_servidor": "PAM",
-      "nome_dns": "pam",
-      "ip": "192.168.29.64",
-      "virtual_hosts": [
-        "192.168.29.64"
-      ],
-      "servicos": [],
-      "urls": []
-    },
-    {
-      "sistema_operacional": "Oracle Linux 7 (64-bit)",
-      "nome_servidor": "Sistuf_API",
-      "nome_dns": "sistufapi",
-      "ip": "192.168.29.27",
-      "virtual_hosts": [
-        {
-          "nome": "sistufapi :9099/sistuf-api-psp",
-          "url": "http://sistufapi.dhn.mar.mil.br/sistuf-api-psp"
-        },
-        {
-          "nome": "sistufapi :9098/sistuf",
-          "url": "http://sistufapi.dhn.mar.mil.br/sistuf"
-        }
-      ],
-      "servicos": [
-        {
-          "nome": "Back:LARAVEL / Front:SCRIPTCASE",
-          "url": null
-        },
-        {
-          "nome": "Apache HTTP",
-          "url": null
-        }
-      ],
-      "urls": []
-    },
-    {
-      "sistema_operacional": "Oracle Linux 7 (64-bit)",
-      "nome_servidor": "SISTUF_APP",
-      "nome_dns": "sistuf",
-      "ip": "192.168.29.23",
-      "virtual_hosts": [
-        {
-          "nome": "sistuf.dhn.mar.mil.br",
-          "url": "http://sistuf.dhn.mar.mil.br"
-        }
-      ],
-      "servicos": [
-        {
-          "nome": "ScriptCase/PHP",
-          "url": null
-        }
-      ],
-      "urls": []
-    },
-    {
-      "sistema_operacional": "Oracle Linux 9 (64-bit)",
-      "nome_servidor": "SISTUF-DHN",
-      "nome_dns": "sistuf-api.chm.mb",
-      "ip": "10.205.144.171",
-      "virtual_hosts": [
-        "10.205.144.171"
-      ],
-      "servicos": [
-        {
-          "nome": "Sistuf/PHP",
-          "url": null
-        }
-      ],
-      "urls": []
-    },
-    {
-      "sistema_operacional": "Oracle Linux 9 (64-bit)",
-      "nome_servidor": "IDEM-DHN",
-      "nome_dns": "idem-dhn.chm.mb",
-      "ip": "10.210.114.96",
-      "virtual_hosts": [
-        "10.210.114.96"
-      ],
-      "servicos": [
-        {
-          "nome": "IDEM",
-          "url": null
-        }
-      ],
-      "urls": []
-    }
-  ]
+	{
+		"vm_name": "ACAMAR",
+		"hostname": "acamar",
+		"domain": "RECIM",
+		"operating_system": {
+			"name": "Oracle Linux",
+			"version": "9.8",
+			"architecture": "x86-64"
+		},
+		"ips": [
+			"10.5.201.40",
+			"10.5.201.62",
+			"10.5.201.63",
+			"10.5.201.64",
+			"10.5.201.65",
+			"10.5.201.66",
+			"10.5.201.67",
+			"10.5.201.68",
+			"10.5.201.69"
+		],
+		"services": [
+			{
+				"name": "hidros",
+				"path": "/opt/hidros",
+				"virtual_host": {
+					"hostname": "api.hidros.chm.mb",
+					"ip": "10.5.201.63",
+					"port": 443,
+					"protocol": "HTTPS",
+					"proxy_target": 3133
+				}
+			},
+			{
+				"name": "pacmare",
+				"path": "/opt/pacmare",
+				"virtual_host": {
+					"hostname": "api.pacmare.chm.mb",
+					"ip": "10.5.201.62",
+					"port": 443,
+					"protocol": "HTTPS",
+					"proxy_target": 3135
+				}
+			},
+			{
+				"name": "previsoes",
+				"path": "/opt/previsoes",
+				"virtual_host": {
+					"hostname": "api.previsaosismare.chm.mb",
+					"ip": "10.5.201.64",
+					"port": 443,
+					"protocol": "HTTPS",
+					"proxy_target": 3134
+				}
+			},
+			{
+				"name": "shipsynop",
+				"path": "/opt/shipsynop",
+				"virtual_host": {
+					"hostname": "api.shipsynop.chm.mb",
+					"ip": "10.5.201.65",
+					"port": 443,
+					"protocol": "HTTPS",
+					"proxy_target": 3130
+				}
+			}
+		]
+	},
+	{
+		"vm_name": "ACHERNAR",
+		"hostname": "achernar",
+		"domain": "RECIM",
+		"operating_system": {
+			"name": "Oracle Linux",
+			"version": "9.8",
+			"architecture": "x86-64"
+		},
+		"ips": [
+			"10.5.201.41",
+			"10.5.201.41",
+			"10.5.201.45",
+			"10.5.201.46",
+			"10.5.201.47",
+			"10.5.201.48",
+			"10.5.201.96",
+			"10.5.201.59",
+			"10.5.201.43",
+			"10.5.201.44"
+		],
+		"services": [
+			{
+				"name": "hidros",
+				"path": "/var/www/html/hidros",
+				"virtual_host": {
+					"hostname": "hidros.chm.mb",
+					"ip": "10.5.201.43",
+					"port": 443,
+					"protocol": "HTTPS",
+					"proxy_target": null
+				}
+			}
+		]
+	},
+	{
+		"vm_name": "ERIDANUS",
+		"hostname": "atom",
+		"domain": "RECIM",
+		"operating_system": {
+			"name": "Oracle Linux",
+			"version": "9.8",
+			"architecture": "x86-64"
+		},
+		"ips": [
+			"10.5.201.77"
+		],
+		"services": [
+			{
+				"name": "atom",
+				"path": "/var/www/html/atom",
+				"virtual_host": {
+					"hostname": "atom.chm.mb",
+					"ip": "10.5.201.77",
+					"port": 443,
+					"protocol": "HTTPS",
+					"proxy_target": null
+				}
+			}
+		]
+	},
+	{
+		"vm_name": "APP_BACKEND",
+		"hostname": "app_backend",
+		"domain": "RECIM",
+		"operating_system": {
+			"name": "Oracle Linux",
+			"version": "7.9",
+			"architecture": "x86-64"
+		},
+		"ips": [
+			"10.5.201.26"
+		],
+		"technologies": [
+			{
+				"name": "Apache HTTP Server",
+				"version": null
+			},
+			{
+				"name": "PHP",
+				"version": null
+			},
+			{
+				"name": "Python",
+				"version": null
+			},
+			{
+				"name": "Java",
+				"version": null
+			}
+		],
+		"services": [
+			{
+				"name": "hidros",
+				"path": "/opt/hidros",
+				"virtual_host": {
+					"hostname": "https://sistemas-api.chm.mb/hidros",
+					"ip": null,
+					"port": 443,
+					"protocol": "HTTPS",
+					"proxy_target": 8080
+				},
+				"technologies": [
+					{
+						"name": "Java",
+						"version": null
+					},
+					{
+						"name": "Apache Tomcat",
+						"version": null
+					}
+				]
+			},
+			{
+				"name": "pacmare",
+				"path": "/opt/pacmare",
+				"virtual_host": {
+					"hostname": null,
+					"ip": null,
+					"port": null,
+					"protocol": null,
+					"proxy_target": 8090
+				},
+				"technologies": [
+					{
+						"name": "Python",
+						"version": null
+					}
+				]
+			},
+			{
+				"name": "previsoes",
+				"path": "/opt/previsoes",
+				"virtual_host": {
+					"hostname": null,
+					"ip": null,
+					"port": null,
+					"protocol": null,
+					"proxy_target": 8091
+				},
+				"technologies": [
+					{
+						"name": "Java",
+						"version": null
+					},
+					{
+						"name": "Apache Tomcat",
+						"version": null
+					}
+				]
+			},
+			{
+				"name": "scmetmar",
+				"path": "/opt/scmetmar",
+				"virtual_host": {
+					"hostname": "https://sistemas-api.chm.mb/scmetmar",
+					"ip": null,
+					"port": 443,
+					"protocol": "HTTPS",
+					"proxy_target": 8083
+				}
+			}
+		]
+	},
+	{
+		"vm_name": "APP_FRONTEND",
+		"hostname": "app_frontend",
+		"domain": "RECIM",
+		"operating_system": {
+			"name": "Oracle Linux",
+			"version": "7.9",
+			"architecture": "x86-64"
+		},
+		"ips": [
+			"10.5.201.25",
+			"10.5.201.27",
+			"10.5.201.28",
+			"10.5.201.29",
+			"10.5.201.37",
+			"10.5.201.38",
+			"10.5.201.39"
+		],
+		"services": [
+			{
+				"name": "hidros",
+				"path": "/var/www/html/hidros",
+				"port": null,
+				"ip": "10.5.201.27",
+				"url": "https://hidros.chm.mb/"
+			}
+		]
+	},
+	{
+		"vm_name": "draco",
+		"hostname": "draco.chm.mb",
+		"domain": "RECIM",
+		"operating_system": {
+			"name": "Oracle Linux",
+			"version": "9.8",
+			"architecture": "x86-64"
+		},
+		"ips": [
+			"10.5.201.80",
+			"10.5.201.90",
+			"10.5.201.91",
+			"10.5.201.92",
+			"10.5.201.93",
+			"10.5.201.94",
+			"10.5.201.95",
+			"10.5.201.96",
+			"10.5.201.97",
+			"10.5.201.98",
+			"10.5.201.124",
+			"10.5.201.125",
+			"10.5.201.126"
+		],
+		"services": [
+			{
+				"name": "avisoradio",
+				"port": "8080",
+				"ip": null,
+				"url": "https://dev.api.avisoradio.chm.mb"
+			},
+			{
+				"name": "geonetwork",
+				"port": "8090",
+				"ip": null,
+				"url": "https://dev.api.geonetwork.chm.mb"
+			},
+			{
+				"name": "geoserver",
+				"port": "8091",
+				"ip": null,
+				"url": "https://dev.api.geoserver.chm.mb"
+			},
+			{
+				"name": "hidros",
+				"port": "8083",
+				"ip": null,
+				"url": "https://dev.api.hidros.chm.mb"
+			},
+			{
+				"name": "maps",
+				"port": "8090",
+				"ip": null,
+				"url": "https://dev.api.maps.chm.mb"
+			},
+			{
+				"name": "pacmare",
+				"port": "8091",
+				"ip": null,
+				"url": "https://dev.api.pacmare.chm.mb"
+			},
+			{
+				"name": "previsoes",
+				"port": "8083",
+				"ip": null,
+				"url": "https://dev.api.previsoes.chm.mb"
+			},
+			{
+				"name": "scmetmar",
+				"port": null,
+				"ip": null,
+				"url": "https://dev.api.scmetmar.chm.mb"
+			},
+			{
+				"name": "shipsynop",
+				"port": "3031",
+				"ip": null,
+				"url": "https://dev.api.shipsynop.chm.mb"
+			}
+		]
+	},
+	{
+		"vm_name": "NASHIRA",
+		"hostname": "nashira.chm",
+		"domain": "RECIM",
+		"operating_system": {
+			"name": "Oracle Linux",
+			"version": "7",
+			"architecture": "x86-64"
+		},
+		"ips": [
+			"10.5.193.43",
+			"10.5.201.105",
+			"10.5.201.110",
+			"10.5.193.41",
+			"10.5.193.75",
+			"10.5.193.76",
+			"10.5.193.77",
+			"10.5.193.78",
+			"10.5.193.79"
+		],
+		"services": [
+			{
+				"name": "Apache HTTP",
+				"url": null
+			}
+		]
+	},
+	{
+		"vm_name": "SISGENEROS",
+		"hostname": "sigma",
+		"domain": "RECIM",
+		"operating_system": {
+			"name": "Oracle Linux",
+			"version": "7",
+			"architecture": "x86-64"
+		},
+		"ips": [
+			"10.5.193.168"
+		],
+		"services": [
+			{
+				"name": "Apache HTTP",
+				"url": null
+			}
+		]
+	},
+	{
+		"vm_name": "SISTUF_API_DESENV",
+		"hostname": "sigma",
+		"domain": "RECIM",
+		"operating_system": {
+			"name": "Oracle Linux",
+			"version": "7",
+			"architecture": "x86-64"
+		},
+		"ips": [
+			"10.5.193.169"
+		],
+		"services": [
+			{
+				"name": "Apache HTTP",
+				"url": null
+			}
+		]
+	},
+	{
+		"vm_name": "DOCKER_PROD",
+		"hostname": "localhost.localdomain",
+		"domain": "RECIM",
+		"operating_system": {
+			"name": "Oracle Linux",
+			"version": "7",
+			"architecture": "x86-64"
+		},
+		"ips": [
+			"10.5.192.36",
+			"172.19.0.1",
+			"172.18.0.1"
+		],
+		"services": [
+			{
+				"name": "DOCKER",
+				"url": null
+			}
+		]
+	},
+	{
+		"vm_name": "HADAR",
+		"hostname": "hadar",
+		"domain": "RECIM",
+		"operating_system": {
+			"name": "Oracle Linux",
+			"version": "7",
+			"architecture": "x86-64"
+		},
+		"ips": [
+			"10.5.193.200"
+		],
+		"services": [
+			{
+				"name": "Apache HTTP",
+				"url": null
+			}
+		]
+	},
+	{
+		"vm_name": "KEYCLOAK",
+		"hostname": "keycloak",
+		"domain": "RECIM",
+		"operating_system": {
+			"name": "Oracle Linux",
+			"version": "7",
+			"architecture": "x86-64"
+		},
+		"ips": [
+			"10.5.192.40"
+		],
+		"services": [
+			{
+				"name": "Apache HTTP",
+				"url": null
+			}
+		]
+	},
+	{
+		"vm_name": "REDMINE_CHM",
+		"hostname": "asterion",
+		"domain": "RECIM",
+		"operating_system": {
+			"name": "Oracle Linux",
+			"version": "7",
+			"architecture": "x86-64"
+		},
+		"ips": [
+			"10.5.193.133"
+		],
+		"services": [
+			{
+				"name": "Apache HTTP",
+				"url": null
+			}
+		]
+	},
+	{
+		"vm_name": "SDQ",
+		"hostname": "canis.cltipa.ad",
+		"domain": "RECIM",
+		"operating_system": {
+			"name": "Oracle Linux",
+			"version": "7",
+			"architecture": "x86-64"
+		},
+		"ips": [
+			"10.5.193.141"
+		],
+		"services": [
+			{
+				"name": "Apache HTTP",
+				"url": null
+			}
+		]
+	},
+	{
+		"vm_name": "GITLAB_CHM",
+		"hostname": "sirius.chm",
+		"domain": "RECIM",
+		"operating_system": {
+			"name": "Oracle Linux",
+			"version": "7",
+			"architecture": "x86-64"
+		},
+		"ips": [
+			"10.5.193.26"
+		],
+		"services": [
+			{
+				"name": "GIT",
+				"url": null
+			}
+		]
+	},
+	{
+		"vm_name": "SPICA",
+		"hostname": "spica.chm.mb",
+		"domain": "RECIM",
+		"operating_system": {
+			"name": "Oracle Linux",
+			"version": "9",
+			"architecture": "x86-64"
+		},
+		"ips": [
+			"10.5.201.70",
+			"10.5.201.71",
+			"10.5.201.72",
+			"10.5.201.73",
+			"10.5.201.74",
+			"10.5.201.75",
+			"10.5.201.76",
+			"10.5.201.127",
+			"10.5.201.128",
+			"10.5.201.129",
+			"10.5.201.131",
+			"10.5.201.132"
+		],
+		"services": [
+			{
+				"name": "maps.chm.mb",
+				"url": "http://maps.chm.mb"
+			},
+			{
+				"name": "dev.avisoradio.chm.mb",
+				"url": "https://dev.avisoradio.chm.mb"
+			},
+			{
+				"name": "~~dev.limesurvey.chm.mb~~",
+				"url": "http://dev.limesurvey.chm.mb"
+			},
+			{
+				"name": "dev.shipsynop.chm.mb",
+				"url": "https://dev.shipsynop.chm.mb"
+			},
+			{
+				"name": "dev.scmetmar.chm.mb",
+				"url": "http://dev.scmetmar.chm.mb"
+			},
+			{
+				"name": "dev.sistuf.chm.mb",
+				"url": "https://dev.sistuf.chm.mb"
+			},
+			{
+				"name": "dev.hidros.chm.mb",
+				"url": "https://dev.hidros.chm.mb"
+			}
+		]
+	},
+	{
+		"vm_name": "WEB02",
+		"hostname": "www.smm.mil.br",
+		"domain": "RECIM",
+		"operating_system": {
+			"name": "Oracle Linux",
+			"version": "7",
+			"architecture": "x86-64"
+		},
+		"ips": [
+			"172.16.13.13"
+		],
+		"services": [
+			{
+				"name": "Apache HTTP",
+				"url": null
+			}
+		]
+	},
+	{
+		"vm_name": "CANOPUS",
+		"hostname": "canopus.chm",
+		"domain": "RECIM",
+		"operating_system": {
+			"name": "Oracle Linux",
+			"version": "7",
+			"architecture": "x86-64"
+		},
+		"ips": [
+			"10.5.192.200"
+		],
+		"services": [
+			{
+				"name": "Apache TOMCAT",
+				"url": null
+			}
+		]
+	},
+	{
+		"vm_name": "CLONE_NASHIRA",
+		"hostname": "nashira.chm",
+		"domain": "RECIM",
+		"operating_system": {
+			"name": "Oracle Linux",
+			"version": "7",
+			"architecture": "x86-64"
+		},
+		"ips": [
+			"10.5.201.30"
+		],
+		"services": [
+			{
+				"name": "Apache HTTP",
+				"url": null
+			}
+		]
+	},
+	{
+		"vm_name": "MARKAB",
+		"hostname": "markab.chm",
+		"domain": "RECIM",
+		"operating_system": {
+			"name": "Oracle Linux",
+			"version": "7",
+			"architecture": "x86-64"
+		},
+		"ips": [
+			"10.5.201.120"
+		],
+		"services": [
+			{
+				"name": "Apache TOMCAT",
+				"url": null
+			}
+		]
+	},
+	{
+		"vm_name": "SIRIUS",
+		"hostname": "sirius",
+		"domain": "RECIM",
+		"operating_system": {
+			"name": "Oracle Linux",
+			"version": "9",
+			"architecture": "x86-64"
+		},
+		"ips": [
+			"10.5.201.119",
+			"10.5.193.42",
+			"10.5.201.105",
+			"10.5.201.106",
+			"10.5.201.107",
+			"10.5.201.108",
+			"10.5.201.109",
+			"10.5.201.110",
+			"10.5.201.111",
+			"10.5.201.112",
+			"10.5.201.113",
+			"10.5.201.114"
+		],
+		"services": [
+			{
+				"name": "dev.clti.chm.mb",
+				"url": "http://dev.clti.chm.mb"
+			},
+			{
+				"name": "dev.chm.mb",
+				"url": "https://dev.chm.mb"
+			},
+			{
+				"name": "vago",
+				"url": null
+			},
+			{
+				"name": "150anos.dhn.mb",
+				"url": null
+			},
+			{
+				"name": "vago",
+				"url": null
+			},
+			{
+				"name": "vago",
+				"url": null
+			},
+			{
+				"name": "vago",
+				"url": null
+			},
+			{
+				"name": "vago",
+				"url": null
+			},
+			{
+				"name": "vago",
+				"url": null
+			},
+			{
+				"name": "vago",
+				"url": null
+			},
+			{
+				"name": "vago",
+				"url": null
+			}
+		]
+	},
+	{
+		"vm_name": "IDEM-DHN",
+		"hostname": "idem-dhn.chm.mb",
+		"domain": "DMZ",
+		"operating_system": {
+			"name": "Oracle Linux",
+			"version": "9",
+			"architecture": "x86-64"
+		},
+		"ips": [
+			"10.210.114.96"
+		],
+		"services": [
+			{
+				"name": "IDEM",
+				"url": null
+			}
+		]
+	},
+	{
+		"vm_name": "IDEM_APP",
+		"hostname": "idem_app",
+		"domain": "DMZ",
+		"operating_system": {
+			"name": "Oracle Linux",
+			"version": "4/5/6/7",
+			"architecture": "x86-64"
+		},
+		"ips": [
+			"192.168.29.58",
+			"192.168.122.1"
+		],
+		"virtual_hosts": [
+			{
+				"name": "idem :8080/geoserver",
+				"url": "http://idem.dhn.mar.mil.br/geoserver"
+			},
+			{
+				"name": "idem :8081/geonetwork",
+				"url": "http://idem.dhn.mar.mil.br/geonetwork"
+			}
+		],
+		"services": [
+			{
+				"name": "GEOSERVER",
+				"url": null
+			},
+			{
+				"name": "GEONETWORK",
+				"url": null
+			}
+		]
+	},
+	{
+		"vm_name": "PAM",
+		"hostname": "pam",
+		"domain": "DMZ",
+		"operating_system": {
+			"name": "Oracle Linux",
+			"version": "7",
+			"architecture": "x86-64"
+		},
+		"ips": [
+			"192.168.29.64"
+		],
+		"services": []
+	},
+	{
+		"vm_name": "SISTUF-DHN",
+		"hostname": "sistuf-api.chm.mb",
+		"domain": "DMZ",
+		"operating_system": {
+			"name": "Oracle Linux",
+			"version": "9",
+			"architecture": "x86-64"
+		},
+		"ips": [
+			"10.205.144.171"
+		],
+		"services": [
+			{
+				"name": "Sistuf/PHP",
+				"url": null
+			}
+		]
+	},
+	{
+		"vm_name": "Sistuf_API",
+		"hostname": "sistufapi",
+		"domain": "DMZ",
+		"operating_system": {
+			"name": "Oracle Linux",
+			"version": "7",
+			"architecture": "x86-64"
+		},
+		"ips": [
+			"192.168.29.27"
+		],
+		"virtual_hosts": [
+			{
+				"name": "sistufapi :9099/sistuf-api-psp",
+				"url": "http://sistufapi.dhn.mar.mil.br/sistuf-api-psp"
+			},
+			{
+				"name": "sistufapi :9098/sistuf",
+				"url": "http://sistufapi.dhn.mar.mil.br/sistuf"
+			}
+		],
+		"services": [
+			{
+				"name": "Back:LARAVEL / Front:SCRIPTCASE",
+				"url": null
+			},
+			{
+				"name": "Apache HTTP",
+				"url": null
+			}
+		]
+	},
+	{
+		"vm_name": "SISTUF_APP",
+		"hostname": "sistuf",
+		"domain": "DMZ",
+		"ips": [
+			"192.168.29.23"
+		],
+		"operating_system": {
+			"name": "Oracle Linux",
+			"version": "7",
+			"architecture": "x86-64"
+		},
+		"virtual_hosts": [
+			{
+				"name": "sistuf.dhn.mar.mil.br",
+				"url": "http://sistuf.dhn.mar.mil.br"
+			}
+		],
+		"services": [
+			{
+				"name": "ScriptCase/PHP",
+				"url": null
+			}
+		]
+	}
+]
