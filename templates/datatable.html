@@ -1,6 +1,28 @@
 {% extends "base.html" %}
 {# Tabela de registros com ações de edição, exclusão, importação e exportação. #}
 {% block content %}
+{# Renderiza valores aninhados: objetos viram linhas chave/valor e listas viram linhas numeradas. #}
+{% macro render_value(value) -%}
+    {%- if value is mapping -%}
+        {%- if value -%}
+        <table class="nested">
+            {%- for key, item in value.items() %}
+            <tr><th scope="row">{{ key }}</th><td>{{ render_value(item) }}</td></tr>
+            {%- endfor %}
+        </table>
+        {%- else -%}{}{%- endif -%}
+    {%- elif value is iterable and value is not string -%}
+        {%- if value -%}
+        <table class="nested">
+            {%- for item in value %}
+            <tr><th scope="row">{{ loop.index0 }}</th><td>{{ render_value(item) }}</td></tr>
+            {%- endfor %}
+        </table>
+        {%- else -%}[]{%- endif -%}
+    {%- elif value is none -%}
+    {%- else -%}{{ value }}
+    {%- endif -%}
+{%- endmacro %}
 <div class="toolbar">
     <a href="/records/new">+ Novo registro</a>
     <a href="/export">Exportar JSON</a>
@@ -47,7 +69,7 @@
         {% for record in records %}
         <tr>
             {% for col in columns %}
-            <td><div class="cell">{{ record.get(col, "") }}</div></td>
+            <td><div class="cell">{{ render_value(record.get(col, "")) }}</div></td>
             {% endfor %}
             {% if is_geojson %}
             <td class="geometria">{{ record.get(geometry_field, "") }}</td>
