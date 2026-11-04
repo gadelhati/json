@@ -10,8 +10,8 @@ class Settings(BaseSettings):
 
     app_name: str = "JSON CRUD"
     data_dir: Path = Path("data")
-    upload_dir: Path = Path("data/uploads")
-    export_dir: Path = Path("data/exports")
+    upload_dir: Path = Path("app/data/uploads")
+    export_dir: Path = Path("app/data/exports")
     # Nome do campo usado como identificador único de cada registro.
     # Se o JSON importado não tiver esse campo, ele é gerado automaticamente.
     id_field: str = "id"
