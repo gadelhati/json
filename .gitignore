@@ -15,5 +15,5 @@ data/exports/*
 !data/uploads/.gitkeep
 !data/exports/.gitkeep
 
-static/previews/*
+app/static/previews/*
 uploads/*

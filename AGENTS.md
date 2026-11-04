@@ -14,7 +14,7 @@ uvicorn app.app:app --reload
 ## Estrutura
 
 - `app/` — backend (FastAPI)
-- `templates/` — páginas Jinja2 (todas estendem `base.html`)
+- `app/templates/` — páginas Jinja2 (todas estendem `base.html`)
 - `static/` — JS/CSS (`dashboard.js`, `geometry.js`, `geotiff.js`, `map.js`, `style.css`) e prévias de GeoTIFF
 - `data/uploads`, `data/exports`, `uploads/geotiff` — arquivos enviados/exportados
 - `docs/` — resumos de estudo; `app/exercices/` — exercícios NumPy/pandas/xarray (fora da aplicação)
