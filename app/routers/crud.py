@@ -13,7 +13,7 @@ from fastapi.templating import Jinja2Templates
 from app.config import settings
 from app.services.crud import store
 
-BASE_DIR = Path(__file__).resolve().parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 router = APIRouter()
 templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
