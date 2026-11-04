@@ -10,8 +10,8 @@ import rasterio
 from rasterio.warp import calculate_default_transform, reproject, Resampling
 from PIL import Image
 
-UPLOAD_DIR = "uploads/geotiff"
-PREVIEW_DIR = "static/previews"
+UPLOAD_DIR = "app/data/uploads/geotiff"
+PREVIEW_DIR = "app/static/previews"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 os.makedirs(PREVIEW_DIR, exist_ok=True)
 
@@ -123,7 +123,7 @@ class TiffStore:
         Image.fromarray(rgb.astype(np.uint8), mode="RGB").save(preview_path)
 
         return {
-            "preview_url": f"/static/previews/{file_id}.png",
+            "preview_url": f"/app/static/previews/{file_id}.png",
             "bounds": [[bottom, left], [top, right]],
         }
 
