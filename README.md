@@ -19,7 +19,7 @@ python.exe -m pip install --upgrade pip
 pip install --upgrade -r requirements.txt
 
 # run application
-uvicorn src.app:app --reload
+uvicorn app.main:app --reload
 
 pip install --proxy http://user:password@proxy.fqdn:6060 -r requirements.txt
 git config --global http.proxy http://user:password@proxy.fqdn:6060

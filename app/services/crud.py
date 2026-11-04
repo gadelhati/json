@@ -5,7 +5,7 @@ import uuid
 from pathlib import Path
 from typing import Any, Optional
 
-from .config import settings
+from app.config import settings
 
 
 class JsonStore:

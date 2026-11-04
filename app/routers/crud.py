@@ -9,8 +9,8 @@ from fastapi import APIRouter, File, Form, HTTPException, Request, UploadFile
 from fastapi.responses import FileResponse, RedirectResponse, StreamingResponse
 from fastapi.templating import Jinja2Templates
 
-from .config import settings
-from .services import store
+from app.config import settings
+from app.services.crud import store
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")

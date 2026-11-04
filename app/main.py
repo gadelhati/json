@@ -8,9 +8,8 @@ estáticos e registrar as rotas da aplicação.
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
-from .config import settings
-from .routes import router
-from .routes_geotiff import routers_geotiff
+from app.config import settings
+from app.routers import crud, geotiff
 
 # Criação da aplicação
 app = FastAPI(title=settings.app_name)
@@ -24,5 +23,5 @@ app.mount(
 
 
 # Rotas
-app.include_router(router)
-app.include_router(routers_geotiff)
+app.include_router(crud.router)
+app.include_router(geotiff.routers_geotiff)

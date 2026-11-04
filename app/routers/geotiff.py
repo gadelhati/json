@@ -1,7 +1,7 @@
 """Endpoints de upload de GeoTIFF e consulta dos metadados processados."""
 
 from fastapi import APIRouter, UploadFile, File, HTTPException
-from .geotiff_service import store
+from app.services.geotiff import store
 
 routers_geotiff = APIRouter(prefix="/geotiff", tags=["geotiff"])
 _layers: dict[str, dict] = {}
