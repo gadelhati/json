@@ -10,10 +10,14 @@ __pycache__/
 .env
 
 # Dados gerados em tempo de execução (uploads e exports)
-app/data/uploads/*
 app/data/exports/*
-!app/data/uploads/.gitkeep
+app/data/uploads/*
+app/data/uploads/geotiff/*
 !app/data/exports/.gitkeep
+!app/data/uploads/.gitkeep
+!app/data/uploads/geotiff/.gitkeep
 
 app/static/previews/*
 uploads/*
+
+.coverage
