@@ -46,6 +46,6 @@
 
 {% block scripts %}
 {% if is_geojson %}
-<script src="/app/static/js/geometry.js"></script>
+<script src="{{ url_for('static', path='js/geometry.js') }}"></script>
 {% endif %}
 {% endblock %}

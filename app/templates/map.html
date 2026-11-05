@@ -52,7 +52,7 @@
 
 {% block scripts %}
 <link rel="stylesheet" href="/app/static/vendor/leaflet/leaflet.css" />
-<script src="/app/static/js/geotiff.js"></script>
-<script src="/app/static/vendor/leaflet/leaflet.js"></script>
-<script src="/app/static/js/map.js"></script>
+<script src="{{ url_for('static', path='js/geotiff.js') }}"></script>
+<script src="{{ url_for('static', path='js/vendor/leaflet/leaflet.js') }}"></script>
+<script src="{{ url_for('static', path='js/map.js') }}"></script>
 {% endblock %}
