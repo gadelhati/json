@@ -10,7 +10,7 @@ import rasterio
 from rasterio.warp import calculate_default_transform, reproject, Resampling
 from PIL import Image
 
-UPLOAD_DIR = "app/uploads/geotiff"
+UPLOAD_DIR = "app/data/uploads/geotiff"
 PREVIEW_DIR = "app/static/previews"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 os.makedirs(PREVIEW_DIR, exist_ok=True)
