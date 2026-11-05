@@ -20,32 +20,15 @@ pip install --upgrade -r requirements.txt
 # run application
 uvicorn app.main:app --reload
 
+# test coverage verification
+python -m pytest --cov=app --cov-report=term-missing
+
+# test report, in /htmlcov/index.html
+python -m pytest --cov=app --cov-report=html
+
+# test execution, with details
+python -m pytest -v
+
 pip install --proxy http://user:password@proxy.fqdn:6060 -r requirements.txt
 git config --global http.proxy http://user:password@proxy.fqdn:6060
 ```
-
-## Roadmap
-- [x] Upload .json
-- [x] Crud .json
-- [x] Donwload .json
-- [x] Upload .geojson
-- [x] Crud .geojson
-- [x] Donwload .geojson
-- [x] Upload .tiff
-- [x] Donwload .csv
-- [ ] Crud .tiff
-- [ ] Donwload .tiff
-- [ ] Dataset > DataArray
-- [ ] NetCDF(Network Common Data Form) > xarray > Zarr
-- [ ] Chunking - Divisão dos dados multidimensionais em blocos menores.
-- [ ] Dask > Object Storage
-
----
-
-- [ ] NumPy
-- [ ] dados multidimensionais
-- [ ] Xarray DataArray
-- [ ] Xarray Dataset
-- [ ] NetCDF
-- [ ] Dask
-- [ ] Zarr

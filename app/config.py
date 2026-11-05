@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     """Configurações da aplicação. Pode ser sobrescrita por variáveis de ambiente ou .env."""
 
     app_name: str = "JSON CRUD"
-    data_dir: Path = Path("data")
+    data_dir: Path = Path("app/data")
     upload_dir: Path = Path("app/data/uploads")
     export_dir: Path = Path("app/data/exports")
     # Nome do campo usado como identificador único de cada registro.

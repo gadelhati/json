@@ -1,0 +1,27 @@
+[project]
+name = "json-manager"
+version = "0.1.0"
+description = "Aplicação para importação, gerenciamento e exportação de arquivos JSON"
+requires-python = ">=3.11"
+
+# Declaração das bibliotecas necessárias para executar a aplicação
+dependencies = [
+    "fastapi",
+    "uvicorn[standard]",
+    "jinja2",
+    "python-multipart",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "httpx",
+    "ruff",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
