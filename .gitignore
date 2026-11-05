@@ -12,12 +12,11 @@ __pycache__/
 # Dados gerados em tempo de execução (uploads e exports)
 app/data/exports/*
 app/data/uploads/*
-
+app/data/uploads/geotiff/*
 
 # Preservar diretórios e arquivos .gitkeep
 !app/data/exports/.gitkeep
 !app/data/uploads/.gitkeep
-!app/data/uploads/geotiff/
 !app/data/uploads/geotiff/.gitkeep
 !app/static/previews/.gitkeep
 
