@@ -255,6 +255,49 @@ nav.tabs a.active {
     color: #fff;
 }
 
+.imported-files {
+    margin: 1rem auto 0;
+    max-width: 1200px;
+    padding: 0 1rem;
+}
+
+.imported-files h2 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.imported-files-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.imported-file {
+    gap: 0.5rem;
+}
+
+.imported-file-count {
+    color: #555;
+    font-size: 0.8rem;
+}
+
+.file-delete-form {
+    margin: 0;
+    margin-left: auto;
+}
+
+.file-delete-btn {
+    border-color: #b42318;
+    color: #b42318;
+}
+
+.file-delete-btn:hover {
+    background: #fef3f2;
+}
+
 .map-container {
     height: 70vh;
     min-height: 420px;

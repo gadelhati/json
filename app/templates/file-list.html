@@ -1,0 +1,37 @@
+{# Lista comum de arquivos importados e respectivas ações de exclusão. #}
+{% set imported_files = source_files() %}
+{% set map_mode = map_layers_by_source is defined %}
+{% set map_layers = map_layers_by_source | default({}) %}
+{% if imported_files %}
+<section class="imported-files" aria-labelledby="imported-files-title">
+    <h2 id="imported-files-title">Arquivos importados</h2>
+    <ul class="imported-files-list{% if map_mode %} map-layers-toggle{% endif %}">
+        {% for source in imported_files %}
+        {% set layer = map_layers.get(source.id) %}
+        <li class="layer-row imported-file"{% if layer %} data-layer-row="{{ layer.id }}"{% endif %}>
+            {% if layer %}
+            <label class="layer-row-main">
+                <input type="checkbox" class="layer-toggle" data-layer="{{ layer.id }}" checked>
+                <span class="layer-swatch" data-layer-swatch="{{ layer.id }}"></span>
+                <span class="layer-name">{{ source.name }}</span>
+            </label>
+            <label class="layer-opacity-control">
+                opacidade
+                <input type="range" class="layer-opacity" data-layer="{{ layer.id }}" min="0" max="100" value="100">
+            </label>
+            <span class="layer-order-controls">
+                <button type="button" class="layer-order-btn" data-action="up" data-layer="{{ layer.id }}" title="Subir uma posição (mais para frente)">▲</button>
+                <button type="button" class="layer-order-btn" data-action="down" data-layer="{{ layer.id }}" title="Descer uma posição (mais para trás)">▼</button>
+            </span>
+            {% else %}
+            <span class="imported-file-name">{{ source.name }}</span>
+            {% endif %}
+            <span class="imported-file-count">{{ source.record_count }} registro(s)</span>
+            <form method="post" action="/sources/{{ source.id }}/delete" class="file-delete-form">
+                <button type="submit" class="file-delete-btn" onclick="return confirm('Excluir o arquivo {{ source.name }} e todos os seus registros?')">Excluir arquivo</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+{% endif %}

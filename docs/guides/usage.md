@@ -119,6 +119,16 @@ Exibe:
   - Label com nome do arquivo
   - Preview PNG do raster (quando clicado)
   - Metadados (CRS, resolução)
+- **Controles de camada**: arquivos com geometria possuem visibilidade, opacidade
+  e ordem de sobreposição.
+
+### Lista de arquivos importados
+Está disponível em todas as abas e contém todos os arquivos importados, incluindo
+JSON sem geometria. No mapa, esta é a mesma lista usada para controlar as camadas:
+arquivos geográficos exibem visibilidade, opacidade, ordem e **Excluir arquivo**
+na mesma linha; arquivos JSON exibem apenas contagem e exclusão. Use **Excluir
+arquivo** para remover seus registros da tabela, sua camada do mapa (quando houver)
+e os arquivos locais associados.
 
 ---
 
@@ -229,9 +239,11 @@ banda_2_media, banda_2_min, banda_2_max  (se houver banda 2)
 **Problema**: Arquivo carregado, mas limites não aparecem no mapa.
 **Solução**: Verifique se o CRS do GeoTIFF é suportado; o sistema reprojeta para EPSG:4326 automaticamente.
 
-### Excluir um GeoTIFF não está funcionando
-**Problema**: Clicou "Excluir" em um registro GeoTIFF, mas o arquivo não foi removido.
-**Solução**: Isso é esperado. O arquivo permanece em `app/data/uploads/` para referência; o registro é apenas removido da tabela.
+### Excluir um arquivo importado
+**Problema**: Precisa remover de uma vez todos os dados de um arquivo.
+**Solução**: Na página do mapa, use **Excluir arquivo** na linha da camada.
+Todos os registros, a camada e os arquivos locais associados àquela importação
+serão removidos.
 
 ---
 

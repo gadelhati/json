@@ -17,6 +17,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 router = APIRouter()
 templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
+templates.env.globals["source_files"] = store.source_summaries
 
 GEOMETRY_PLACEHOLDER = '{\n  "type": "Point",\n  "coordinates": [0, 0]\n}'
 
@@ -62,6 +63,7 @@ def index(request: Request):
             "geometry_field": store.GEOMETRY_FIELD,
             "show_layer": store.has_multiple_sources,
             "layer_field": store.SOURCE_FIELD,
+            "source_id_field": store.SOURCE_ID_FIELD,
         },
     )
 
@@ -76,6 +78,7 @@ def map_view(request: Request, layer: str | None = None):
         "map.html",
         {
             "layers": layers,
+            "map_layers_by_source": {layer["id"]: layer for layer in layers},
             "has_geometries": has_geometries,
             "layers_json": json.dumps(layers, ensure_ascii=False),
             "selected_layer": layer,
@@ -172,6 +175,10 @@ async def import_file(
                 metadata=metadata,
                 bounds_geometry=bounds_geom,
                 preview_path=str(preview.get("preview_url", "")),
+                source_paths=[
+                    Path(path),
+                    BASE_DIR / "static" / "previews" / f"{file_id}.png",
+                ],
             )
             
         else:
@@ -193,6 +200,26 @@ async def import_file(
         raise HTTPException(status_code=400, detail=detail) from exc
     
     return RedirectResponse("/", status_code=303)
+
+
+@router.post("/sources/{source_id}/delete")
+def delete_source(source_id: str):
+    """Remove uma importação completa, incluindo seus registros e arquivos locais."""
+    cleanup_paths = store.source_cleanup_paths(source_id)
+    if cleanup_paths is None:
+        raise HTTPException(status_code=404, detail="Arquivo importado não encontrado")
+
+    try:
+        for path in cleanup_paths:
+            path.unlink(missing_ok=True)
+    except OSError as exc:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Falha ao remover os arquivos da importação: {exc}",
+        ) from exc
+
+    store.delete_source(source_id)
+    return RedirectResponse("/map", status_code=303)
 
 
 @router.get("/records/new")

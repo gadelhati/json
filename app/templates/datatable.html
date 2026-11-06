@@ -88,7 +88,7 @@
             {% if show_layer %}
             <td class="camada">
                 {% if is_geojson and record.get(layer_field) %}
-                <a href="/map?layer={{ record.get(layer_field) | urlencode }}" title="Ver esta camada enquadrada no mapa">{{ record.get(layer_field) }}</a>
+                <a href="/map?layer={{ record.get(source_id_field) | urlencode }}" title="Ver esta camada enquadrada no mapa">{{ record.get(layer_field) }}</a>
                 {% else %}
                 {{ record.get(layer_field, "") }}
                 {% endif %}
@@ -97,7 +97,7 @@
             <td class="acoes">
                 <div class="action-controls">
                     {% if record.get('_source_type') == 'geotiff' %}
-                    <a href="/map?layer={{ record.get('_source') | urlencode }}" title="Visualizar no mapa">Mapa</a>
+                    <a href="/map?layer={{ record.get(source_id_field) | urlencode }}" title="Visualizar no mapa">Mapa</a>
                     {% else %}
                     <a href="/records/{{ record[id_field] }}/edit">Editar</a>
                     {% endif %}

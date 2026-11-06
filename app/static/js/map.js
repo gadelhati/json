@@ -70,7 +70,7 @@
         var overallBounds = L.latLngBounds([]);
         // Ordem atual de sobreposição, da mais ao fundo (índice 0) para a mais
         // à frente (último índice). É reaplicada ao mapa sempre que muda.
-        var zOrder = layersData.map(function (layer) { return layer.name; });
+        var zOrder = layersData.map(function (layer) { return layer.id; });
 
         layersData.forEach(function (layer, index) {
             var color = PALETTE[index % PALETTE.length];
@@ -107,16 +107,16 @@
                 : vectorLayer;
             geoLayer.rasterLayer = rasterLayer;
 
-            leafletLayersByName[layer.name] = geoLayer;
+            leafletLayersByName[layer.id] = geoLayer;
             geoLayer.addTo(map);
 
             if (geoLayer.getBounds && geoLayer.getBounds().isValid()) {
-                boundsByName[layer.name] = geoLayer.getBounds();
-                overallBounds.extend(boundsByName[layer.name]);
+                boundsByName[layer.id] = geoLayer.getBounds();
+                overallBounds.extend(boundsByName[layer.id]);
             }
 
             document.querySelectorAll("[data-layer-swatch]").forEach(function (el) {
-                if (el.getAttribute("data-layer-swatch") === layer.name) {
+                if (el.getAttribute("data-layer-swatch") === layer.id) {
                     el.style.backgroundColor = color;
                 }
             });

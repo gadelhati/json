@@ -85,6 +85,45 @@ class TestGeoJsonWorkflow:
         assert response.status_code in [200, 303]
         assert len(store.records) == initial_count + 1
 
+    def test_delete_source_removes_all_its_records_and_map_layer(self, client, tmp_path):
+        """A exclusão de um arquivo remove seus registros da tabela e do mapa."""
+        first_source_id = store.records[0][store.SOURCE_ID_FIELD]
+        second_geojson = {
+            "type": "FeatureCollection",
+            "features": [{
+                "type": "Feature",
+                "geometry": {"type": "Point", "coordinates": [0, 0]},
+                "properties": {"id": "3", "name": "Second source"},
+            }],
+        }
+        second_file = tmp_path / "second.geojson"
+        second_file.write_text(json.dumps(second_geojson), encoding="utf-8")
+        with open(second_file, "rb") as file:
+            client.post(
+                "/import",
+                data={"concatenar": True},
+                files={"file": ("second.geojson", file, "application/geo+json")},
+            )
+
+        map_content = client.get("/map").text
+        assert map_content.count('id="imported-files-title"') == 1
+        assert map_content.count('class="layer-toggle"') == 2
+        assert map_content.count("Excluir arquivo") == 2
+        assert f"/sources/{first_source_id}/delete" in map_content
+
+        response = client.post(f"/sources/{first_source_id}/delete", follow_redirects=False)
+
+        assert response.status_code == 303
+        assert len(store.records) == 1
+        assert all(record[store.SOURCE_ID_FIELD] != first_source_id for record in store.records)
+        assert [layer["name"] for layer in store.feature_collections_by_layer()] == ["second.geojson"]
+        assert "test.geojson" not in client.get("/").text
+
+    def test_delete_unknown_source_returns_404(self, client):
+        """A exclusão deve informar quando a importação não existe."""
+        response = client.post("/sources/inexistente/delete")
+        assert response.status_code == 404
+
 
 class TestGeoJsonValidation:
     """Testes para validação de estrutura GeoJSON."""

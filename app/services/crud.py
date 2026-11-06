@@ -24,6 +24,7 @@ class JsonStore:
 
     GEOMETRY_FIELD = "_geometry"
     SOURCE_FIELD = "_source"
+    SOURCE_ID_FIELD = "_source_id"
     SOURCE_TYPE_FIELD = "_source_type"  # "json", "geojson" ou "geotiff"
     GEOTIFF_ID_FIELD = "_geotiff_id"
     GEOTIFF_PREVIEW_FIELD = "_geotiff_preview"
@@ -34,6 +35,8 @@ class JsonStore:
         self.source_filenames: list[str] = []
         self.source_format: str = "json"  # "json" ou "geojson"
         self.geotiff_layers: dict[str, dict[str, Any]] = {}  # file_id -> {metadata, preview, bounds}
+        self.source_paths: dict[str, list[Path]] = {}
+        self.source_names: dict[str, str] = {}
 
     @property
     def source_filename(self) -> Optional[str]:
@@ -49,7 +52,8 @@ class JsonStore:
                        Só é permitido quando o novo arquivo tem o mesmo formato
                        dos dados já carregados (ambos "json" ou ambos "geojson");
                        caso contrário uma ValueError é lançada."""
-        records, fmt = self._parse(file_path)
+        source_id = str(uuid.uuid4())
+        records, fmt = self._parse(file_path, source_id)
 
         if mode == "append" and self.records:
             if fmt != self.source_format:
@@ -69,8 +73,13 @@ class JsonStore:
             self.records = records
             self.source_format = fmt
             self.source_filenames = [file_path.name]
+            self.geotiff_layers = {}
+            self.source_paths = {}
+            self.source_names = {}
+        self.source_paths[source_id] = [file_path]
+        self.source_names[source_id] = file_path.name
 
-    def _parse(self, file_path: Path) -> tuple[list[dict[str, Any]], str]:
+    def _parse(self, file_path: Path, source_id: str) -> tuple[list[dict[str, Any]], str]:
         """Lê e interpreta um arquivo, devolvendo (registros, formato) sem
         alterar o estado do store."""
         with open(file_path, "r", encoding="utf-8") as f:
@@ -94,6 +103,7 @@ class JsonStore:
 
         for record in records:
             record[self.SOURCE_FIELD] = file_path.name
+            record[self.SOURCE_ID_FIELD] = source_id
         return records, fmt
 
     def _features_to_records(self, features: list[Any]) -> list[dict[str, Any]]:
@@ -120,7 +130,7 @@ class JsonStore:
         cols: list[str] = []
         for record in self.records:
             for key in record:
-                if key in (settings.id_field, self.GEOMETRY_FIELD, self.SOURCE_FIELD):
+                if key in (settings.id_field, self.GEOMETRY_FIELD, self.SOURCE_FIELD, self.SOURCE_ID_FIELD):
                     continue
                 if key not in cols:
                     cols.append(key)
@@ -130,7 +140,7 @@ class JsonStore:
     def has_multiple_sources(self) -> bool:
         """True quando os registros atuais vieram de mais de um arquivo importado
         (ou seja, quando houve concatenação)."""
-        sources = {r.get(self.SOURCE_FIELD) for r in self.records if r.get(self.SOURCE_FIELD)}
+        sources = {r.get(self.SOURCE_ID_FIELD) for r in self.records if r.get(self.SOURCE_ID_FIELD)}
         return len(sources) > 1
 
     def feature_collections_by_layer(self) -> list[dict[str, Any]]:
@@ -155,7 +165,7 @@ class JsonStore:
                 for record in records:
                     properties = {
                         k: v for k, v in record.items()
-                        if k not in (settings.id_field, self.GEOMETRY_FIELD, self.SOURCE_FIELD, self.SOURCE_TYPE_FIELD,
+                        if k not in (settings.id_field, self.GEOMETRY_FIELD, self.SOURCE_FIELD, self.SOURCE_ID_FIELD, self.SOURCE_TYPE_FIELD,
                                      self.GEOTIFF_ID_FIELD, self.GEOTIFF_PREVIEW_FIELD)
                     }
                     features.append({
@@ -165,6 +175,7 @@ class JsonStore:
                         "properties": properties,
                     })
                 layers.append({
+                    "id": records[0][self.SOURCE_ID_FIELD],
                     "name": name,
                     "featureCollection": {"type": "FeatureCollection", "features": features},
                 })
@@ -184,6 +195,7 @@ class JsonStore:
                     }
                 }]
                 layer = {
+                    "id": record[self.SOURCE_ID_FIELD],
                     "name": layer_name,
                     "featureCollection": {"type": "FeatureCollection", "features": features},
                 }
@@ -211,6 +223,23 @@ class JsonStore:
                 layers.append(layer)
 
         return layers
+
+    def source_summaries(self) -> list[dict[str, Any]]:
+        """Lista as importações ativas para a lista comum de arquivos da interface."""
+        records_by_source: dict[str, list[dict[str, Any]]] = {}
+        for record in self.records:
+            source_id = record.get(self.SOURCE_ID_FIELD)
+            if source_id:
+                records_by_source.setdefault(source_id, []).append(record)
+
+        return [
+            {
+                "id": source_id,
+                "name": name,
+                "record_count": len(records_by_source.get(source_id, [])),
+            }
+            for source_id, name in self.source_names.items()
+        ]
 
     def get_all(self) -> list[dict[str, Any]]:
         """Retorna a lista atual de registros."""
@@ -246,6 +275,7 @@ class JsonStore:
         metadata: dict[str, Any],
         bounds_geometry: dict[str, Any],
         preview_path: str,
+        source_paths: Optional[list[Path]] = None,
     ) -> dict[str, Any]:
         """Adiciona um registro GeoTIFF com seus metadados e geometria de limites.
         
@@ -267,6 +297,7 @@ class JsonStore:
         record = {
             settings.id_field: file_id,
             self.SOURCE_FIELD: filename,
+            self.SOURCE_ID_FIELD: file_id,
             self.SOURCE_TYPE_FIELD: "geotiff",
             self.GEOMETRY_FIELD: bounds_geometry,
             self.GEOTIFF_ID_FIELD: file_id,
@@ -293,7 +324,31 @@ class JsonStore:
             "preview": preview_path,
             "bounds": bounds_geometry,
         }
+        self.source_filenames.append(filename)
+        self.source_paths[file_id] = source_paths or []
+        self.source_names[file_id] = filename
         return record
+
+    def source_cleanup_paths(self, source_id: str) -> Optional[list[Path]]:
+        """Retorna os arquivos associados à importação indicada, se ela existir."""
+        if source_id not in self.source_names:
+            return None
+        return list(self.source_paths.get(source_id, []))
+
+    def delete_source(self, source_id: str) -> bool:
+        """Remove todos os registros e metadados associados a uma importação."""
+        if source_id not in self.source_names:
+            return False
+
+        self.records = [
+            record for record in self.records
+            if record.get(self.SOURCE_ID_FIELD) != source_id
+        ]
+        self.geotiff_layers.pop(source_id, None)
+        self.source_paths.pop(source_id, None)
+        self.source_names.pop(source_id)
+        self.source_filenames = list(self.source_names.values())
+        return True
 
     def update(self, record_id: str, data: dict[str, Any]) -> Optional[dict[str, Any]]:
         """Atualiza um registro existente e retorna-o, ou retorna ``None``."""
@@ -329,7 +384,7 @@ class JsonStore:
             for record in self.records:
                 properties = {
                     k: v for k, v in record.items()
-                    if k not in (settings.id_field, self.GEOMETRY_FIELD, self.SOURCE_FIELD)
+                    if k not in (settings.id_field, self.GEOMETRY_FIELD, self.SOURCE_FIELD, self.SOURCE_ID_FIELD)
                 }
                 features.append({
                     "type": "Feature",
@@ -340,7 +395,7 @@ class JsonStore:
             payload: Any = {"type": "FeatureCollection", "features": features}
         else:
             payload = [
-                {k: v for k, v in record.items() if k != self.SOURCE_FIELD}
+                {k: v for k, v in record.items() if k not in (self.SOURCE_FIELD, self.SOURCE_ID_FIELD)}
                 for record in self.records
             ]
 

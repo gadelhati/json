@@ -38,17 +38,18 @@ uvicorn app.app:app --reload
   - **Novo**: `add_geotiff_metadata(file_id, filename, metadata, bounds_geometry, preview_path)` cria um registro GeoTIFF com metadados extraídos (CRS, resolução, bandas, limites em EPSG:4326).
   - Em GeoJSON, cada registro é uma Feature: as chaves de `properties` viram colunas normais e a geometria fica isolada em `GEOMETRY_FIELD`.
   - Registros GeoTIFF marcam-se com `_source_type="geotiff"` e incluem `_geotiff_id` e `_geotiff_preview`.
-  - `columns()` lista as colunas normais; `feature_collections_by_layer()` **agora agrupa e inclui camadas GeoTIFF como limites (Polygon)**; `has_multiple_sources()` indica concatenação.
+  - `columns()` lista as colunas normais; `feature_collections_by_layer()` agrupa fontes por identificador interno e inclui camadas GeoTIFF como limites (Polygon); `delete_source()` remove uma importação completa e seus registros.
   - `get_all`, `get`, `prepare_incoming` (converte dados brutos do formulário), `create` (gera id e marca tipo), `update` (retorna `None` se não existir), `delete` (retorna bool).
   - `export()` aplica as edições; em GeoJSON reconstrói uma FeatureCollection válida (geometrias de JSON + limites de GeoTIFF), senão exporta lista de objetos. Usa nome genérico (`export.geojson`/`export.json`) quando há várias fontes.
 - `geotiff.py` (em `services/`) — processa e armazena GeoTIFFs com UUID: extrai metadados (CRS, transformação, limites, resolução, pontos de controle, bandas com estatísticas/tags GDAL/TIFF); reprojeta para EPSG:4326 e gera uma prévia PNG no caminho público `/static/previews/`, preservando a paleta de rasters indexados, com limites para Leaflet e polígono GeoJSON. Remove `PROJ_DATA` do ambiente na importação. Exporta para `app.services.crud.JsonStore` via `add_geotiff_metadata()`.
 
 ## Templates
 
-- `base.html` — layout comum; define os blocos `content` e `scripts`.
+- `base.html` — layout comum; define os blocos `content` e `scripts` e inclui a lista compartilhada de arquivos importados.
+- `file-list.html` — componente reutilizável de arquivos importados; no mapa integra controles de camada e exclusão na mesma lista, e nas demais abas exibe apenas a exclusão por arquivo.
 - `datatable.html` — **tabela integrada** de registros (JSON, GeoJSON e metadados de GeoTIFF) com CRUD e exportação; indicador visual de tipo (📄 JSON, 🔷 GeoJSON com geometria, 🗺️ GeoTIFF); ações contextuais (Editar/Mapa, Excluir).
 - `form.html` — criação/edição de registro.
-- `map.html` — mapa Leaflet com as camadas GeoJSON e limites de GeoTIFF já importados.
+- `map.html` — mapa Leaflet com as camadas GeoJSON e limites de GeoTIFF já importados, incluindo controles de visibilidade, opacidade, ordem e exclusão por arquivo.
 - `upload.html` — **formulário integrado** para importar JSON, GeoJSON ou GeoTIFF com opções de concatenação (JSON/GeoJSON) e substituição (GeoTIFF).
 
 ## Convenções

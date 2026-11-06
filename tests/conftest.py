@@ -30,11 +30,17 @@ def reset_store():
     store.records = []
     store.source_filenames = []
     store.source_format = "json"
+    store.geotiff_layers = {}
+    store.source_paths = {}
+    store.source_names = {}
     yield
     # Limpa após o teste
     store.records = []
     store.source_filenames = []
     store.source_format = "json"
+    store.geotiff_layers = {}
+    store.source_paths = {}
+    store.source_names = {}
 
 
 @pytest.fixture

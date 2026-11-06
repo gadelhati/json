@@ -16,11 +16,17 @@ def clear_store():
     store.records = []
     store.source_filenames = []
     store.source_format = "json"
+    store.geotiff_layers = {}
+    store.source_paths = {}
+    store.source_names = {}
     yield
     # Limpa após o teste
     store.records = []
     store.source_filenames = []
     store.source_format = "json"
+    store.geotiff_layers = {}
+    store.source_paths = {}
+    store.source_names = {}
 
 
 @pytest.fixture
@@ -117,6 +123,27 @@ class TestJsonUpload:
             )
         assert response.status_code in [200, 303]
         assert len(store.records) == 0
+
+    def test_json_source_is_listed_and_can_be_deleted(self, client, sample_json_file):
+        """Arquivos JSON devem aparecer na lista comum e poder ser excluídos."""
+        with open(sample_json_file, "rb") as file:
+            client.post(
+                "/import",
+                data={"concatenar": False},
+                files={"file": ("test.json", file, "application/json")},
+            )
+
+        source_id = store.records[0][store.SOURCE_ID_FIELD]
+        for path in ("/", "/map", "/import"):
+            page = client.get(path)
+            assert "Arquivos importados" in page.text
+            assert "test.json" in page.text
+            assert f"/sources/{source_id}/delete" in page.text
+
+        response = client.post(f"/sources/{source_id}/delete", follow_redirects=False)
+        assert response.status_code == 303
+        assert store.records == []
+        assert store.source_summaries() == []
 
 
 class TestJsonDownload:

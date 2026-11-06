@@ -9,26 +9,6 @@
     <code>geometry</code> preenchida) em <a href="/import">Importar</a> para
     visualizar as camadas aqui.
 </p>
-{% else %}
-<div class="map-layers-toggle">
-    {% for layer in layers %}
-    <div class="layer-row" data-layer-row="{{ layer.name }}">
-        <label class="layer-row-main">
-            <input type="checkbox" class="layer-toggle" data-layer="{{ layer.name }}" checked>
-            <span class="layer-swatch" data-layer-swatch="{{ layer.name }}"></span>
-            <span class="layer-name">{{ layer.name }} ({{ layer.featureCollection.features | length }})</span>
-        </label>
-        <label class="layer-opacity-control">
-            opacidade
-            <input type="range" class="layer-opacity" data-layer="{{ layer.name }}" min="0" max="100" value="100">
-        </label>
-        <span class="layer-order-controls">
-            <button type="button" class="layer-order-btn" data-action="up" data-layer="{{ layer.name }}" title="Subir uma posição (mais para frente)">▲</button>
-            <button type="button" class="layer-order-btn" data-action="down" data-layer="{{ layer.name }}" title="Descer uma posição (mais para trás)">▼</button>
-        </span>
-    </div>
-    {% endfor %}
-</div>
 {% endif %}
 
 <div id="map" class="map-container" data-selected-layer="{{ selected_layer or '' }}"></div>
