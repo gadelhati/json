@@ -145,6 +145,13 @@ class TestTemplateRendering:
         content = response.text
         # Verifica integração com Leaflet
         assert "leaflet" in content.lower() or "L.map" in content or "coordinates" in content
+        assert "btnUploadGeotiff" not in content
+        assert "js/geotiff.js" not in content
+
+    def test_legacy_geotiff_upload_route_is_not_available(self, client):
+        """O upload de GeoTIFF deve ocorrer exclusivamente pela rota integrada."""
+        response = client.post("/geotiff/upload")
+        assert response.status_code == 404
 
 
 class TestFormHandling:

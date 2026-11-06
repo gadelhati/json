@@ -1,21 +1,7 @@
 {% extends "base.html" %}
-{# Mapa de camadas GeoJSON e painel de importação/metadados de GeoTIFF. #}
+{# Mapa de camadas GeoJSON e GeoTIFF já importadas. #}
 {% block content %}
 <h2>Mapa das camadas</h2>
-
-<div class="geotiff-import">
-    <input type="file" id="geotiffInput" accept=".tif,.tiff" />
-    <button id="btnUploadGeotiff">Importar GeoTIFF</button>
-
-    <div id="metadataTabs" class="sub-tabs" style="display:none;">
-        <button class="sub-tab-btn active" data-target="meta-geo">Geoespaciais (GeoKeys)</button>
-        <button class="sub-tab-btn" data-target="meta-sensor">Dados e Sensores</button>
-        <button class="sub-tab-btn" data-target="meta-desc">Descritivos (GDAL/TIFF)</button>
-    </div>
-    <pre id="meta-geo" class="sub-tab-pane"></pre>
-    <pre id="meta-sensor" class="sub-tab-pane" style="display:none;"></pre>
-    <pre id="meta-desc" class="sub-tab-pane" style="display:none;"></pre>
-</div>
 
 {% if not has_geometries %}
 <p>
@@ -52,7 +38,6 @@
 
 {% block scripts %}
 <link rel="stylesheet" href="{{ url_for('static', path='vendor/leaflet/leaflet.css') }}" />
-<script src="{{ url_for('static', path='js/geotiff.js') }}"></script>
 <script src="{{ url_for('static', path='vendor/leaflet/leaflet.js') }}"></script>
 <script src="{{ url_for('static', path='js/map.js') }}"></script>
 {% endblock %}

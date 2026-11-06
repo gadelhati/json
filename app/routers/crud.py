@@ -113,7 +113,6 @@ async def import_file(
     - concatenar: se True e arquivo é JSON/GeoJSON, concatena aos dados existentes
     - substituir_geotiff: se True e arquivo é GeoTIFF, remove GeoTIFFs anteriores
     """
-    from app.routers.geotiff import _layers
     from app.services.geotiff import store as geotiff_store
     
     dest = settings.upload_dir / file.filename
@@ -140,7 +139,6 @@ async def import_file(
                     r for r in store.records
                     if r.get(store.SOURCE_TYPE_FIELD) != "geotiff"
                 ]
-                _layers.clear()
 
             # Adiciona o novo GeoTIFF ao store
             bounds = preview.get("bounds", [0, 0, 0, 0])
@@ -176,12 +174,6 @@ async def import_file(
                 preview_path=str(preview.get("preview_url", "")),
             )
             
-            # Mantém referência no _layers (compatibilidade com mapa)
-            _layers[file_id] = {
-                "path": path,
-                "metadata": metadata,
-                "preview": preview,
-            }
         else:
             # Processa JSON/GeoJSON
             with open(dest, "wb") as buffer:

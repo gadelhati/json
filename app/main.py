@@ -10,7 +10,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
 from app.config import settings
-from app.routers import crud, geotiff
+from app.routers import crud
 
 APP_DIR = Path(__file__).resolve().parent
 
@@ -27,4 +27,3 @@ app.mount(
 
 # Rotas
 app.include_router(crud.router)
-app.include_router(geotiff.routers_geotiff)

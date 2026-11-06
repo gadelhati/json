@@ -42,14 +42,13 @@ uvicorn app.app:app --reload
   - `get_all`, `get`, `prepare_incoming` (converte dados brutos do formulário), `create` (gera id e marca tipo), `update` (retorna `None` se não existir), `delete` (retorna bool).
   - `export()` aplica as edições; em GeoJSON reconstrói uma FeatureCollection válida (geometrias de JSON + limites de GeoTIFF), senão exporta lista de objetos. Usa nome genérico (`export.geojson`/`export.json`) quando há várias fontes.
 - `geotiff.py` (em `services/`) — processa e armazena GeoTIFFs com UUID: extrai metadados (CRS, transformação, limites, resolução, pontos de controle, bandas com estatísticas/tags GDAL/TIFF); reprojeta para EPSG:4326 e gera uma prévia PNG no caminho público `/static/previews/`, preservando a paleta de rasters indexados, com limites para Leaflet e polígono GeoJSON. Remove `PROJ_DATA` do ambiente na importação. Exporta para `app.services.crud.JsonStore` via `add_geotiff_metadata()`.
-- `geotiff.py` — **rota de upload legada** `/geotiff/upload` (mantida para compatibilidade) e consulta de metadados `/geotiff/{file_id}/metadata`; agora integrada à rota unificada `/import`.
 
 ## Templates
 
 - `base.html` — layout comum; define os blocos `content` e `scripts`.
 - `datatable.html` — **tabela integrada** de registros (JSON, GeoJSON e metadados de GeoTIFF) com CRUD e exportação; indicador visual de tipo (📄 JSON, 🔷 GeoJSON com geometria, 🗺️ GeoTIFF); ações contextuais (Editar/Mapa, Excluir).
 - `form.html` — criação/edição de registro.
-- `map.html` — mapa Leaflet com as camadas GeoJSON.
+- `map.html` — mapa Leaflet com as camadas GeoJSON e limites de GeoTIFF já importados.
 - `upload.html` — **formulário integrado** para importar JSON, GeoJSON ou GeoTIFF com opções de concatenação (JSON/GeoJSON) e substituição (GeoTIFF).
 
 ## Convenções
