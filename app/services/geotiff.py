@@ -93,11 +93,13 @@ class TiffStore:
     def generate_leaflet_preview(self, path: str, file_id: str) -> dict:
         """Reprojeta o raster para EPSG:4326 e gera PNG e limites para o Leaflet.
 
-        Retorna a URL da prévia e os limites no formato aceito por
-        ``L.imageOverlay``.
+        Preserva a paleta de cores de rasters indexados. Retorna a URL pública
+        da prévia, os limites no formato aceito por ``L.imageOverlay`` e seus
+        limites como polígono GeoJSON.
         """
         dst_crs = "EPSG:4326"
         with rasterio.open(path) as src:
+            color_map = src.colormap(1) if src.count == 1 and src.colorinterp[0].name == "palette" else None
             transform, width, height = calculate_default_transform(
                 src.crs, dst_crs, src.width, src.height, *src.bounds
             )
@@ -111,20 +113,35 @@ class TiffStore:
                 )
             left, bottom, right, top = rasterio.transform.array_bounds(height, width, transform)
 
-        rgb = np.stack([data[0]] * 3, axis=-1) if data.shape[0] < 3 else data[:3].transpose(1, 2, 0)
-        rgb = rgb.astype(np.float32)
-        for c in range(3):
-            band = rgb[..., c]
-            valid = band[band > 0]
-            vmin, vmax = np.percentile(valid, (2, 98)) if valid.size else (0, 1)
-            rgb[..., c] = np.clip((band - vmin) / (vmax - vmin + 1e-9), 0, 1) * 255
-
         preview_path = os.path.join(PREVIEW_DIR, f"{file_id}.png")
-        Image.fromarray(rgb.astype(np.uint8), mode="RGB").save(preview_path)
+        if color_map:
+            rgba = np.zeros((height, width, 4), dtype=np.uint8)
+            for value, color in color_map.items():
+                rgba[data[0] == value] = color
+            Image.fromarray(rgba, mode="RGBA").save(preview_path)
+        else:
+            rgb = np.stack([data[0]] * 3, axis=-1) if data.shape[0] < 3 else data[:3].transpose(1, 2, 0)
+            rgb = rgb.astype(np.float32)
+            for c in range(3):
+                band = rgb[..., c]
+                valid = band[band > 0]
+                vmin, vmax = np.percentile(valid, (2, 98)) if valid.size else (0, 1)
+                rgb[..., c] = np.clip((band - vmin) / (vmax - vmin + 1e-9), 0, 1) * 255
+            Image.fromarray(rgb.astype(np.uint8), mode="RGB").save(preview_path)
 
         return {
-            "preview_url": f"/app/static/previews/{file_id}.png",
+            "preview_url": f"/static/previews/{file_id}.png",
             "bounds": [[bottom, left], [top, right]],
+            "bounds_geojson": {
+                "type": "Polygon",
+                "coordinates": [[
+                    [left, bottom],
+                    [right, bottom],
+                    [right, top],
+                    [left, top],
+                    [left, bottom],
+                ]],
+            },
         }
 
 store = TiffStore()

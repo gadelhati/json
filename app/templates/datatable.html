@@ -28,6 +28,7 @@
     <a href="/export">Exportar JSON</a>
     <a href="/export/csv">Exportar CSV</a>
     <a href="/import">Importar outro arquivo</a>
+    <a href="/map">Ver mapa</a>
 </div>
 <div class="dashboard-controls">
     <label for="record-search">Buscar nos registros</label>
@@ -38,6 +39,7 @@
 <table id="records-table">
     <thead>
         <tr>
+            <th scope="col" style="width: 2rem;" title="Tipo">T</th>
             {% for col in columns %}
             <th scope="col" aria-sort="none">
                 <button type="button" class="sort-button" data-sort-column>
@@ -68,6 +70,15 @@
     <tbody>
         {% for record in records %}
         <tr>
+            <td class="type-indicator" title="{{ record.get('_source_type', 'desconhecido') }}">
+                {% if record.get('_source_type') == 'geotiff' %}
+                🗺️
+                {% elif record.get('_geometry') %}
+                🔷
+                {% else %}
+                📄
+                {% endif %}
+            </td>
             {% for col in columns %}
             <td><div class="cell">{{ render_value(record.get(col, "")) }}</div></td>
             {% endfor %}
@@ -85,7 +96,11 @@
             {% endif %}
             <td class="acoes">
                 <div class="action-controls">
+                    {% if record.get('_source_type') == 'geotiff' %}
+                    <a href="/map?layer={{ record.get('_source') | urlencode }}" title="Visualizar no mapa">Mapa</a>
+                    {% else %}
                     <a href="/records/{{ record[id_field] }}/edit">Editar</a>
+                    {% endif %}
                     <form method="post" action="/records/{{ record[id_field] }}/delete">
                         <button type="submit" onclick="return confirm('Excluir este registro?')">Excluir</button>
                     </form>
@@ -94,7 +109,7 @@
         </tr>
         {% endfor %}
         <tr id="no-records-match" hidden>
-            <td colspan="{{ columns|length + (1 if is_geojson else 0) + (1 if show_layer else 0) + 1 }}">
+            <td colspan="{{ columns|length + (1 if is_geojson else 0) + (1 if show_layer else 0) + 3 }}">
                 Nenhum registro corresponde à busca.
             </td>
         </tr>

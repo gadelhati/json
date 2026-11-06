@@ -1,30 +1,52 @@
 {% extends "base.html" %}
-{# Formulário para importar JSON/GeoJSON e, opcionalmente, concatenar os dados. #}
+{# Formulário integrado para importar JSON, GeoJSON e GeoTIFF. #}
 {% block content %}
-<h2>Importar JSON ou GeoJSON</h2>
+<h2>Importar Dados</h2>
 
 {% if has_data %}
-<p class="import-info">
-    Já há dados carregados no formato <strong>{{ current_format }}</strong>
-    {% if source_filenames %}(arquivo{{ "s" if source_filenames|length > 1 else "" }}: {{ source_filenames | join(", ") }}){% endif %}.
-</p>
+<div class="import-info">
+    <p>
+        Dados já carregados: <strong>{{ current_format }}</strong>
+        {% if source_filenames %}
+            (arquivo{{ "s" if source_filenames|length > 1 else "" }}: {{ source_filenames | join(", ") }})
+        {% endif %}
+    </p>
+</div>
 {% endif %}
 
 <form method="post" action="/import" enctype="multipart/form-data">
-    <input type="file" name="file" accept="application/json,application/geo+json,.json,.geojson" required>
+    <fieldset>
+        <legend>Selecione um arquivo</legend>
+        <input 
+            type="file" 
+            name="file" 
+            accept="application/json,application/geo+json,.json,.geojson,.tif,.tiff" 
+            required
+        >
+        <small>Aceita: JSON, GeoJSON (.json, .geojson) ou GeoTIFF (.tif, .tiff)</small>
+    </fieldset>
 
     {% if has_data %}
-    <label class="import-concat">
-        <input type="checkbox" name="concatenar" value="true">
-        Concatenar com os dados já carregados, em vez de substituí-los
-        (só funciona se o novo arquivo for do mesmo formato: {{ current_format }})
-    </label>
+    <fieldset>
+        <legend>Opções de carregamento</legend>
+        
+        <label class="import-concat">
+            <input type="checkbox" name="concatenar" value="true">
+            Concatenar com os dados já carregados
+            <small>(apenas para JSON/GeoJSON do mesmo formato)</small>
+        </label>
+        
+        <label class="import-replace-geotiff">
+            <input type="checkbox" name="substituir_geotiff" value="true">
+            Substituir GeoTIFFs anteriores
+            <small>(remove rasters carregados previamente)</small>
+        </label>
+    </fieldset>
     {% endif %}
 
-    <button type="submit">Importar</button>
+    <div class="form-actions">
+        <button type="submit">Importar</button>
+        <a href="/">Cancelar</a>
+    </div>
 </form>
-
-{% if has_data %}
-<p><a href="/">Cancelar e voltar aos dados atuais</a></p>
-{% endif %}
 {% endblock %}

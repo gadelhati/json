@@ -75,9 +75,15 @@
         layersData.forEach(function (layer, index) {
             var color = PALETTE[index % PALETTE.length];
 
-            var geoLayer = L.geoJSON(layer.featureCollection, {
+            var vectorLayer = L.geoJSON(layer.featureCollection, {
                 style: function () {
-                    return { color: color, weight: 2, fillColor: color, opacity: 1, fillOpacity: 0.5 };
+                    return {
+                        color: color,
+                        weight: layer.raster ? 1 : 2,
+                        fillColor: color,
+                        opacity: layer.raster ? 0.6 : 1,
+                        fillOpacity: layer.raster ? 0 : 0.5,
+                    };
                 },
                 pointToLayer: function (feature, latlng) {
                     return L.circleMarker(latlng, {
@@ -93,6 +99,13 @@
                     lyr.bindPopup(popupHtml(feature.properties));
                 },
             });
+            var rasterLayer = layer.raster && layer.raster.url && layer.raster.bounds
+                ? L.imageOverlay(layer.raster.url, layer.raster.bounds, { opacity: 1 })
+                : null;
+            var geoLayer = rasterLayer
+                ? L.featureGroup([rasterLayer, vectorLayer])
+                : vectorLayer;
+            geoLayer.rasterLayer = rasterLayer;
 
             leafletLayersByName[layer.name] = geoLayer;
             geoLayer.addTo(map);
@@ -157,7 +170,13 @@
                     return;
                 }
                 var fraction = Number(slider.value) / 100;
-                geoLayer.setStyle({ opacity: fraction, fillOpacity: fraction * 0.5 });
+                geoLayer.setStyle({
+                    opacity: fraction,
+                    fillOpacity: geoLayer.rasterLayer ? 0 : fraction * 0.5,
+                });
+                if (geoLayer.rasterLayer) {
+                    geoLayer.rasterLayer.setOpacity(fraction);
+                }
             });
         });
 

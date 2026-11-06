@@ -24,12 +24,16 @@ class JsonStore:
 
     GEOMETRY_FIELD = "_geometry"
     SOURCE_FIELD = "_source"
+    SOURCE_TYPE_FIELD = "_source_type"  # "json", "geojson" ou "geotiff"
+    GEOTIFF_ID_FIELD = "_geotiff_id"
+    GEOTIFF_PREVIEW_FIELD = "_geotiff_preview"
 
     def __init__(self) -> None:
         """Inicializa o armazenamento sem registros carregados."""
         self.records: list[dict[str, Any]] = []
         self.source_filenames: list[str] = []
         self.source_format: str = "json"  # "json" ou "geojson"
+        self.geotiff_layers: dict[str, dict[str, Any]] = {}  # file_id -> {metadata, preview, bounds}
 
     @property
     def source_filename(self) -> Optional[str]:
@@ -131,36 +135,81 @@ class JsonStore:
 
     def feature_collections_by_layer(self) -> list[dict[str, Any]]:
         """Agrupa os registros que têm geometria por arquivo de origem, devolvendo
-        uma FeatureCollection por camada (uma por arquivo importado). Usado para
-        exibir as camadas no mapa, cada uma com sua própria cor."""
-        if self.source_format != "geojson":
-            return []
-
-        grouped: dict[str, list[dict[str, Any]]] = {}
-        for record in self.records:
-            if record.get(self.GEOMETRY_FIELD) is None:
-                continue
-            layer_name = record.get(self.SOURCE_FIELD) or "dados"
-            grouped.setdefault(layer_name, []).append(record)
-
+        uma FeatureCollection por camada (uma por arquivo importado). Inclui camadas
+        GeoTIFF. Usado para exibir as camadas no mapa, cada uma com sua própria cor."""
         layers = []
-        for name, records in grouped.items():
-            features = []
-            for record in records:
-                properties = {
-                    k: v for k, v in record.items()
-                    if k not in (settings.id_field, self.GEOMETRY_FIELD, self.SOURCE_FIELD)
-                }
-                features.append({
+
+        # Camadas de GeoJSON
+        if self.source_format == "geojson":
+            grouped: dict[str, list[dict[str, Any]]] = {}
+            for record in self.records:
+                if record.get(self.SOURCE_TYPE_FIELD) == "geotiff":
+                    continue  # GeoTIFF é tratado separadamente
+                if record.get(self.GEOMETRY_FIELD) is None:
+                    continue
+                layer_name = record.get(self.SOURCE_FIELD) or "dados"
+                grouped.setdefault(layer_name, []).append(record)
+
+            for name, records in grouped.items():
+                features = []
+                for record in records:
+                    properties = {
+                        k: v for k, v in record.items()
+                        if k not in (settings.id_field, self.GEOMETRY_FIELD, self.SOURCE_FIELD, self.SOURCE_TYPE_FIELD,
+                                     self.GEOTIFF_ID_FIELD, self.GEOTIFF_PREVIEW_FIELD)
+                    }
+                    features.append({
+                        "type": "Feature",
+                        "id": record.get(settings.id_field),
+                        "geometry": record.get(self.GEOMETRY_FIELD),
+                        "properties": properties,
+                    })
+                layers.append({
+                    "name": name,
+                    "featureCollection": {"type": "FeatureCollection", "features": features},
+                })
+
+        # Camadas GeoTIFF (como limites)
+        for record in self.records:
+            if record.get(self.SOURCE_TYPE_FIELD) == "geotiff":
+                layer_name = record.get(self.SOURCE_FIELD) or "GeoTIFF"
+                features = [{
                     "type": "Feature",
                     "id": record.get(settings.id_field),
                     "geometry": record.get(self.GEOMETRY_FIELD),
-                    "properties": properties,
-                })
-            layers.append({
-                "name": name,
-                "featureCollection": {"type": "FeatureCollection", "features": features},
-            })
+                    "properties": {
+                        "tipo": "GeoTIFF",
+                        "crs": record.get("crs"),
+                        "preview": record.get(self.GEOTIFF_PREVIEW_FIELD),
+                    }
+                }]
+                layer = {
+                    "name": layer_name,
+                    "featureCollection": {"type": "FeatureCollection", "features": features},
+                }
+                geometry = record.get(self.GEOMETRY_FIELD)
+                coordinates = geometry.get("coordinates") if isinstance(geometry, dict) else None
+                ring = coordinates[0] if isinstance(coordinates, list) and coordinates else None
+                if (
+                    isinstance(ring, list)
+                    and len(ring) >= 3
+                    and all(isinstance(point, list) and len(point) >= 2 for point in (ring[0], ring[2]))
+                ):
+                    layer["raster"] = {
+                        "url": record.get(self.GEOTIFF_PREVIEW_FIELD),
+                        "bounds": [
+                            [
+                                ring[0][1],
+                                ring[0][0],
+                            ],
+                            [
+                                ring[2][1],
+                                ring[2][0],
+                            ],
+                        ],
+                    }
+                layers.append(layer)
+
         return layers
 
     def get_all(self) -> list[dict[str, Any]]:
@@ -186,8 +235,65 @@ class JsonStore:
     def create(self, data: dict[str, Any]) -> dict[str, Any]:
         """Adiciona um registro e gera um identificador quando necessário."""
         data.setdefault(settings.id_field, str(uuid.uuid4()))
+        data.setdefault(self.SOURCE_TYPE_FIELD, "json" if self.source_format == "json" else "geojson")
         self.records.append(data)
         return data
+
+    def add_geotiff_metadata(
+        self,
+        file_id: str,
+        filename: str,
+        metadata: dict[str, Any],
+        bounds_geometry: dict[str, Any],
+        preview_path: str,
+    ) -> dict[str, Any]:
+        """Adiciona um registro GeoTIFF com seus metadados e geometria de limites.
+        
+        Cria um registro que aparece na tabela com os metadados extraídos do GeoTIFF.
+        A geometria do registro é os limites do raster (bbox em EPSG:4326).
+        
+        Retorna o registro criado."""
+        # Extrai transformação com segurança
+        geo_info = metadata.get("geo", {})
+        transform = geo_info.get("transform", [None] * 6)
+        resolucao_x = transform[1] if len(transform) > 1 else None
+        resolucao_y = transform[5] if len(transform) > 5 else None
+        
+        # Extrai bounds com segurança
+        bounds_info = geo_info.get("bounds", {})
+        min_val = bounds_info.get("min")
+        max_val = bounds_info.get("max")
+        
+        record = {
+            settings.id_field: file_id,
+            self.SOURCE_FIELD: filename,
+            self.SOURCE_TYPE_FIELD: "geotiff",
+            self.GEOMETRY_FIELD: bounds_geometry,
+            self.GEOTIFF_ID_FIELD: file_id,
+            self.GEOTIFF_PREVIEW_FIELD: preview_path,
+            "crs": geo_info.get("crs"),
+            "resolucao_x": resolucao_x,
+            "resolucao_y": resolucao_y,
+            "bandas": len(metadata.get("bands", [])),
+            "min": min_val,
+            "max": max_val,
+        }
+        
+        # Adiciona metadados de bandas (se houver)
+        for i, band in enumerate(metadata.get("bands", []), 1):
+            if isinstance(band, dict) and band.get("statistics"):
+                stats = band["statistics"]
+                record[f"banda_{i}_media"] = stats.get("mean")
+                record[f"banda_{i}_min"] = stats.get("min")
+                record[f"banda_{i}_max"] = stats.get("max")
+        
+        self.records.append(record)
+        self.geotiff_layers[file_id] = {
+            "metadata": metadata,
+            "preview": preview_path,
+            "bounds": bounds_geometry,
+        }
+        return record
 
     def update(self, record_id: str, data: dict[str, Any]) -> Optional[dict[str, Any]]:
         """Atualiza um registro existente e retorna-o, ou retorna ``None``."""

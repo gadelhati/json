@@ -98,16 +98,108 @@ def import_form(request: Request):
 
 
 @router.post("/import")
-async def import_json(file: UploadFile = File(...), concatenar: bool = Form(False)):
-    """Salva e carrega um JSON/GeoJSON, substituindo ou concatenando registros."""
+async def import_file(
+    file: UploadFile = File(...),
+    concatenar: bool = Form(False),
+    substituir_geotiff: bool = Form(False),
+):
+    """Importa um arquivo JSON, GeoJSON ou GeoTIFF, substituindo ou concatenando registros.
+    
+    Aceita:
+    - JSON/GeoJSON (.json, .geojson): carrega como registros
+    - GeoTIFF (.tif, .tiff): processa raster e adiciona como registro com metadados
+    
+    Parâmetros:
+    - concatenar: se True e arquivo é JSON/GeoJSON, concatena aos dados existentes
+    - substituir_geotiff: se True e arquivo é GeoTIFF, remove GeoTIFFs anteriores
+    """
+    from app.routers.geotiff import _layers
+    from app.services.geotiff import store as geotiff_store
+    
     dest = settings.upload_dir / file.filename
-    with open(dest, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
-    mode = "append" if concatenar else "replace"
+    
+    # Detecta o tipo de arquivo
+    is_geotiff = file.filename.lower().endswith((".tif", ".tiff"))
+    
     try:
-        store.load(dest, mode=mode)
-    except (ValueError, Exception) as exc:  # json.JSONDecodeError herda de ValueError
-        raise HTTPException(status_code=400, detail=f"Falha ao importar JSON/GeoJSON: {exc}") from exc
+        if is_geotiff:
+            # Processa GeoTIFF
+            if not file.filename.lower().endswith((".tif", ".tiff")):
+                raise HTTPException(400, "Envie um arquivo .tif ou .tiff")
+
+            file_bytes = await file.read()
+            file_id, path = geotiff_store.save_geotiff(file_bytes, file.filename)
+
+            metadata = geotiff_store.extract_all_metadata(path)
+            preview = geotiff_store.generate_leaflet_preview(path, file_id)
+            
+            # Se substituir_geotiff, limpa os GeoTIFFs anteriores
+            if substituir_geotiff:
+                # Remove registros GeoTIFF anteriores
+                store.records = [
+                    r for r in store.records
+                    if r.get(store.SOURCE_TYPE_FIELD) != "geotiff"
+                ]
+                _layers.clear()
+
+            # Adiciona o novo GeoTIFF ao store
+            bounds = preview.get("bounds", [0, 0, 0, 0])
+            bounds_geom = preview.get("bounds_geojson")
+            
+            # Se bounds_geojson não foi gerado, cria a partir de bounds Leaflet:
+            # [[sul, oeste], [norte, leste]].
+            if not bounds_geom and len(bounds) == 2:
+                south, west = bounds[0]
+                north, east = bounds[1]
+                bounds_geom = {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [west, south],
+                        [east, south],
+                        [east, north],
+                        [west, north],
+                        [west, south],
+                    ]]
+                }
+            else:
+                # Fallback seguro
+                bounds_geom = bounds_geom or {
+                    "type": "Point",
+                    "coordinates": [0, 0]
+                }
+            
+            store.add_geotiff_metadata(
+                file_id=file_id,
+                filename=file.filename,
+                metadata=metadata,
+                bounds_geometry=bounds_geom,
+                preview_path=str(preview.get("preview_url", "")),
+            )
+            
+            # Mantém referência no _layers (compatibilidade com mapa)
+            _layers[file_id] = {
+                "path": path,
+                "metadata": metadata,
+                "preview": preview,
+            }
+        else:
+            # Processa JSON/GeoJSON
+            with open(dest, "wb") as buffer:
+                shutil.copyfileobj(file.file, buffer)
+            
+            mode = "append" if concatenar else "replace"
+            store.load(dest, mode=mode)
+    
+    except HTTPException:
+        raise
+    except (ValueError, Exception) as exc:
+        detail = "Falha ao importar arquivo"
+        if is_geotiff:
+            detail = f"Falha ao processar GeoTIFF: {exc}"
+        else:
+            detail = f"Falha ao importar JSON/GeoJSON: {exc}"
+        raise HTTPException(status_code=400, detail=detail) from exc
+    
     return RedirectResponse("/", status_code=303)
 
 
