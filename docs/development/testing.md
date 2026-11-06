@@ -1,7 +1,7 @@
 # Resumo dos Testes Implementados
 
 Foram implementados **44 testes automatizados** para os itens de testes
-concluídos no [ROADMAP.md](ROADMAP.md).
+concluídos no [roadmap](roadmap.md).
 
 | Arquivo | Testes | Cobertura principal |
 |---|---:|---|

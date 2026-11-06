@@ -3,6 +3,11 @@
 ![Python](https://img.shields.io/badge/Python-3.13.5-blue?logo=python)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.115.13-009688?logo=fastapi)
 
+## documentação
+
+Consulte o [índice de documentação](docs/README.md) para guias de uso,
+arquitetura, testes, roadmap e histórico de mudanças.
+
 ## install
 ```
 # create virtual environment
