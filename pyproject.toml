@@ -1,5 +1,5 @@
 [project]
-name = "json-manager"
+name = "data-forge"
 version = "0.1.0"
 description = "Aplicação para importação, gerenciamento e exportação de arquivos JSON"
 requires-python = ">=3.11"

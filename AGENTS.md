@@ -1,5 +1,7 @@
 # AGENTS.md
 
+**Data Forge** (anteriormente "json").
+
 Editor web de arquivos JSON/GeoJSON/XML (CRUD, mapa e exportação) com suporte a metadados de GeoTIFF. Construído com FastAPI + Jinja2.
 
 ## Comandos

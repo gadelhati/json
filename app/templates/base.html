@@ -3,13 +3,13 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>JSON CRUD</title>
+    <title>Data Forge</title>
     <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
     <link rel="icon" type="image/png" href="{{ url_for('static', path='img/weather.png') }}">
 </head>
 <body>
     <header>
-        <h1><a href="/">JSON CRUD</a></h1>
+        <h1><a href="/">Data Forge</a></h1>
         <nav class="tabs">
             <a href="/" class="{{ 'active' if request.url.path == '/' else '' }}">Tabela</a>
             <a href="/map" class="{{ 'active' if request.url.path == '/map' else '' }}">Mapa</a>

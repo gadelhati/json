@@ -8,7 +8,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     """Configurações da aplicação. Pode ser sobrescrita por variáveis de ambiente ou .env."""
 
-    app_name: str = "JSON CRUD"
+    app_name: str = "Data Forge"
     data_dir: Path = Path("app/data")
     upload_dir: Path = Path("app/data/uploads")
     export_dir: Path = Path("app/data/exports")
