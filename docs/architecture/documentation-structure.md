@@ -54,3 +54,5 @@ Parquet e GeoParquet
 formatos colunares comprimidos, substitos do CSV/Shapefile
 
 XML/JSON
+
+gdalinfo, rasterio, pyproj

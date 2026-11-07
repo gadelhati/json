@@ -1,0 +1,110 @@
+{
+  "schema_version": "2.0.0",
+  "_nota": "Somente o que está gravado no arquivo ou no sistema de arquivos. Nada calculado. Valores de GDAL_METADATA preservados como strings, exatamente como gravados.",
+  "filesystem": {
+    "_origem": "sistema de arquivos, não do TIFF",
+    "filename": "batimetria.tif",
+    "file_size_bytes": 125829120
+  },
+  "tiff": {
+    "byte_order": "little-endian",
+    "big_tiff": false,
+    "ImageWidth": 10000,
+    "ImageLength": 8000,
+    "BitsPerSample": [32],
+    "SampleFormat": [3],
+    "SamplesPerPixel": 1,
+    "Compression": "LZW",
+    "Predictor": 3,
+    "PhotometricInterpretation": "MinIsBlack",
+    "PlanarConfiguration": "Contig",
+    "Orientation": 1,
+    "TileWidth": 256,
+    "TileLength": 256,
+    "RowsPerStrip": null,
+    "ResolutionUnit": null,
+    "XResolution": null,
+    "YResolution": null,
+    "ExtraSamples": [],
+    "ColorMap": null,
+    "ImageDescription": null,
+    "Software": "GDAL 3.8.0",
+    "DateTime": "2026:11:05 18:20:00",
+    "Artist": null,
+    "Copyright": null
+  },
+  "geotiff": {
+    "ModelPixelScaleTag": [0.0001, 0.0001, 0.0],
+    "ModelTiepointTag": [0.0, 0.0, 0.0, -45.0, -20.0, 0.0],
+    "ModelTransformationTag": null,
+    "GeoKeyDirectoryTag": {
+      "KeyDirectoryVersion": 1,
+      "KeyRevision": 1,
+      "MinorRevision": 0,
+      "GTModelTypeGeoKey": 2,
+      "GTRasterTypeGeoKey": 1,
+      "GTCitationGeoKey": null,
+      "GeographicTypeGeoKey": 4326,
+      "GeogCitationGeoKey": "WGS 84",
+      "GeogGeodeticDatumGeoKey": null,
+      "GeogAngularUnitsGeoKey": 9102,
+      "GeogSemiMajorAxisGeoKey": null,
+      "GeogInvFlatteningGeoKey": null,
+      "ProjectedCSTypeGeoKey": null,
+      "ProjectionGeoKey": null,
+      "ProjLinearUnitsGeoKey": null,
+      "VerticalCSTypeGeoKey": null,
+      "VerticalUnitsGeoKey": null
+    },
+    "GeoDoubleParamsTag": [],
+    "GeoAsciiParamsTag": ["WGS 84|"]
+  },
+  "gdal": {
+    "GDAL_NODATA": "-9999",
+    "GDAL_METADATA": {
+      "dataset": {
+        "AREA_OR_POINT": "Area"
+      },
+      "bands": [
+        {
+          "band": "1",
+          "DESCRIPTION": "Profundidade",
+          "UNITTYPE": "m",
+          "SCALE": "1",
+          "OFFSET": "0",
+          "STATISTICS_MINIMUM": "-3850.5",
+          "STATISTICS_MAXIMUM": "-2.1",
+          "STATISTICS_MEAN": "-1240.7",
+          "STATISTICS_STDDEV": "980.3",
+          "STATISTICS_VALID_PERCENT": "92"
+        }
+      ]
+    },
+    "GDAL_STRUCTURAL_METADATA": {
+      "LAYOUT": "IFDS_BEFORE_DATA",
+      "BLOCK_ORDER": "ROW_MAJOR",
+      "BLOCK_LEADER": "SIZE_AS_UINT4",
+      "BLOCK_TRAILER": "LAST_4_BYTES_REPEATED",
+      "KNOWN_INCOMPATIBLE_EDITION": "NO"
+    }
+  },
+  "gcps": [],
+  "rpcs": null,
+  "subdatasets": [],
+  "overviews": [
+    {"level": 1, "width": 5000, "height": 4000},
+    {"level": 2, "width": 2500, "height": 2000},
+    {"level": 3, "width": 1250, "height": 1000},
+    {"level": 4, "width": 625,  "height": 500}
+  ],
+  "masks": {
+    "per_dataset": false,
+    "per_band": [["GMF_NODATA"]]
+  },
+  "xmp": null,
+  "exif": null,
+  "auxiliary_files": {
+    "_nota": "inventário de arquivos encontrados ao lado do .tif; não presume que fazem parte do GeoTIFF",
+    "items": []
+  }
+}
