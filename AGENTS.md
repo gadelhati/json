@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Editor web de arquivos JSON/GeoJSON (CRUD, mapa e exportação) com suporte a metadados de GeoTIFF. Construído com FastAPI + Jinja2.
+Editor web de arquivos JSON/GeoJSON/XML (CRUD, mapa e exportação) com suporte a metadados de GeoTIFF. Construído com FastAPI + Jinja2.
 
 ## Comandos
 
@@ -24,17 +24,17 @@ uvicorn app.app:app --reload
 
 - `app.py` — inicializa o FastAPI, configura recursos estáticos e registra as rotas.
 - `config.py` — configurações da aplicação (`Settings`, pydantic-settings); sobrescrevíveis por variáveis de ambiente ou `.env`; prepara os diretórios de trabalho.
-- `routers/crud.py` — **rotas integradas** para importar, editar, exibir e exportar JSON/GeoJSON/GeoTIFF:
+- `routers/crud.py` — **rotas integradas** para importar, editar, exibir e exportar JSON/GeoJSON/XML/GeoTIFF:
   - tabela de registros unificada (JSON, GeoJSON e metadados de GeoTIFF), mapa com camadas, formulário de importação integrado;
-  - **upload unificado** (`/import`): detecta tipo de arquivo (JSON/GeoJSON/GeoTIFF) e processa com as opções apropriadas:
+  - **upload unificado** (`/import`): detecta tipo de arquivo (JSON/GeoJSON/XML/GeoTIFF) e processa com as opções apropriadas:
     - `concatenar=true`: para JSON/GeoJSON, adiciona aos dados existentes (mesmo formato);
     - `substituir_geotiff=true`: para GeoTIFF, remove rasters anteriores;
     - suporta **cross-type**: pode-se misturar JSON com GeoTIFF na mesma sessão.
   - criar, editar, atualizar (com validação) e excluir registros;
   - exportar JSON/GeoJSON (excluindo GeoTIFF)/CSV (incluindo metadados de GeoTIFF);
   - Na tabela, a geometria é exibida resumida como texto curto; registros GeoTIFF aparecem com indicador 🗺️ e link "Mapa".
-- `services/crud.py` — `JsonStore` agora gerencia **registros integrados** (JSON, GeoJSON e metadados de GeoTIFF):
-  - `load(file_path, mode)` detecta o formato (JSON, GeoJSON) pelo conteúdo; `mode` = `replace` ou `append`.
+- `services/crud.py` — `JsonStore` agora gerencia **registros integrados** (JSON, GeoJSON, XML e metadados de GeoTIFF):
+  - `load(file_path, mode)` detecta JSON/GeoJSON pelo conteúdo e XML pela extensão; XML converte elementos aninhados em caminhos de colunas (com índices para repetições) e preserva sua estrutura para exportação; `mode` = `replace` ou `append`.
   - **Novo**: `add_geotiff_metadata(file_id, filename, metadata, bounds_geometry, preview_path)` cria um registro GeoTIFF com metadados extraídos (CRS, resolução, bandas, limites em EPSG:4326).
   - Em GeoJSON, cada registro é uma Feature: as chaves de `properties` viram colunas normais e a geometria fica isolada em `GEOMETRY_FIELD`.
   - Registros GeoTIFF marcam-se com `_source_type="geotiff"` e incluem `_geotiff_id` e `_geotiff_preview`.
@@ -50,7 +50,7 @@ uvicorn app.app:app --reload
 - `datatable.html` — **tabela integrada** de registros (JSON, GeoJSON e metadados de GeoTIFF) com CRUD e exportação; indicador visual de tipo (📄 JSON, 🔷 GeoJSON com geometria, 🗺️ GeoTIFF); ações contextuais (Editar/Mapa, Excluir).
 - `form.html` — criação/edição de registro.
 - `map.html` — mapa Leaflet com as camadas GeoJSON e limites de GeoTIFF já importados, incluindo controles de visibilidade, opacidade, ordem e exclusão por arquivo.
-- `upload.html` — **formulário integrado** para importar JSON, GeoJSON ou GeoTIFF com opções de concatenação (JSON/GeoJSON) e substituição (GeoTIFF).
+- `upload.html` — **formulário integrado** para importar JSON, GeoJSON, XML ou GeoTIFF com opções de concatenação (JSON/GeoJSON/XML) e substituição (GeoTIFF).
 
 ## Convenções
 

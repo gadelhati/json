@@ -2,7 +2,7 @@
 
 ## Visão Geral
 
-A partir desta versão, o editor suporta um **sistema unificado de importação** que permite carregar JSON, GeoJSON e GeoTIFF em um único fluxo. Você não precisa mais alternar entre dois formulários diferentes.
+A partir desta versão, o editor suporta um **sistema unificado de importação** que permite carregar JSON, GeoJSON, XML e GeoTIFF em um único fluxo. Você não precisa mais alternar entre formulários diferentes.
 
 ---
 
@@ -14,22 +14,23 @@ GET /import
 ```
 
 Você verá um formulário único com:
-- Campo para selecionar arquivo (aceita `.json`, `.geojson`, `.tif`, `.tiff`)
+- Campo para selecionar arquivo (aceita `.json`, `.geojson`, `.xml`, `.tif`, `.tiff`)
 - Opções de carregamento (checkboxes)
 - Botões "Importar" e "Cancelar"
 
 ### 2. Selecionar o arquivo
 Clique no campo de arquivo e escolha:
 - **JSON/GeoJSON**: Arquivo com dados vetoriais ou objetos
+- **XML**: Documento tabular simples
 - **GeoTIFF**: Arquivo com dados raster
 
 ### 3. Configurar opções (se já há dados)
 
-#### Para JSON/GeoJSON:
+#### Para JSON/GeoJSON/XML:
 - ☐ **Concatenar com os dados já carregados**
   - Se marcado: adiciona registros do novo arquivo aos existentes
   - Se não marcado: substitui todos os dados
-  - ⚠️ Só funciona se ambos os arquivos têm o mesmo formato (JSON com JSON ou GeoJSON com GeoJSON)
+  - ⚠️ Só funciona se ambos os arquivos têm o mesmo formato
 
 #### Para GeoTIFF:
 - ☐ **Substituir GeoTIFFs anteriores**
@@ -108,6 +109,7 @@ Mostra todos os registros com indicadores visuais:
 | JSON | 📄 | Editar, Excluir | Dados sem geometria |
 | GeoJSON | 🔷 | Editar, Excluir | Dados com geometria (Point, Polygon, etc.) |
 | GeoTIFF | 🗺️ | **Mapa**, Excluir | Metadados extraídos; clique "Mapa" para visualizar |
+| XML | 📄 | Editar, Excluir | Elementos XML simples como colunas editáveis |
 
 ### Mapa (`/map`)
 Exibe:
@@ -147,6 +149,16 @@ GET /export  (quando dados são GeoJSON)
 Baixa um arquivo `.geojson` com:
 - Todas as Features originais (geometrias de JSON/GeoJSON)
 - Limites de GeoTIFF como Polygon (cada raster = 1 Feature)
+
+### XML
+```
+GET /export/xml
+```
+Baixa os registros como XML. Para XML importado, preserva a tag raiz e as tags
+de registro; por exemplo, `<titulo>Dominando XML</titulo>` vira a coluna
+`titulo` com o valor `Dominando XML`. Elementos aninhados usam caminhos com
+ponto, como `cliente.nome`; itens repetidos recebem índices, como
+`itens.item[1].descricao`. A edição desses valores é refletida no XML exportado.
 
 ### CSV
 ```

@@ -64,6 +64,9 @@ def index(request: Request):
             "show_layer": store.has_multiple_sources,
             "layer_field": store.SOURCE_FIELD,
             "source_id_field": store.SOURCE_ID_FIELD,
+            "can_create_record": not (
+                store.source_format == "xml" and store.xml_uses_root_record
+            ),
         },
     )
 
@@ -106,10 +109,10 @@ async def import_file(
     concatenar: bool = Form(False),
     substituir_geotiff: bool = Form(False),
 ):
-    """Importa um arquivo JSON, GeoJSON ou GeoTIFF, substituindo ou concatenando registros.
+    """Importa um arquivo JSON, GeoJSON, XML ou GeoTIFF, substituindo ou concatenando registros.
     
     Aceita:
-    - JSON/GeoJSON (.json, .geojson): carrega como registros
+    - JSON/GeoJSON/XML (.json, .geojson, .xml): carrega como registros
     - GeoTIFF (.tif, .tiff): processa raster e adiciona como registro com metadados
     
     Parâmetros:
@@ -182,7 +185,7 @@ async def import_file(
             )
             
         else:
-            # Processa JSON/GeoJSON
+            # Processa JSON, GeoJSON ou XML
             with open(dest, "wb") as buffer:
                 shutil.copyfileobj(file.file, buffer)
             
@@ -196,7 +199,7 @@ async def import_file(
         if is_geotiff:
             detail = f"Falha ao processar GeoTIFF: {exc}"
         else:
-            detail = f"Falha ao importar JSON/GeoJSON: {exc}"
+            detail = f"Falha ao importar JSON, GeoJSON ou XML: {exc}"
         raise HTTPException(status_code=400, detail=detail) from exc
     
     return RedirectResponse("/", status_code=303)
@@ -225,6 +228,11 @@ def delete_source(source_id: str):
 @router.get("/records/new")
 def new_form(request: Request):
     """Exibe o formulário para criar um registro."""
+    if store.source_format == "xml" and store.xml_uses_root_record:
+        raise HTTPException(
+            status_code=400,
+            detail="Não é possível adicionar registros a um XML com uma única raiz de dados.",
+        )
     is_geojson = store.source_format == "geojson"
     return templates.TemplateResponse(
         request,
@@ -313,6 +321,15 @@ def export_json():
     path = store.export()
     media_type = "application/geo+json" if store.source_format == "geojson" else "application/json"
     return FileResponse(path, filename=path.name, media_type=media_type)
+
+
+@router.get("/export/xml")
+def export_xml():
+    """Exporta todos os registros como XML para download."""
+    if not store.records:
+        raise HTTPException(status_code=400, detail="Nenhum dado importado para exportar")
+    path = store.export_xml()
+    return FileResponse(path, filename=path.name, media_type="application/xml")
 
 
 @router.get("/export/csv")

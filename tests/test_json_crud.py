@@ -19,6 +19,9 @@ def clear_store():
     store.geotiff_layers = {}
     store.source_paths = {}
     store.source_names = {}
+    store.xml_root_tag = None
+    store.xml_root_attributes = {}
+    store.xml_uses_root_record = False
     yield
     # Limpa após o teste
     store.records = []
@@ -27,6 +30,9 @@ def clear_store():
     store.geotiff_layers = {}
     store.source_paths = {}
     store.source_names = {}
+    store.xml_root_tag = None
+    store.xml_root_attributes = {}
+    store.xml_uses_root_record = False
 
 
 @pytest.fixture

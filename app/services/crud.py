@@ -1,7 +1,9 @@
-"""Armazena, transforma e exporta registros JSON e GeoJSON em memória."""
+"""Armazena, transforma e exporta registros JSON, GeoJSON e XML em memória."""
 
 import json
+import re
 import uuid
+import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Any, Optional
 
@@ -9,7 +11,7 @@ from app.config import settings
 
 
 class JsonStore:
-    """Guarda em memória os registros de um JSON (ou GeoJSON) importado, permitindo
+    """Guarda em memória os registros de um JSON, GeoJSON ou XML importado, permitindo
     criar/ler/atualizar/remover registros antes de exportar o resultado.
 
     Em modo GeoJSON, cada registro corresponde a uma Feature: as chaves de
@@ -26,6 +28,8 @@ class JsonStore:
     SOURCE_FIELD = "_source"
     SOURCE_ID_FIELD = "_source_id"
     SOURCE_TYPE_FIELD = "_source_type"  # "json", "geojson" ou "geotiff"
+    XML_RECORD_TAG_FIELD = "_xml_record_tag"
+    XML_GENERATED_ID_FIELD = "_xml_generated_id"
     GEOTIFF_ID_FIELD = "_geotiff_id"
     GEOTIFF_PREVIEW_FIELD = "_geotiff_preview"
 
@@ -37,6 +41,9 @@ class JsonStore:
         self.geotiff_layers: dict[str, dict[str, Any]] = {}  # file_id -> {metadata, preview, bounds}
         self.source_paths: dict[str, list[Path]] = {}
         self.source_names: dict[str, str] = {}
+        self.xml_root_tag: Optional[str] = None
+        self.xml_root_attributes: dict[str, str] = {}
+        self.xml_uses_root_record = False
 
     @property
     def source_filename(self) -> Optional[str]:
@@ -53,13 +60,27 @@ class JsonStore:
                        dos dados já carregados (ambos "json" ou ambos "geojson");
                        caso contrário uma ValueError é lançada."""
         source_id = str(uuid.uuid4())
-        records, fmt = self._parse(file_path, source_id)
+        (
+            records,
+            fmt,
+            xml_root_tag,
+            xml_root_attributes,
+            xml_uses_root_record,
+        ) = self._parse(file_path, source_id)
 
         if mode == "append" and self.records:
             if fmt != self.source_format:
                 raise ValueError(
                     "Só é possível concatenar arquivos do mesmo formato "
                     f"(dados já carregados: {self.source_format}, novo arquivo: {fmt})."
+                )
+            if fmt == "xml" and (
+                xml_root_tag != self.xml_root_tag
+                or xml_uses_root_record
+                or self.xml_uses_root_record
+            ):
+                raise ValueError(
+                    "Só é possível concatenar XMLs com a mesma raiz e coleção de registros."
                 )
             existing_ids = {r.get(settings.id_field) for r in self.records}
             for record in records:
@@ -76,12 +97,33 @@ class JsonStore:
             self.geotiff_layers = {}
             self.source_paths = {}
             self.source_names = {}
+            self.xml_root_tag = xml_root_tag
+            self.xml_root_attributes = xml_root_attributes
+            self.xml_uses_root_record = xml_uses_root_record
         self.source_paths[source_id] = [file_path]
         self.source_names[source_id] = file_path.name
 
-    def _parse(self, file_path: Path, source_id: str) -> tuple[list[dict[str, Any]], str]:
+    def _parse(
+        self, file_path: Path, source_id: str
+    ) -> tuple[list[dict[str, Any]], str, Optional[str], dict[str, str], bool]:
         """Lê e interpreta um arquivo, devolvendo (registros, formato) sem
         alterar o estado do store."""
+        if file_path.suffix.lower() == ".xml":
+            records, root_tag, root_attributes, uses_root_record = self._parse_xml(file_path)
+            fmt = "xml"
+        else:
+            records, fmt = self._parse_json(file_path)
+            root_tag = None
+            root_attributes = {}
+            uses_root_record = False
+
+        for record in records:
+            record[self.SOURCE_FIELD] = file_path.name
+            record[self.SOURCE_ID_FIELD] = source_id
+        return records, fmt, root_tag, root_attributes, uses_root_record
+
+    def _parse_json(self, file_path: Path) -> tuple[list[dict[str, Any]], str]:
+        """Lê JSON ou GeoJSON e devolve seus registros e formato."""
         with open(file_path, "r", encoding="utf-8") as f:
             data = json.load(f)
 
@@ -101,10 +143,85 @@ class JsonStore:
             records = data
             fmt = "json"
 
-        for record in records:
-            record[self.SOURCE_FIELD] = file_path.name
-            record[self.SOURCE_ID_FIELD] = source_id
         return records, fmt
+
+    def _parse_xml(
+        self, file_path: Path
+    ) -> tuple[list[dict[str, Any]], str, dict[str, str], bool]:
+        """Lê XML, convertendo elementos aninhados em colunas com caminhos."""
+        try:
+            root = ET.parse(file_path).getroot()
+        except ET.ParseError as exc:
+            raise ValueError(f"XML inválido: {exc}") from exc
+
+        children = list(root)
+        if not children:
+            return [], root.tag, dict(root.attrib), True
+
+        child_tags = {self._xml_local_name(child.tag) for child in children}
+        is_record_collection = len(child_tags) == 1 and all(list(child) for child in children)
+        if is_record_collection:
+            return (
+                [self._xml_element_to_record(child, self._xml_local_name(child.tag)) for child in children],
+                root.tag,
+                dict(root.attrib),
+                False,
+            )
+
+        return (
+            [self._xml_element_to_record(root, None)],
+            root.tag,
+            dict(root.attrib),
+            True,
+        )
+
+    def _xml_element_to_record(
+        self, element: ET.Element, record_tag: Optional[str]
+    ) -> dict[str, Any]:
+        """Converte um elemento XML, incluindo seus filhos aninhados, em um registro."""
+        record: dict[str, Any] = {}
+        self._flatten_xml_element(element, record)
+        has_id = settings.id_field in record
+        record.setdefault(settings.id_field, str(uuid.uuid4()))
+        record[self.XML_GENERATED_ID_FIELD] = not has_id
+        if record_tag is not None:
+            record[self.XML_RECORD_TAG_FIELD] = record_tag
+        return record
+
+    def _flatten_xml_element(
+        self, element: ET.Element, record: dict[str, Any], prefix: str = ""
+    ) -> None:
+        """Achata um elemento XML em caminhos separados por ponto e índices."""
+        for attribute, value in element.attrib.items():
+            path = f"{prefix}.@{self._xml_local_name(attribute)}" if prefix else f"@{self._xml_local_name(attribute)}"
+            record[path] = value
+
+        children = list(element)
+        if not children:
+            if prefix:
+                record[prefix] = element.text or ""
+            return
+
+        sibling_counts: dict[str, int] = {}
+        for child in children:
+            name = self._xml_local_name(child.tag)
+            sibling_counts[name] = sibling_counts.get(name, 0) + 1
+        sibling_indexes: dict[str, int] = {}
+        for child in children:
+            name = self._xml_local_name(child.tag)
+            sibling_indexes[name] = sibling_indexes.get(name, 0) + 1
+            segment = (
+                f"{name}[{sibling_indexes[name]}]"
+                if sibling_counts[name] > 1
+                else name
+            )
+            path = f"{prefix}.{segment}" if prefix else segment
+            self._flatten_xml_element(child, record, path)
+
+    @staticmethod
+    def _xml_local_name(tag: str) -> str:
+        """Remove o namespace de uma tag para formar um nome de coluna legível."""
+        return tag.rsplit("}", 1)[-1]
 
     def _features_to_records(self, features: list[Any]) -> list[dict[str, Any]]:
         """Converte features GeoJSON em registros editáveis do armazenamento.
@@ -130,7 +247,14 @@ class JsonStore:
         cols: list[str] = []
         for record in self.records:
             for key in record:
-                if key in (settings.id_field, self.GEOMETRY_FIELD, self.SOURCE_FIELD, self.SOURCE_ID_FIELD):
+                if key in (
+                    settings.id_field,
+                    self.GEOMETRY_FIELD,
+                    self.SOURCE_FIELD,
+                    self.SOURCE_ID_FIELD,
+                    self.XML_RECORD_TAG_FIELD,
+                    self.XML_GENERATED_ID_FIELD,
+                ):
                     continue
                 if key not in cols:
                     cols.append(key)
@@ -264,7 +388,10 @@ class JsonStore:
     def create(self, data: dict[str, Any]) -> dict[str, Any]:
         """Adiciona um registro e gera um identificador quando necessário."""
         data.setdefault(settings.id_field, str(uuid.uuid4()))
-        data.setdefault(self.SOURCE_TYPE_FIELD, "json" if self.source_format == "json" else "geojson")
+        data.setdefault(self.SOURCE_TYPE_FIELD, self.source_format)
+        if self.source_format == "xml":
+            data[self.XML_GENERATED_ID_FIELD] = True
+            data[self.XML_RECORD_TAG_FIELD] = "record"
         self.records.append(data)
         return data
 
@@ -376,7 +503,11 @@ class JsonStore:
         # genérico em vez do nome do último arquivo importado, para não sugerir
         # que o export contém apenas aquele arquivo.
         if filename is None:
-            filename = default_name if len(self.source_filenames) != 1 else self.source_filenames[0]
+            filename = (
+                default_name
+                if self.source_format == "xml" or len(self.source_filenames) != 1
+                else self.source_filenames[0]
+            )
         export_path = settings.export_dir / filename
 
         if self.source_format == "geojson":
@@ -384,7 +515,14 @@ class JsonStore:
             for record in self.records:
                 properties = {
                     k: v for k, v in record.items()
-                    if k not in (settings.id_field, self.GEOMETRY_FIELD, self.SOURCE_FIELD, self.SOURCE_ID_FIELD)
+                    if k not in (
+                        settings.id_field,
+                        self.GEOMETRY_FIELD,
+                        self.SOURCE_FIELD,
+                        self.SOURCE_ID_FIELD,
+                        self.XML_RECORD_TAG_FIELD,
+                        self.XML_GENERATED_ID_FIELD,
+                    )
                 }
                 features.append({
                     "type": "Feature",
@@ -395,13 +533,102 @@ class JsonStore:
             payload: Any = {"type": "FeatureCollection", "features": features}
         else:
             payload = [
-                {k: v for k, v in record.items() if k not in (self.SOURCE_FIELD, self.SOURCE_ID_FIELD)}
+                {
+                    k: v for k, v in record.items()
+                    if k not in (
+                        self.SOURCE_FIELD,
+                        self.SOURCE_ID_FIELD,
+                        self.XML_RECORD_TAG_FIELD,
+                        self.XML_GENERATED_ID_FIELD,
+                    )
+                }
                 for record in self.records
             ]
 
         with open(export_path, "w", encoding="utf-8") as f:
             json.dump(payload, f, ensure_ascii=False, indent=2)
         return export_path
+
+    def export_xml(self, filename: Optional[str] = None) -> Path:
+        """Exporta os registros como XML, preservando a estrutura XML importada."""
+        root = ET.Element(self.xml_root_tag or "records", self.xml_root_attributes)
+        if self.source_format == "xml" and self.xml_uses_root_record:
+            if self.records:
+                self._record_to_xml(root, self.records[0])
+        else:
+            for record in self.records:
+                record_tag = record.get(self.XML_RECORD_TAG_FIELD, "record")
+                element = ET.SubElement(root, record_tag)
+                self._record_to_xml(element, record)
+
+        ET.indent(root, space="  ")
+        export_path = settings.export_dir / (filename or "export.xml")
+        ET.ElementTree(root).write(export_path, encoding="utf-8", xml_declaration=True)
+        return export_path
+
+    def _record_to_xml(self, element: ET.Element, record: dict[str, Any]) -> None:
+        """Serializa campos simples e aninhados de um registro em um elemento XML."""
+        internal_fields = {
+            self.SOURCE_FIELD,
+            self.SOURCE_ID_FIELD,
+            self.SOURCE_TYPE_FIELD,
+            self.GEOMETRY_FIELD,
+            self.XML_RECORD_TAG_FIELD,
+            self.XML_GENERATED_ID_FIELD,
+        }
+        for key, value in record.items():
+            if key in internal_fields:
+                continue
+            if key == settings.id_field and record.get(self.XML_GENERATED_ID_FIELD):
+                continue
+            self._set_xml_path_value(element, key, self._xml_value(value))
+
+    def _set_xml_path_value(self, element: ET.Element, path: str, value: str) -> None:
+        """Cria os elementos de um caminho XML e armazena seu valor ou atributo."""
+        segments = path.split(".")
+        current = element
+        for position, segment in enumerate(segments):
+            is_last = position == len(segments) - 1
+            if segment.startswith("@"):
+                if not is_last:
+                    raise ValueError(f"Atributo XML inválido no caminho '{path}'.")
+                current.set(segment[1:], value)
+                return
+
+            name, index = self._xml_path_segment(segment)
+            current = self._xml_child_at(current, name, index)
+            if is_last:
+                current.text = value
+
+    @staticmethod
+    def _xml_path_segment(segment: str) -> tuple[str, int]:
+        """Extrai nome e índice de um segmento XML achatado."""
+        match = re.fullmatch(r"(.+?)(?:\[(\d+)\])?", segment)
+        if not match:
+            raise ValueError(f"Caminho XML inválido: '{segment}'.")
+        return match.group(1), int(match.group(2) or 1)
+
+    def _xml_child_at(self, parent: ET.Element, name: str, index: int) -> ET.Element:
+        """Obtém ou cria o filho XML indicado por nome e posição."""
+        tag = self._xml_qualified_tag(name)
+        children = [child for child in parent if child.tag == tag]
+        while len(children) < index:
+            children.append(ET.SubElement(parent, tag))
+        return children[index - 1]
+
+    def _xml_qualified_tag(self, name: str) -> str:
+        """Aplica o namespace da raiz às tags reconstruídas para exportação."""
+        if self.xml_root_tag and self.xml_root_tag.startswith("{"):
+            namespace = self.xml_root_tag.partition("}")[0][1:]
+            return f"{{{namespace}}}{name}"
+        return name
+
+    @staticmethod
+    def _xml_value(value: Any) -> str:
+        """Converte valores de tabela para texto XML."""
+        if isinstance(value, (dict, list)):
+            return json.dumps(value, ensure_ascii=False)
+        return "" if value is None else str(value)
 
 
 # Instância única (singleton simples) compartilhada por toda a aplicação.

@@ -24,8 +24,11 @@
     {%- endif -%}
 {%- endmacro %}
 <div class="toolbar">
+    {% if can_create_record %}
     <a href="/records/new">+ Novo registro</a>
+    {% endif %}
     <a href="/export">Exportar JSON</a>
+    <a href="/export/xml">Exportar XML</a>
     <a href="/export/csv">Exportar CSV</a>
     <a href="/import">Importar outro arquivo</a>
     <a href="/map">Ver mapa</a>

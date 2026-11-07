@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{# Formulário integrado para importar JSON, GeoJSON e GeoTIFF. #}
+{# Formulário integrado para importar JSON, GeoJSON, XML e GeoTIFF. #}
 {% block content %}
 <h2>Importar Dados</h2>
 
@@ -20,10 +20,10 @@
         <input 
             type="file" 
             name="file" 
-            accept="application/json,application/geo+json,.json,.geojson,.tif,.tiff" 
+            accept="application/json,application/geo+json,application/xml,text/xml,.json,.geojson,.xml,.tif,.tiff" 
             required
         >
-        <small>Aceita: JSON, GeoJSON (.json, .geojson) ou GeoTIFF (.tif, .tiff)</small>
+        <small>Aceita: JSON, GeoJSON, XML (.xml) ou GeoTIFF (.tif, .tiff)</small>
     </fieldset>
 
     {% if has_data %}
@@ -33,7 +33,7 @@
         <label class="import-concat">
             <input type="checkbox" name="concatenar" value="true">
             Concatenar com os dados já carregados
-            <small>(apenas para JSON/GeoJSON do mesmo formato)</small>
+            <small>(apenas para JSON, GeoJSON ou XML do mesmo formato)</small>
         </label>
         
         <label class="import-replace-geotiff">
