@@ -1,0 +1,211 @@
+{
+  "schema_version": "2.0.0",
+  "profile": "bathymetry",
+  "_nota": "Metadados declarados (não extraíveis do GeoTIFF): vêm de relatório de levantamento, sistema de processamento ou preenchimento humano. Propriedades técnicas do raster (CRS horizontal, resolução, dimensões, nodata, estatísticas, cobertura) NÃO são repetidas aqui: ficam em raw.json e refined.json e são referenciadas por 'ref'.",
+
+  "provenance": {
+    "type": "declared",
+    "source_document": null,
+    "declared_by": null,
+    "declared_at": null
+  },
+
+  "metadata_record": {
+    "identifier": null,
+    "standard": null,
+    "standard_version": null,
+    "profile": null,
+    "date_stamp": null,
+    "language": null
+  },
+
+  "technical_refs": {
+    "asset": {
+      "asset_id": "uuid",
+      "raster_checksum_sha256": "...",
+      "raw_document_id": "uuid",
+      "refined_document_id": "uuid"
+    }
+  },
+
+  "identification": {
+    "identifier": null,
+    "title": null,
+    "abstract": null,
+    "supplemental_information": null,
+    "keywords": [],
+    "language": null,
+    "creation_date": null,
+    "publication_date": null,
+    "revision_date": null
+  },
+
+  "responsible_parties": [],
+
+  "survey": {
+    "survey_id": null,
+    "survey_type": null,
+    "survey_purpose": null,
+    "start_date": null,
+    "end_date": null,
+    "survey_area": null,
+    "survey_order": null,
+    "survey_standard": null,
+    "survey_standard_version": null
+  },
+
+  "acquisition": {
+    "method": null,
+    "platform": {"name": null, "type": null},
+    "vessel": {"name": null, "identifier": null},
+    "positioning": {
+      "system": null,
+      "correction_type": null,
+      "correction_service": null
+    },
+    "instruments": [],
+    "sound_velocity": {"correction_applied": null, "method": null, "profile_source": null},
+    "tide_correction": {"correction_applied": null, "method": null, "reference": null}
+  },
+
+  "spatial_reference": {
+    "horizontal": {
+      "crs_ref": "raw.geotiff.GeoKeyDirectoryTag",
+      "coordinate_epoch": null
+    },
+    "vertical": {
+      "datum": null,
+      "datum_type": null,
+      "epsg_code": null,
+      "unit": null,
+      "separation_model": null,
+      "separation_model_version": null,
+      "reference_epoch": null
+    }
+  },
+
+  "processing": {
+    "processing_date": null,
+    "software": [],
+    "workflow_description": null,
+    "steps": [],
+    "corrections": [],
+    "interpolation": {
+      "method": null,
+      "parameters": null
+    },
+    "sounding_density": {
+      "mean_per_cell": null,
+      "min_per_cell": null,
+      "unit": "soundings_per_cell"
+    },
+    "input_datasets": []
+  },
+
+  "quality": {
+    "assessment_date": null,
+    "assessment_method": null,
+    "horizontal_uncertainty": {
+      "measure": "THU",
+      "representation": null,
+      "value": null,
+      "unit": null,
+      "confidence_level": null,
+      "band_ref": null
+    },
+    "vertical_uncertainty": {
+      "measure": "TVU",
+      "representation": null,
+      "value": null,
+      "unit": null,
+      "confidence_level": null,
+      "band_ref": null
+    },
+    "feature_detection": {"required_size": null, "unit": null, "achieved": null},
+    "coverage": {
+      "ref": "refined.bands[0].pixel_counts",
+      "method": null,
+      "gap_description": null
+    },
+    "limitations": [],
+    "quality_report": null
+  },
+
+  "product": {
+    "product_category": "bathymetric_surface",
+    "surface_type": null,
+    "vertical_variable": null,
+    "vertical_positive_direction": null,
+    "grid_type": null,
+    "description": null,
+    "bands": []
+  },
+
+  "constraints": {
+    "access_restrictions": null,
+    "use_constraints": null,
+    "other_constraints": null,
+    "use_limitation": null,
+    "license": null,
+    "copyright": null,
+    "distribution_statement": null,
+    "security_classification": null,
+    "national_classification": null,
+    "classification_authority": null,
+    "handling_description": null
+  },
+
+  "references": [],
+
+  "reconciliation": {
+    "_nota": "Regra de precedência quando um valor aparece em mais de uma fonte. A divergência vai para refined.validation.warnings; este arquivo não guarda status de completude.",
+    "rules": [
+      {"topic": "propriedades técnicas do raster (resolução, dimensões, nodata, CRS horizontal)", "wins": "extracted_or_calculated"},
+      {"topic": "semântica científica (datum vertical, sinal e variável vertical, incerteza, ordem do levantamento)", "wins": "declared"},
+      {"topic": "estatísticas e cobertura", "wins": "calculated"}
+    ],
+    "cross_checks": [
+      {"declared": "product.vertical_variable", "compare_with": "refined.thematic_analysis.value_semantics.variable"},
+      {"declared": "product.vertical_positive_direction", "compare_with": "refined.thematic_analysis.value_semantics.positive_direction"},
+      {"declared": "spatial_reference.vertical.unit", "compare_with": "raw.gdal.GDAL_METADATA.bands[0].UNITTYPE"},
+      {"declared": "product.bands[].index", "compare_with": "raw.tiff.SamplesPerPixel"}
+    ]
+  },
+
+  "_vocabularies": {
+    "survey_order": ["exclusive", "special", "1a", "1b", "2"],
+    "survey_standard": ["IHO S-44"],
+    "responsible_party_role": ["resourceProvider", "custodian", "owner", "user", "distributor", "originator", "pointOfContact", "principalInvestigator", "processor", "publisher", "author", "sponsor", "coAuthor", "collaborator", "editor", "mediator", "rightsHolder", "contributor", "funder", "stakeholder"],
+    "acquisition.method": ["multibeam_echosounder", "singlebeam_echosounder", "airborne_lidar_bathymetry", "satellite_derived", "interferometric_sonar", "other"],
+    "positioning.correction_type": ["none", "DGNSS", "SBAS", "RTK", "PPK", "PPP", "other"],
+    "instrument.role": ["echosounder", "sound_velocity_profiler", "sound_velocity_probe", "motion_sensor", "gnss_receiver", "inertial_navigation", "tide_gauge", "other"],
+    "vertical.datum_type": ["tidal", "geoid", "ellipsoid", "local", "other"],
+    "correction.type": ["tide", "sound_velocity", "heave_pitch_roll", "draft_squat", "datum_transformation", "tpu_model", "other"],
+    "interpolation.method": ["none", "cube", "tin", "idw", "kriging", "nearest_neighbour", "weighted_mean", "other"],
+    "uncertainty.representation": ["scalar_summary", "specification_limit", "per_node_band"],
+    "uncertainty.confidence_level": ["95%", "68%", "other"],
+    "product.surface_type": ["average", "shoalest", "deepest", "cube_estimate", "other"],
+    "product.vertical_variable": ["depth", "elevation", "height"],
+    "product.vertical_positive_direction": ["down", "up"],
+    "product.grid_type": ["regular", "variable_resolution", "other"],
+    "band.role": ["depth", "uncertainty_vertical", "uncertainty_horizontal", "std_dev", "sounding_count", "other"],
+    "security_classification": ["unclassified", "restricted", "confidential", "secret", "topSecret"],
+    "national_classification": "definir com a política institucional (ex.: ostensivo, reservado, secreto, ultrassecreto, conforme Lei de Acesso à Informação)",
+    "reference_type": ["survey_report", "specification", "processing_report", "publication", "related_dataset", "other"]
+  },
+
+  "_item_shapes": {
+    "responsible_parties[]": {"organization": null, "individual": null, "role": "<responsible_party_role>", "email": null, "website": null},
+    "acquisition.instruments[]": {"role": "<instrument.role>", "name": null, "manufacturer": null, "model": null, "serial_number": null, "calibration_date": null},
+    "processing.software[]": {"name": null, "version": null, "provider": null},
+    "processing.steps[]": {"order": null, "name": null, "description": null, "method": null, "parameters": {}, "execution_date": null},
+    "processing.corrections[]": {"type": "<correction.type>", "description": null, "applied": null, "method": null},
+    "processing.input_datasets[]": {"identifier": null, "title": null, "description": null},
+    "quality.limitations[]": {"description": null},
+    "product.bands[]": {"index": null, "role": "<band.role>", "quantity": null, "unit": null, "uncertainty_confidence_level": null},
+    "quality.*_uncertainty.band_ref": {"band_index": null, "quantity": "THU|TVU|std_dev"},
+    "references[]": {"title": null, "reference_type": "<reference_type>", "identifier": null, "url": null, "publication_date": null, "description": null},
+    "survey.survey_area": "GeoJSON geometry (Polygon ou MultiPolygon, EPSG:4326)",
+    "datas": "ISO 8601 (YYYY-MM-DD ou data-hora com fuso)"
+  }
+}
