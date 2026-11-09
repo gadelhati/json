@@ -20,6 +20,9 @@
 - [ ] NetCDF(Network Common Data Form) > xarray > Zarr
 - [ ] Chunking - Divisão dos dados multidimensionais em blocos menores.
 - [ ] Dask > Object Storage
+- [-] Structural validation — JSON Schema
+- [ ] Consistency validation — Application validator
+- [ ] Scientific assessment — Profile rules
 
 ---
 

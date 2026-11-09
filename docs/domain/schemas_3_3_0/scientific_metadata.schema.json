@@ -1,0 +1,1494 @@
+{
+  "type": "object",
+  "properties": {
+    "acquisition": {
+      "type": "object",
+      "properties": {
+        "campaign_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "end_date": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "instruments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "manufacturer": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "model": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "identifier": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "serial_number": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "calibration_date": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "format": "date"
+              }
+            },
+            "required": [
+              "name",
+              "manufacturer",
+              "model",
+              "identifier",
+              "serial_number",
+              "calibration_date"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "method": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "multibeam_echosounder",
+            "singlebeam_echosounder",
+            "lidar",
+            "satellite_derived",
+            "interferometric",
+            "other",
+            null
+          ]
+        },
+        "platform": {
+          "type": "object",
+          "properties": {
+            "identifier": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "name": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "type": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "identifier",
+            "name",
+            "type"
+          ]
+        },
+        "start_date": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "title": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "campaign_id",
+        "end_date",
+        "instruments",
+        "method",
+        "platform",
+        "start_date",
+        "title"
+      ]
+    },
+    "applies_to": {
+      "type": "object",
+      "properties": {
+        "_managed_by": {
+          "type": "string"
+        },
+        "dataset_version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "format": {
+                "type": "string"
+              },
+              "raw_document_id": {
+                "$ref": "common.schema.json#/$defs/documentId"
+              },
+              "source_checksums_sha256": {
+                "type": "array",
+                "items": {
+                  "$ref": "common.schema.json#/$defs/sha256"
+                }
+              },
+              "status": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "format",
+              "raw_document_id",
+              "source_checksums_sha256",
+              "status"
+            ]
+          }
+        },
+        "note": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "_managed_by",
+        "dataset_version",
+        "inputs",
+        "note"
+      ]
+    },
+    "constraints": {
+      "type": "object",
+      "properties": {
+        "access": {
+          "type": "object",
+          "properties": {
+            "access_constraints": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "classification": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "enum": [
+                "public",
+                "internal",
+                "confidential",
+                "restricted",
+                "secret",
+                "top_secret",
+                "other",
+                null
+              ]
+            },
+            "classification_authority": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "handling_restrictions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "national_classification": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "access_constraints",
+            "classification",
+            "classification_authority",
+            "handling_restrictions",
+            "national_classification"
+          ]
+        },
+        "use": {
+          "type": "object",
+          "properties": {
+            "attribution_requirements": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "copyright": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "distribution_statement": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "license": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "use_constraints": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "use_limitation": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "attribution_requirements",
+            "copyright",
+            "distribution_statement",
+            "license",
+            "use_constraints",
+            "use_limitation"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "access",
+        "use"
+      ]
+    },
+    "dataset_id": {
+      "type": "string"
+    },
+    "document_id": {
+      "type": "string"
+    },
+    "document_type": {
+      "const": "scientific_metadata"
+    },
+    "extension": {
+      "type": "object",
+      "properties": {
+        "bathymetry": {
+          "$ref": "../profiles/hydrography/bathymetry/1.0.0/profile.schema.json#/$defs/extension"
+        }
+      },
+      "additionalProperties": true
+    },
+    "field_status": {
+      "type": "object",
+      "properties": {
+        "default_status": {
+          "type": "string",
+          "enum": [
+            "declared",
+            "not_declared",
+            "not_applicable",
+            "unknown"
+          ]
+        },
+        "fields": {
+          "type": "object",
+          "additionalProperties": {
+            "enum": [
+              "declared",
+              "not_declared",
+              "not_applicable",
+              "unknown"
+            ]
+          }
+        },
+        "note": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "default_status",
+        "fields",
+        "note"
+      ]
+    },
+    "identification": {
+      "type": "object",
+      "properties": {
+        "abstract": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "alternate_titles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dates": {
+          "type": "object",
+          "properties": {
+            "creation": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "date"
+            },
+            "publication": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "date"
+            },
+            "revision": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "date"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "creation",
+            "publication",
+            "revision"
+          ]
+        },
+        "identifiers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "scheme": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              },
+              "authority": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "scheme",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "keywords": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "language": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "purpose": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "status": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "supplemental_information": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "title": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "topic_categories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "abstract",
+        "alternate_titles",
+        "dates",
+        "identifiers",
+        "keywords",
+        "language",
+        "purpose",
+        "status",
+        "supplemental_information",
+        "title",
+        "topic_categories"
+      ]
+    },
+    "metadata_record": {
+      "type": "object",
+      "properties": {
+        "date_stamp": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "language": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "date_stamp",
+        "language"
+      ]
+    },
+    "processing": {
+      "type": "object",
+      "properties": {
+        "corrections_applied": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "method": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "description": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "parameters": {
+                "type": "object",
+                "additionalProperties": true
+              },
+              "date": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "format": "date"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "filtering": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "method": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "description": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "parameters": {
+                "type": "object",
+                "additionalProperties": true
+              },
+              "date": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "format": "date"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "gridding": {
+          "type": "object",
+          "properties": {
+            "applied": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "method": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "enum": [
+                "mean",
+                "median",
+                "minimum",
+                "maximum",
+                "nearest_neighbor",
+                "inverse_distance_weighting",
+                "kriging",
+                "natural_neighbor",
+                "spline",
+                "cube",
+                "other",
+                null
+              ]
+            },
+            "resolution": {
+              "type": [
+                "number",
+                "string",
+                "null"
+              ]
+            },
+            "resolution_unit": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "applied",
+            "method",
+            "resolution",
+            "resolution_unit"
+          ]
+        },
+        "input_datasets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "dataset_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "title": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "reference": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "role": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "dataset_id",
+              "title",
+              "reference",
+              "role"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "interpolation": {
+          "type": "object",
+          "properties": {
+            "applied": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "method": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "enum": [
+                "nearest_neighbor",
+                "linear",
+                "bilinear",
+                "cubic",
+                "cubic_convolution",
+                "natural_neighbor",
+                "inverse_distance_weighting",
+                "kriging",
+                "spline",
+                "other",
+                null
+              ]
+            },
+            "parameters": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": true
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "applied",
+            "method",
+            "parameters"
+          ]
+        },
+        "manual_edits": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "processing_date": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "processing_steps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "method": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "description": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "parameters": {
+                "type": "object",
+                "additionalProperties": true
+              },
+              "date": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "format": "date"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "software": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/software"
+          }
+        },
+        "workflow_description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "corrections_applied",
+        "filtering",
+        "gridding",
+        "input_datasets",
+        "interpolation",
+        "manual_edits",
+        "processing_date",
+        "processing_steps",
+        "software",
+        "workflow_description"
+      ]
+    },
+    "profile": {
+      "type": "object",
+      "properties": {
+        "domain": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*$"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*$"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "domain",
+        "name",
+        "version"
+      ]
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "declared_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "declared_by": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "source_document": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "declared",
+            "derived_from_document",
+            "imported"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "declared_at",
+        "declared_by",
+        "notes",
+        "source_document",
+        "type"
+      ]
+    },
+    "quality": {
+      "type": "object",
+      "properties": {
+        "assessment_date": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "assessment_method": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "assessment_status": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "not_assessed",
+            "assessed",
+            "passed",
+            "passed_with_warnings",
+            "failed",
+            null
+          ]
+        },
+        "conformance_claims": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "specification": {
+                "type": "string"
+              },
+              "version": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "degree": {
+                "enum": [
+                  "conformant",
+                  "non_conformant",
+                  "not_evaluated",
+                  "partial",
+                  "unknown"
+                ]
+              },
+              "explanation": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "specification",
+              "version",
+              "degree",
+              "explanation"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "coverage_assessment": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "known_issues": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "quality_report": {
+          "type": "object",
+          "properties": {
+            "available": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "reference": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "summary": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "available",
+            "reference",
+            "summary"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "assessment_date",
+        "assessment_method",
+        "assessment_status",
+        "conformance_claims",
+        "coverage_assessment",
+        "known_issues",
+        "limitations",
+        "quality_report"
+      ]
+    },
+    "references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "enum": [
+              "publication",
+              "dataset",
+              "standard",
+              "website",
+              "document",
+              "other"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "creator": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "date": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "identifier": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "uri": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri"
+          },
+          "citation": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "title"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "responsible_parties": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/party"
+      }
+    },
+    "schema_reference": {
+      "type": "object",
+      "properties": {
+        "profile_schema_ref": {
+          "const": "profiles/hydrography/bathymetry/1.0.0"
+        },
+        "schema_id": {
+          "const": "scientific_metadata"
+        },
+        "schema_version": {
+          "const": "3.3.0"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "profile_schema_ref",
+        "schema_id",
+        "schema_version"
+      ]
+    },
+    "schema_version": {
+      "const": "3.3.0"
+    },
+    "spatial_reference": {
+      "type": "object",
+      "properties": {
+        "horizontal": {
+          "type": "object",
+          "properties": {
+            "_nota": {
+              "type": "string"
+            },
+            "coordinate_epoch": {
+              "type": [
+                "number",
+                "string",
+                "null"
+              ]
+            },
+            "identifier": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "name": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "_nota",
+            "coordinate_epoch",
+            "identifier",
+            "name"
+          ]
+        },
+        "vertical": {
+          "type": "object",
+          "properties": {
+            "datum": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "datum_type": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "enum": [
+                "orthometric",
+                "ellipsoidal",
+                "tidal",
+                "chart",
+                "local",
+                "other",
+                null
+              ]
+            },
+            "identifier": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "name": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "realization": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "reference_epoch": {
+              "type": [
+                "number",
+                "string",
+                "null"
+              ]
+            },
+            "reference_surface": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "separation_model": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "separation_model_version": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "unit": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "datum",
+            "datum_type",
+            "identifier",
+            "name",
+            "realization",
+            "reference_epoch",
+            "reference_surface",
+            "separation_model",
+            "separation_model_version",
+            "unit"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "horizontal",
+        "vertical"
+      ]
+    },
+    "temporal_reference": {
+      "type": "object",
+      "properties": {
+        "calendar": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "gregorian",
+            "proleptic_gregorian",
+            "noleap",
+            "all_leap",
+            "360_day",
+            "julian",
+            "other",
+            null
+          ]
+        },
+        "end": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "start": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "temporal_resolution": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "time_zone": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "calendar",
+        "end",
+        "start",
+        "temporal_resolution",
+        "time_zone"
+      ]
+    },
+    "variables": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "key": {
+            "type": "string"
+          },
+          "name": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "note": {
+            "type": "string"
+          },
+          "positive_direction": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "up",
+              "down",
+              "north",
+              "south",
+              "east",
+              "west",
+              "not_applicable",
+              null
+            ]
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "primary",
+              "secondary",
+              "coordinate",
+              "quality",
+              "ancillary"
+            ]
+          },
+          "sign_convention": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "positive_up",
+              "positive_down",
+              "negative_below_sea_level",
+              "positive_below_sea_level",
+              "not_applicable",
+              null
+            ]
+          },
+          "standard_name": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "uncertainty": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "measure": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "representation": {
+                  "enum": [
+                    "standard_deviation",
+                    "confidence_interval",
+                    "expanded_uncertainty",
+                    "maximum_error",
+                    "rmse",
+                    "other"
+                  ]
+                },
+                "value": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "minimum": 0
+                },
+                "unit": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "confidence_level": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "variable_ref": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "measure",
+                "representation",
+                "value",
+                "unit",
+                "confidence_level",
+                "variable_ref"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "unit": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "description",
+          "key",
+          "name",
+          "note",
+          "positive_direction",
+          "role",
+          "sign_convention",
+          "standard_name",
+          "uncertainty",
+          "unit"
+        ]
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "acquisition",
+    "applies_to",
+    "constraints",
+    "dataset_id",
+    "document_id",
+    "document_type",
+    "extension",
+    "field_status",
+    "identification",
+    "metadata_record",
+    "processing",
+    "profile",
+    "provenance",
+    "quality",
+    "references",
+    "responsible_parties",
+    "schema_reference",
+    "schema_version",
+    "spatial_reference",
+    "temporal_reference",
+    "variables"
+  ],
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.forgepack.dev/scientific/3.3.0/scientific_metadata.schema.json",
+  "title": "scientific_metadata.json 3.3.0",
+  "description": "Declarações científicas fornecidas pelo responsável pelo dataset. Não é preenchido automaticamente por simples observação de fontes.",
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "profile": {
+            "properties": {
+              "domain": {
+                "const": "hydrography"
+              },
+              "name": {
+                "const": "bathymetry"
+              }
+            },
+            "required": [
+              "domain",
+              "name"
+            ]
+          }
+        },
+        "required": [
+          "profile"
+        ]
+      },
+      "then": {
+        "properties": {
+          "extension": {
+            "required": [
+              "bathymetry"
+            ]
+          },
+          "schema_reference": {
+            "properties": {
+              "profile_schema_ref": {
+                "const": "profiles/hydrography/bathymetry/1.0.0"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$comment": "3.3.0. This schema validates structure only. Profile-specific scientific acceptance criteria are outside JSON Schema."
+}

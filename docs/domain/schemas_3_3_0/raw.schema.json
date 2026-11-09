@@ -1,0 +1,1189 @@
+{
+  "type": "object",
+  "properties": {
+    "components": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "component_id": {
+            "$ref": "common.schema.json#/$defs/identifier"
+          },
+          "source_id": {
+            "$ref": "common.schema.json#/$defs/identifier"
+          },
+          "name": {
+            "type": "string"
+          },
+          "media_type": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "format": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "role": {
+            "enum": [
+              "sidecar",
+              "metadata",
+              "index",
+              "overview",
+              "mask",
+              "auxiliary",
+              "other"
+            ]
+          },
+          "checksum": {
+            "$ref": "common.schema.json#/$defs/checksum"
+          },
+          "location": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "uri": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "format": "uri"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "component_id",
+          "name",
+          "role"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "conventions": {
+      "type": "object",
+      "properties": {
+        "cardinality": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        },
+        "nulls": {
+          "type": "string"
+        },
+        "sources": {
+          "type": "string"
+        },
+        "values": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "cardinality",
+        "language",
+        "nulls",
+        "sources",
+        "values"
+      ]
+    },
+    "created_at": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "data_objects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "native_reference": {
+            "type": "object",
+            "properties": {
+              "format": {
+                "type": "string"
+              },
+              "locator": {
+                "type": "object",
+                "properties": {
+                  "band_indices": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    }
+                  },
+                  "group": {
+                    "type": "string"
+                  },
+                  "ifd": {
+                    "type": "integer"
+                  },
+                  "variables": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "format",
+              "locator"
+            ]
+          },
+          "object_id": {
+            "type": "string"
+          },
+          "object_type": {
+            "type": "string"
+          },
+          "source_id": {
+            "$ref": "common.schema.json#/$defs/identifier"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "native_reference",
+          "object_id",
+          "object_type",
+          "source_id"
+        ]
+      }
+    },
+    "dataset_id": {
+      "type": "string"
+    },
+    "document_id": {
+      "type": "string"
+    },
+    "document_type": {
+      "const": "raw"
+    },
+    "extraction": {
+      "type": "object",
+      "properties": {
+        "executed_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "parameters": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": true
+        },
+        "status": {
+          "type": "string"
+        },
+        "tool": {
+          "type": "string"
+        },
+        "tool_version": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "executed_at",
+        "parameters",
+        "status",
+        "tool",
+        "tool_version"
+      ]
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "schema_version": {
+      "const": "3.3.0"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "checksum": {
+            "$ref": "common.schema.json#/$defs/checksum"
+          },
+          "file_metadata": {
+            "type": "object",
+            "properties": {
+              "created_at": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "last_modified": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "created_at",
+              "last_modified"
+            ]
+          },
+          "format": {
+            "enum": [
+              "GeoTIFF",
+              "NetCDF",
+              "GDAL PAM"
+            ]
+          },
+          "format_metadata": {
+            "type": "object",
+            "oneOf": [
+              {
+                "required": [
+                  "tiff",
+                  "gdal"
+                ],
+                "properties": {
+                  "tiff": {
+                    "$ref": "#/$defs/tiffMetadata"
+                  },
+                  "gdal": {
+                    "$ref": "#/$defs/gdalMetadata"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "required": [
+                  "netcdf"
+                ],
+                "properties": {
+                  "netcdf": {
+                    "$ref": "#/$defs/netcdfMetadata"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "required": [
+                  "pam"
+                ],
+                "properties": {
+                  "pam": {
+                    "$ref": "#/$defs/pamMetadata"
+                  }
+                },
+                "additionalProperties": false
+              }
+            ]
+          },
+          "format_version": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "location": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "uri": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "format": "uri"
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "path",
+              "uri"
+            ]
+          },
+          "media_type": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "role": {
+            "enum": [
+              "primary_data",
+              "sidecar",
+              "auxiliary",
+              "metadata",
+              "supporting_data",
+              "other"
+            ]
+          },
+          "sidecar_of": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "size_bytes": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "source_id": {
+            "$ref": "common.schema.json#/$defs/identifier"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "checksum",
+          "file_metadata",
+          "format",
+          "format_metadata",
+          "format_version",
+          "location",
+          "media_type",
+          "name",
+          "role",
+          "sidecar_of",
+          "size_bytes",
+          "source_id"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "format": {
+                  "const": "GeoTIFF"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "format_metadata": {
+                  "required": [
+                    "tiff",
+                    "gdal"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "format": {
+                  "const": "NetCDF"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "format_metadata": {
+                  "required": [
+                    "netcdf"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "format": {
+                  "const": "GDAL PAM"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "format_metadata": {
+                  "required": [
+                    "pam"
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "components",
+    "conventions",
+    "created_at",
+    "data_objects",
+    "dataset_id",
+    "document_id",
+    "document_type",
+    "extraction",
+    "limitations",
+    "schema_version",
+    "sources"
+  ],
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "raw.json 3.3.0",
+  "description": "Registro fiel das fontes e dos metadados nativos observados. Não contém interpretação científica normalizada.",
+  "$defs": {
+    "tagEnum": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": [
+            "integer",
+            "number",
+            "string",
+            "boolean",
+            "array"
+          ],
+          "items": {
+            "type": [
+              "integer",
+              "number",
+              "string",
+              "boolean"
+            ]
+          }
+        },
+        "label": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "value",
+        "label"
+      ],
+      "additionalProperties": false
+    },
+    "tiffTags": {
+      "type": "object",
+      "properties": {
+        "NewSubfileType": {
+          "$ref": "#/$defs/tagEnum"
+        },
+        "ImageWidth": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "ImageLength": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "BitsPerSample": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "SampleFormat": {
+          "$ref": "#/$defs/tagEnum"
+        },
+        "SamplesPerPixel": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "Compression": {
+          "$ref": "#/$defs/tagEnum"
+        },
+        "Predictor": {
+          "$ref": "#/$defs/tagEnum"
+        },
+        "PhotometricInterpretation": {
+          "$ref": "#/$defs/tagEnum"
+        },
+        "PlanarConfiguration": {
+          "$ref": "#/$defs/tagEnum"
+        },
+        "Orientation": {
+          "$ref": "#/$defs/tagEnum"
+        },
+        "TileWidth": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "TileLength": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "Software": {
+          "type": "string"
+        },
+        "DateTime": {
+          "type": "string"
+        },
+        "ModelPixelScaleTag": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "ModelTiepointTag": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "ModelTransformationTag": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "number"
+          }
+        },
+        "GeoKeyDirectoryTag": {
+          "type": "object",
+          "properties": {
+            "KeyDirectoryVersion": {
+              "type": "integer"
+            },
+            "KeyRevision": {
+              "type": "integer"
+            },
+            "MinorRevision": {
+              "type": "integer"
+            },
+            "keys": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": [
+                      "string",
+                      "number",
+                      "integer",
+                      "array"
+                    ]
+                  },
+                  "label": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "id",
+                  "name",
+                  "value",
+                  "label"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "KeyDirectoryVersion",
+            "KeyRevision",
+            "MinorRevision",
+            "keys"
+          ],
+          "additionalProperties": false
+        },
+        "GeoDoubleParamsTag": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "GeoAsciiParamsTag": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "GDAL_NODATA": {
+          "type": [
+            "string",
+            "number",
+            "null"
+          ]
+        },
+        "GDAL_METADATA": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "tiffMetadata": {
+      "type": "object",
+      "properties": {
+        "byte_order": {
+          "enum": [
+            "little-endian",
+            "big-endian"
+          ]
+        },
+        "big_tiff": {
+          "type": "boolean"
+        },
+        "ifds": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "ifd": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "tags": {
+                "$ref": "#/$defs/tiffTags"
+              }
+            },
+            "required": [
+              "ifd",
+              "tags"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "byte_order",
+        "big_tiff",
+        "ifds"
+      ],
+      "additionalProperties": false
+    },
+    "gdalBand": {
+      "type": "object",
+      "properties": {
+        "index": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "data_type": {
+          "type": "string"
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "unit_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "scale": {
+          "type": [
+            "string",
+            "number",
+            "null"
+          ]
+        },
+        "offset": {
+          "type": [
+            "string",
+            "number",
+            "null"
+          ]
+        },
+        "no_data_value": {
+          "type": [
+            "string",
+            "number",
+            "null"
+          ]
+        },
+        "color_interpretation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "mask_flags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "required": [
+        "index",
+        "data_type",
+        "description",
+        "unit_type",
+        "scale",
+        "offset",
+        "no_data_value",
+        "color_interpretation",
+        "mask_flags",
+        "metadata"
+      ],
+      "additionalProperties": false
+    },
+    "gdalMetadata": {
+      "type": "object",
+      "properties": {
+        "_nota": {
+          "type": "string"
+        },
+        "driver": {
+          "type": "string"
+        },
+        "metadata_items": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "null"
+              ]
+            }
+          }
+        },
+        "bands": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/gdalBand"
+          }
+        },
+        "structural_metadata": {
+          "type": "object",
+          "properties": {
+            "raw_text": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "capture_status": {
+              "enum": [
+                "captured",
+                "not_captured",
+                "not_available",
+                "not_applicable"
+              ]
+            },
+            "note": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "raw_text",
+            "capture_status",
+            "note"
+          ],
+          "additionalProperties": false,
+          "description": "Preservação literal de GDAL_STRUCTURAL_METADATA. A interpretação estruturada pertence ao refined."
+        }
+      },
+      "required": [
+        "driver",
+        "metadata_items",
+        "bands",
+        "structural_metadata"
+      ],
+      "additionalProperties": false
+    },
+    "netcdfDimension": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unlimited": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "size",
+        "unlimited"
+      ],
+      "additionalProperties": false
+    },
+    "netcdfVariable": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "dtype": {
+          "type": "string"
+        },
+        "dimensions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "shape": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "storage": {
+          "enum": [
+            "contiguous",
+            "chunked",
+            "unknown"
+          ]
+        },
+        "chunking": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "filters": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "deflate": {
+              "type": [
+                "integer",
+                "boolean",
+                "null"
+              ]
+            },
+            "shuffle": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "fletcher32": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "szip": {
+              "type": [
+                "object",
+                "string",
+                "null"
+              ]
+            },
+            "zstd": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "bzip2": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": {
+            "type": [
+              "integer",
+              "number",
+              "string",
+              "boolean",
+              "null"
+            ]
+          }
+        },
+        "endianness": {
+          "enum": [
+            "little",
+            "big",
+            "native",
+            "unknown"
+          ]
+        },
+        "attributes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "integer",
+              "boolean",
+              "array",
+              "null"
+            ]
+          }
+        },
+        "coordinate_values": {
+          "type": "object",
+          "properties": {
+            "included": {
+              "type": "boolean"
+            },
+            "inspection_status": {
+              "type": "string"
+            },
+            "note": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "included",
+            "inspection_status",
+            "note"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "name",
+        "dtype",
+        "dimensions",
+        "shape",
+        "storage",
+        "chunking",
+        "filters",
+        "endianness",
+        "attributes"
+      ],
+      "additionalProperties": false
+    },
+    "netcdfMetadata": {
+      "type": "object",
+      "properties": {
+        "data_model": {
+          "type": "string"
+        },
+        "disk_format": {
+          "type": "string"
+        },
+        "dimensions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/netcdfDimension"
+          }
+        },
+        "groups": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/netcdfGroup"
+          }
+        },
+        "global_attributes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "integer",
+              "boolean",
+              "array",
+              "null"
+            ]
+          }
+        },
+        "variables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/netcdfVariable"
+          }
+        }
+      },
+      "required": [
+        "data_model",
+        "disk_format",
+        "dimensions",
+        "groups",
+        "global_attributes",
+        "variables"
+      ],
+      "additionalProperties": false
+    },
+    "pamMetadata": {
+      "type": "object",
+      "properties": {
+        "srs": {
+          "type": [
+            "string",
+            "object",
+            "null"
+          ]
+        },
+        "geotransform": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "number"
+          }
+        },
+        "bands": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "index": {
+                "type": "integer"
+              },
+              "no_data_value": {
+                "type": [
+                  "number",
+                  "string",
+                  "null"
+                ]
+              },
+              "histogram": {
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "properties": {
+                  "minimum": {
+                    "type": "number"
+                  },
+                  "maximum": {
+                    "type": "number"
+                  },
+                  "bucket_count": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "counts": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  }
+                },
+                "additionalProperties": false
+              },
+              "metadata": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": [
+                    "string",
+                    "number",
+                    "boolean",
+                    "null"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "index",
+              "no_data_value",
+              "histogram",
+              "metadata"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "srs",
+        "geotransform",
+        "bands"
+      ],
+      "additionalProperties": false
+    },
+    "netcdfGroup": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "dimensions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/netcdfDimension"
+          }
+        },
+        "attributes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "array",
+              "null"
+            ]
+          }
+        },
+        "variables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/netcdfVariable"
+          }
+        },
+        "groups": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/netcdfGroup"
+          }
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://schemas.forgepack.dev/scientific/3.3.0/raw.schema.json",
+  "$comment": "3.3.0. GDAL structural metadata is preserved as raw_text only; parsed representation is intentionally outside raw.json."
+}

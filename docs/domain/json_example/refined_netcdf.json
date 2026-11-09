@@ -1,0 +1,671 @@
+{
+  "schema_version": "3.3.0",
+  "document_type": "refined",
+  "document_id": "REPLACE-WITH-REFINED-NETCDF-DOCUMENT-UUID",
+  "dataset_id": "REPLACE-WITH-DATASET-UUID",
+  "created_at": "2026-11-06T14:00:00Z",
+  "inputs": {
+    "raw": {
+      "document_id": "REPLACE-WITH-RAW-NETCDF-DOCUMENT-UUID",
+      "checksum_sha256": null
+    },
+    "scientific_metadata": {
+      "document_id": "REPLACE-WITH-SCIENTIFIC-METADATA-DOCUMENT-UUID",
+      "schema_version": "3.2.0",
+      "checksum_sha256": null,
+      "status": "current"
+    }
+  },
+  "processing": {
+    "status": "completed",
+    "processed_at": "2026-11-06T14:00:00Z",
+    "software": [
+      {
+        "name": "netCDF4",
+        "version": "1.6.5"
+      },
+      {
+        "name": "pyproj",
+        "version": null
+      }
+    ],
+    "parameters": {
+      "statistics_mode": "exact",
+      "histogram_bins": 256
+    }
+  },
+  "dataset": {
+    "profile_ref": {
+      "document": "scientific_metadata",
+      "path": "profile"
+    },
+    "data_model": "raster_grid",
+    "spatial_reference": {
+      "horizontal": {
+        "crs": {
+          "authority": "EPSG",
+          "code": 4326,
+          "name": "WGS 84",
+          "type": "geographic",
+          "wkt": "GEOGCS[\"WGS 84\",DATUM[\"WGS_1984\",SPHEROID[\"WGS 84\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433]]",
+          "resolved_from": "raw.sources[0].format_metadata.netcdf.variables[2].attributes"
+        },
+        "coordinate_epoch": null
+      }
+    }
+  },
+  "data_objects": [
+    {
+      "object_id": "data-object-001",
+      "raw_object_refs": [
+        "raw-object-001"
+      ],
+      "source_refs": [
+        "source-001"
+      ],
+      "role": "primary_data",
+      "structure": "regular_grid",
+      "dimensions": [
+        {
+          "name": "lat",
+          "size": 8000,
+          "axis": "spatial_y",
+          "unit": "degrees_north"
+        },
+        {
+          "name": "lon",
+          "size": 10000,
+          "axis": "spatial_x",
+          "unit": "degrees_east"
+        }
+      ],
+      "storage": {
+        "organization": "chunked",
+        "chunk_or_tile_shape": [
+          256,
+          256
+        ],
+        "compression": "deflate (nível 4) com shuffle",
+        "overview_levels": null,
+        "native_layout_ref": "raw.sources[0].format_metadata.netcdf.variables[3]"
+      },
+      "geometry": {
+        "shape": [
+          8000,
+          10000
+        ],
+        "georeferencing": {
+          "transform": null,
+          "pixel_interpretation": "unknown",
+          "pixel_interpretation_origin": "not_determined",
+          "pixel_interpretation_note": "Não é possível concluir se os valores de lat/lon representam centros ou limites das células com os metadados atualmente registrados. Os arrays de coordenadas e eventuais variáveis bounds precisam ser inspecionados na fonte.",
+          "rotation": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "north_up": true,
+          "coordinate_order": {
+            "y": "descending",
+            "x": "ascending"
+          },
+          "coordinate_axes": {
+            "x": {
+              "coordinate_variable": "lon",
+              "coordinate_values_inspected": false,
+              "coordinate_semantics": "unknown",
+              "bounds_variable_ref": null,
+              "bounds_present": "not_determined"
+            },
+            "y": {
+              "coordinate_variable": "lat",
+              "coordinate_values_inspected": false,
+              "coordinate_semantics": "unknown",
+              "bounds_variable_ref": null,
+              "bounds_present": "not_determined"
+            }
+          }
+        },
+        "extent": {
+          "native": {
+            "west": -45.0,
+            "south": -20.8,
+            "east": -44.0,
+            "north": -20.0,
+            "crs_ref": "dataset.spatial_reference.horizontal.crs",
+            "origin": "source_global_attributes",
+            "source_ref": "raw.sources[source-001].format_metadata.netcdf.global_attributes"
+          },
+          "wgs84": null,
+          "centroid": null,
+          "footprint": null,
+          "valid_data_bbox": {
+            "west": -44.998,
+            "south": -20.799,
+            "east": -44.001,
+            "north": -20.002
+          },
+          "extent_semantics": "source_declared_geospatial_bounds; not independently verified against coordinate arrays or cell bounds"
+        },
+        "resolution": {
+          "native": {
+            "x": 0.0001,
+            "y": 0.0001,
+            "unit": "degree"
+          },
+          "approximate_ground": {
+            "x": 10.44,
+            "y": 11.07,
+            "unit": "m",
+            "reference_latitude": -20.4
+          }
+        }
+      },
+      "validation_check_refs": [
+        "chk-dimensions-valid",
+        "chk-north-up"
+      ]
+    }
+  ],
+  "variables": [
+    {
+      "variable_id": "variable-depth-001",
+      "key": "depth",
+      "key_origin": "assigned_at_ingestion",
+      "name": "depth",
+      "label": "Profundidade",
+      "standard_name": null,
+      "description": null,
+      "data_type": "Float32",
+      "dimensions": [
+        "lat",
+        "lon"
+      ],
+      "data_object_ref": "data-object-001",
+      "source_bindings": [
+        {
+          "source_ref": "source-001",
+          "locator": {
+            "netcdf_variable": "depth"
+          },
+          "binding_origin": "assigned_at_ingestion"
+        }
+      ],
+      "unit": "m",
+      "encoding": {
+        "scale_factor": null,
+        "add_offset": null,
+        "nodata": -9999
+      },
+      "semantics": {
+        "sign_convention": "negative_below_sea_level",
+        "positive_direction": "up",
+        "origin": "inferred",
+        "ambiguity": {
+          "detected": true,
+          "description": "A descrição 'Profundidade' sugere profundidade (positiva para baixo), mas todos os valores válidos são <= 0, o que indica convenção de elevação. A interpretação precisa ser confirmada por declaração.",
+          "requires_declaration": "scientific_metadata.variables[key=depth].sign_convention"
+        }
+      },
+      "statistics_ref": "statistics.variables[statistics-depth-001]"
+    }
+  ],
+  "coverage": {
+    "spatial": {
+      "extent_ref": "data_objects[0].geometry.extent",
+      "valid_data_extent_ref": "data_objects[0].geometry.extent.valid_data_bbox",
+      "area_km2": 9244.77,
+      "area_method": "geodesic",
+      "area_reference_crs": "EPSG:4326"
+    },
+    "temporal": null,
+    "data_completeness": {
+      "valid_count": 73600000,
+      "nodata_count": 6400000,
+      "total_count": 80000000,
+      "valid_percentage": 92.0,
+      "nodata_percentage": 8.0,
+      "method": "contagem sobre todos os blocos",
+      "variable_key": "depth"
+    }
+  },
+  "statistics": {
+    "variables": [
+      {
+        "variable_key": "depth",
+        "method": "exact",
+        "valid_sample_count": 73600000,
+        "minimum": -3850.5,
+        "maximum": -2.1,
+        "mean": -1240.7,
+        "median": -980.2,
+        "standard_deviation": 980.3,
+        "variance": 960988.1,
+        "percentiles": {
+          "p02": -3400.0,
+          "p05": -3100.0,
+          "p25": -1900.0,
+          "p50": -980.2,
+          "p75": -300.0,
+          "p95": -20.0,
+          "p98": -8.0
+        },
+        "histogram": {
+          "bin_count": 256,
+          "minimum": -3850.5,
+          "maximum": -2.1,
+          "counts": []
+        },
+        "comparison_with_sources": [],
+        "comparison_note": "A fonte não traz estatísticas gravadas; nada a comparar.",
+        "statistics_id": "statistics-depth-001"
+      }
+    ]
+  },
+  "thematic_analysis": {
+    "suggested_profile": "bathymetry",
+    "confidence": null,
+    "confidence_method": null,
+    "method": "heuristic",
+    "evidence": [
+      "o nome da fonte contém 'batimetria'",
+      "a descrição da variável é 'Profundidade'",
+      "todos os valores válidos são menores ou iguais a zero"
+    ],
+    "matches_declared_profile": null,
+    "note": "Sugestão apenas. Não preenche campos científicos."
+  },
+  "reconciliation": {
+    "precedence": [
+      {
+        "topic": "propriedades técnicas do dado (dimensões, resolução, nodata, CRS horizontal)",
+        "wins": "extracted_or_calculated"
+      },
+      {
+        "topic": "semântica científica (datum vertical, convenção de sinal, incerteza, ordem do levantamento, título, descrição)",
+        "wins": "declared"
+      },
+      {
+        "topic": "estatísticas e cobertura",
+        "wins": "calculated"
+      }
+    ],
+    "ownership": {
+      "scientific_metadata": [
+        "identification",
+        "responsible_parties",
+        "spatial_reference.vertical",
+        "temporal_reference",
+        "acquisition",
+        "processing",
+        "variables[].sign_convention",
+        "variables[].uncertainty",
+        "quality",
+        "constraints",
+        "references",
+        "extension"
+      ],
+      "refined": [
+        "dataset.spatial_reference.horizontal",
+        "data_objects",
+        "variables[].encoding",
+        "coverage",
+        "statistics",
+        "validation",
+        "derivations"
+      ]
+    },
+    "rule": "Divergência entre declarado e extraído nunca é resolvida em silêncio: gera aviso em validation.warnings.",
+    "cross_checks": [
+      {
+        "check_id": "xchk-vertical-unit",
+        "declared_ref": "scientific_metadata.variables[key=depth].unit",
+        "extracted_ref": "variables[0].unit",
+        "result": "not_comparable",
+        "reason": "valor declarado ausente"
+      },
+      {
+        "check_id": "xchk-sign-convention",
+        "declared_ref": "scientific_metadata.variables[key=depth].sign_convention",
+        "extracted_ref": "variables[0].semantics",
+        "result": "not_comparable",
+        "reason": "valor declarado ausente"
+      },
+      {
+        "check_id": "xchk-horizontal-crs",
+        "declared_ref": "scientific_metadata.spatial_reference.horizontal.identifier",
+        "extracted_ref": "dataset.spatial_reference.horizontal.crs",
+        "result": "not_comparable",
+        "reason": "valor declarado ausente"
+      },
+      {
+        "check_id": "xchk-gridding-resolution",
+        "declared_ref": "scientific_metadata.processing.gridding.resolution",
+        "extracted_ref": "data_objects[0].geometry.resolution.native",
+        "result": "not_comparable",
+        "reason": "valor declarado ausente"
+      },
+      {
+        "check_id": "xchk-variable-binding",
+        "declared_ref": "variables[0].source_bindings",
+        "extracted_ref": "raw.sources[0].format_metadata.netcdf.variables",
+        "result": "match",
+        "reason": "variável depth encontrada na fonte e vinculada"
+      }
+    ]
+  },
+  "quality_assessment": {
+    "status": "not_assessed",
+    "computed_quality": {
+      "completeness_ref": "coverage.data_completeness"
+    },
+    "declared_quality_ref": {
+      "document": "scientific_metadata",
+      "path": "quality"
+    },
+    "quality_score": null,
+    "quality_score_method": null,
+    "issues": [],
+    "recommendations": []
+  },
+  "validation": {
+    "checks": [
+      {
+        "id": "chk-source-readable",
+        "name": "source_readable",
+        "criterion": "a fonte abre sem erro e todos os blocos de dados são lidos",
+        "severity": "error",
+        "passed": true,
+        "scope": "source"
+      },
+      {
+        "id": "chk-crs-resolved",
+        "name": "spatial_reference_resolved",
+        "criterion": "CRS horizontal resolvido para um identificador de autoridade reconhecido",
+        "severity": "error",
+        "passed": true,
+        "scope": "dataset"
+      },
+      {
+        "id": "chk-dimensions-valid",
+        "name": "data_object_dimensions_valid",
+        "criterion": "dimensões e forma do objeto de dados são consistentes",
+        "severity": "error",
+        "passed": true,
+        "scope": "data_object"
+      },
+      {
+        "id": "chk-encoding-valid",
+        "name": "variable_encoding_valid",
+        "criterion": "tipo de dado e codificação de nodata são legíveis",
+        "severity": "error",
+        "passed": true,
+        "scope": "variable"
+      },
+      {
+        "id": "chk-north-up",
+        "name": "north_up",
+        "criterion": "rotação zero e passo em Y negativo (ou eixo Y decrescente)",
+        "severity": "warning",
+        "passed": null,
+        "scope": "data_object",
+        "details": {
+          "reason": "A ordem dos valores dos arrays de coordenadas não está registrada nesta instância raw."
+        }
+      },
+      {
+        "id": "chk-coordinates-regular",
+        "name": "coordinates_regular",
+        "criterion": "variáveis lat e lon monotônicas, com espaçamento constante dentro da tolerância",
+        "severity": "warning",
+        "passed": null,
+        "scope": "data_object",
+        "details": {
+          "reason": "A regularidade deve ser verificada sobre os arrays de coordenadas, não apenas sobre as definições das variáveis."
+        }
+      },
+      {
+        "id": "chk-cf-conventions-declared",
+        "name": "cf_conventions_declared",
+        "criterion": "atributo global Conventions lista CF",
+        "severity": "warning",
+        "passed": true,
+        "scope": "source"
+      },
+      {
+        "id": "chk-cf-standard-name",
+        "name": "cf_standard_name_present",
+        "criterion": "a variável principal tem standard_name do CF",
+        "severity": "warning",
+        "passed": false,
+        "scope": "variable"
+      },
+      {
+        "id": "chk-vertical-datum-declared",
+        "name": "vertical_datum_declared",
+        "criterion": "datum vertical declarado em scientific_metadata",
+        "severity": "warning",
+        "passed": false,
+        "scope": "dataset"
+      },
+      {
+        "id": "chk-uncertainty-declared",
+        "name": "uncertainty_declared",
+        "criterion": "incerteza vertical declarada para a variável principal",
+        "severity": "warning",
+        "passed": false,
+        "scope": "variable"
+      },
+      {
+        "id": "chk-vertical-semantics-unambiguous",
+        "name": "vertical_semantics_unambiguous",
+        "criterion": "convenção de sinal confirmada por declaração",
+        "severity": "warning",
+        "passed": false,
+        "scope": "variable"
+      }
+    ],
+    "warnings": [
+      {
+        "check_ref": "chk-vertical-datum-declared",
+        "message": "Datum vertical não declarado: os valores verticais não são utilizáveis sem referência."
+      },
+      {
+        "check_ref": "chk-uncertainty-declared",
+        "message": "Incerteza vertical não declarada."
+      },
+      {
+        "check_ref": "chk-vertical-semantics-unambiguous",
+        "message": "Convenção de sinal inferida e ambígua; requer declaração."
+      },
+      {
+        "check_ref": "chk-cf-standard-name",
+        "message": "A variável depth não tem standard_name; a semântica depende de declaração."
+      },
+      {
+        "check_ref": "chk-coordinates-regular",
+        "message": "Georreferenciamento NetCDF pendente: os arrays de coordenadas e eventuais bounds precisam ser inspecionados para determinar centros/limites e transformação."
+      }
+    ],
+    "errors": [],
+    "dimensions": {
+      "structural_integrity": {
+        "status": "passed_with_warnings",
+        "meaning": "O documento e os dados de origem podem ser lidos, interpretados e relacionados estruturalmente.",
+        "checks_ref": "validation.checks"
+      },
+      "scientific_conformance": {
+        "status": "incomplete",
+        "meaning": "Os requisitos aplicáveis ao perfil científico foram atendidos.",
+        "profile_ref": "dataset.profile_ref",
+        "checks_ref": "validation.checks"
+      },
+      "publication_readiness": {
+        "status": "not_ready",
+        "publishable": false,
+        "meaning": "O dataset possui as declarações, evidências e condições exigidas para publicação."
+      }
+    },
+    "publication_requirements": {
+      "profile": "bathymetry@1.0.0",
+      "publishable": false,
+      "required_missing": [
+        "spatial_reference.vertical.datum",
+        "variables[key=depth].uncertainty",
+        "identification.title",
+        "responsible_parties",
+        "constraints.access.classification"
+      ],
+      "rule_source": "Requisitos ilustrativos; a definição normativa será estabelecida no perfil científico versionado.",
+      "status": "not_ready"
+    }
+  },
+  "derivations": [
+    {
+      "derivation_id": "derivation-structure-001",
+      "target_ref": "data_objects[0].storage",
+      "origin_type": "extracted",
+      "operation": "read_layout",
+      "method": "chunking e filtros da variável depth",
+      "input_refs": [
+        "raw.sources[source-001].format_metadata.netcdf.variables[3]"
+      ],
+      "status": "completed"
+    },
+    {
+      "derivation_id": "derivation-encoding-001",
+      "target_ref": "variables[0].encoding",
+      "origin_type": "extracted",
+      "operation": "read_encoding",
+      "method": "atributo _FillValue; scale_factor e add_offset ausentes",
+      "input_refs": [
+        "raw.sources[source-001].format_metadata.netcdf.variables[3].attributes"
+      ],
+      "status": "completed"
+    },
+    {
+      "derivation_id": "derivation-crs-001",
+      "target_ref": "dataset.spatial_reference.horizontal.crs",
+      "origin_type": "external",
+      "operation": "resolve_crs",
+      "method": "crs_wkt da variável de mapeamento de grade consultado na base EPSG",
+      "input_refs": [
+        "raw.sources[source-001].format_metadata.netcdf.variables[2].attributes"
+      ],
+      "status": "completed"
+    },
+    {
+      "derivation_id": "derivation-georef-001",
+      "target_ref": "data_objects[0].geometry.georeferencing",
+      "origin_type": "incomplete",
+      "operation": "derive_geotransform",
+      "method": "Pendente: inspecionar os arrays lat/lon, verificar monotonicidade/espaçamento e consultar atributos bounds antes de derivar transformação.",
+      "input_refs": [
+        "raw.sources[source-001].format_metadata.netcdf.variables[0]",
+        "raw.sources[source-001].format_metadata.netcdf.variables[1]",
+        "source_file:coordinate_arrays_not_captured_in_raw"
+      ],
+      "status": "requires_source_inspection"
+    },
+    {
+      "derivation_id": "derivation-extent-001",
+      "target_ref": "data_objects[0].geometry.extent",
+      "origin_type": "external",
+      "operation": "calculate_extent",
+      "method": "Valores de geospatial_lon_min/max e geospatial_lat_min/max preservados nos atributos globais; não interpretados como bordas de células sem verificar arrays e bounds.",
+      "input_refs": [
+        "raw.sources[source-001].format_metadata.netcdf.global_attributes.geospatial_lon_min",
+        "raw.sources[source-001].format_metadata.netcdf.global_attributes.geospatial_lon_max",
+        "raw.sources[source-001].format_metadata.netcdf.global_attributes.geospatial_lat_min",
+        "raw.sources[source-001].format_metadata.netcdf.global_attributes.geospatial_lat_max"
+      ],
+      "status": "provisional"
+    },
+    {
+      "derivation_id": "derivation-valid-bbox-001",
+      "target_ref": "data_objects[0].geometry.extent.valid_data_bbox",
+      "origin_type": "calculated",
+      "operation": "scan_valid_cells",
+      "method": "varredura de células diferentes de _FillValue",
+      "input_refs": [
+        "data_objects[0]"
+      ],
+      "status": "completed"
+    },
+    {
+      "derivation_id": "derivation-ground-resolution-001",
+      "target_ref": "data_objects[0].geometry.resolution.approximate_ground",
+      "origin_type": "calculated",
+      "operation": "calculate_ground_resolution",
+      "method": "cálculo geodésico no elipsoide WGS 84 (pyproj.Geod)",
+      "parameters": {
+        "reference_latitude": -20.4
+      },
+      "input_refs": [
+        "data_objects[0].geometry.georeferencing"
+      ],
+      "status": "completed"
+    },
+    {
+      "derivation_id": "derivation-area-001",
+      "target_ref": "coverage.spatial.area_km2",
+      "origin_type": "calculated",
+      "operation": "calculate_area",
+      "method": "área geodésica do footprint no elipsoide WGS 84 (pyproj.Geod)",
+      "input_refs": [
+        "data_objects[0].geometry.extent.footprint"
+      ],
+      "status": "completed"
+    },
+    {
+      "derivation_id": "derivation-counts-001",
+      "target_ref": "coverage.data_completeness",
+      "origin_type": "calculated",
+      "operation": "count_valid_cells",
+      "method": "contagem sobre todos os blocos",
+      "input_refs": [
+        "data_objects[0]",
+        "variables[0]"
+      ],
+      "status": "completed"
+    },
+    {
+      "derivation_id": "derivation-statistics-001",
+      "target_ref": "statistics.variables[statistics-depth-001]",
+      "origin_type": "calculated",
+      "operation": "calculate_statistics",
+      "method": "varredura completa das células válidas",
+      "input_refs": [
+        "data_objects[0]",
+        "variables[0]"
+      ],
+      "status": "completed"
+    },
+    {
+      "derivation_id": "derivation-semantics-001",
+      "target_ref": "variables[0].semantics",
+      "origin_type": "inferred",
+      "operation": "infer_vertical_semantics",
+      "method": "long_name e faixa de valores (sem standard_name na fonte)",
+      "input_refs": [
+        "raw.sources[source-001].format_metadata.netcdf.variables[3].attributes",
+        "statistics.variables[0]"
+      ],
+      "status": "completed"
+    }
+  ],
+  "provenance": {
+    "conventions": {
+      "extracted": "valor copiado de uma fonte, sem reinterpretação semântica",
+      "calculated": "valor produzido por cálculo documentado",
+      "transformed": "valor convertido de outra representação ou sistema de referência",
+      "inferred": "valor interpretado a partir de evidências e heurísticas",
+      "declared": "valor fornecido por pessoa autorizada ou documento científico externo",
+      "external": "valor resolvido em recurso externo autoritativo (por exemplo, base EPSG)"
+    },
+    "notes": [
+      "Este documento descreve um conjunto de dados científico, não um formato de arquivo.",
+      "Detalhes específicos de formato ficam no raw.json e são referenciados quando necessário.",
+      "null indica informação indisponível ou indeterminada; não significa zero nem falso."
+    ]
+  }
+}

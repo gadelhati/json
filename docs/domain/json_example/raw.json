@@ -1,0 +1,175 @@
+{
+  "schema_version": "3.0.0",
+  "document_type": "raw",
+  "dataset_id": "REPLACE-WITH-DATASET-UUID",
+  "created_at": null,
+  "sources": [
+    {
+      "source_id": "REPLACE-WITH-SOURCE-UUID",
+      "name": "batimetria.tif",
+      "media_type": "image/tiff",
+      "format": "GeoTIFF",
+      "format_version": null,
+      "size_bytes": 125829120,
+      "checksum": {
+        "algorithm": "sha256",
+        "value": null
+      },
+      "role": "primary_data",
+      "location": {
+        "path": null,
+        "uri": null
+      },
+      "file_metadata": {
+        "last_modified": null,
+        "created_at": null
+      },
+      "format_metadata": {
+        "tiff": {
+          "image_width": 10000,
+          "image_length": 8000,
+          "bits_per_sample": [
+            32
+          ],
+          "samples_per_pixel": 1,
+          "sample_format": [
+            "IEEE floating point"
+          ],
+          "compression": "LZW",
+          "predictor": 3,
+          "photometric_interpretation": null,
+          "planar_configuration": null,
+          "tile_width": 256,
+          "tile_length": 256,
+          "orientation": null,
+          "datetime": "2026:11:05 18:20:00",
+          "software": "GDAL 3.8.0",
+          "extra_tags": {}
+        },
+        "geotiff": {
+          "model_pixel_scale": [
+            0.0001,
+            0.0001,
+            0.0
+          ],
+          "model_tiepoint": [
+            0.0,
+            0.0,
+            0.0,
+            -45.0,
+            -20.0,
+            0.0
+          ],
+          "geo_keys": {
+            "projected_cstype_geokey": null,
+            "geographic_type_geokey": 4326,
+            "geog_geodetic_datum_geokey": null,
+            "geog_ellipsoid_geokey": null,
+            "geog_angular_units_geokey": null,
+            "raster_type_geokey": null,
+            "vertical_cstype_geokey": null,
+            "other_keys": {}
+          }
+        },
+        "gdal": {
+          "driver": "GTiff",
+          "metadata": {
+            "IMAGE_STRUCTURE": {
+              "COMPRESSION": "LZW",
+              "INTERLEAVE": null,
+              "PREDICTOR": "3",
+              "LAYOUT": "COG"
+            },
+            "default": {}
+          },
+          "band_metadata": [
+            {
+              "band_index": 1,
+              "description": "Profundidade",
+              "data_type": "Float32",
+              "no_data_value": -9999.0,
+              "unit_type": "m",
+              "scale": 1.0,
+              "offset": 0.0,
+              "metadata": {
+                "STATISTICS_MINIMUM": "-3850.5",
+                "STATISTICS_MAXIMUM": "-2.1",
+                "STATISTICS_MEAN": "-1240.7",
+                "STATISTICS_STDDEV": "980.3",
+                "STATISTICS_VALID_PERCENT": "92"
+              }
+            }
+          ],
+          "overviews": [
+            {
+              "band_index": 1,
+              "width": 5000,
+              "height": 4000
+            },
+            {
+              "band_index": 1,
+              "width": 2500,
+              "height": 2000
+            },
+            {
+              "band_index": 1,
+              "width": 1250,
+              "height": 1000
+            },
+            {
+              "band_index": 1,
+              "width": 625,
+              "height": 500
+            }
+          ],
+          "mask_flags": [
+            "GMF_NODATA"
+          ],
+          "structural_metadata": {
+            "layout": "COG",
+            "raw_text": null
+          }
+        }
+      }
+    }
+  ],
+  "components": [],
+  "data_objects": [
+    {
+      "object_id": "REPLACE-WITH-DATA-OBJECT-UUID",
+      "source_id": "REPLACE-WITH-SOURCE-UUID",
+      "object_type": "raster_band_collection",
+      "native_reference": {
+        "format": "GeoTIFF",
+        "locator": {
+          "ifd": 0,
+          "band_indices": [
+            1
+          ]
+        }
+      },
+      "properties": {
+        "width": 10000,
+        "height": 8000,
+        "band_count": 1,
+        "data_type": "Float32",
+        "tile_width": 256,
+        "tile_height": 256,
+        "overview_count": 4
+      }
+    }
+  ],
+  "extraction": {
+    "tool": "GDAL",
+    "tool_version": "3.8.0",
+    "executed_at": null,
+    "parameters": {},
+    "status": "source_metadata_example"
+  },
+  "limitations": [
+    "The document records metadata available in the supplied example; fields not present in that source description are left null or omitted.",
+    "No pixel values or raster payload are embedded in this JSON document.",
+    "The stored GDAL statistics are preserved as source metadata and are not recalculated here.",
+    "No auxiliary sidecar files were present in the example."
+  ]
+}

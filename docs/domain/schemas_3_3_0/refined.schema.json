@@ -1,0 +1,2020 @@
+{
+  "type": "object",
+  "properties": {
+    "coverage": {
+      "type": "object",
+      "properties": {
+        "data_completeness": {
+          "type": "object",
+          "properties": {
+            "method": {
+              "type": "string"
+            },
+            "nodata_count": {
+              "type": "integer"
+            },
+            "nodata_percentage": {
+              "type": "number"
+            },
+            "total_count": {
+              "type": "integer"
+            },
+            "valid_count": {
+              "type": "integer"
+            },
+            "valid_percentage": {
+              "type": "number"
+            },
+            "variable_key": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "method",
+            "nodata_count",
+            "nodata_percentage",
+            "total_count",
+            "valid_count",
+            "valid_percentage",
+            "variable_key"
+          ]
+        },
+        "spatial": {
+          "type": "object",
+          "properties": {
+            "area_km2": {
+              "type": "number"
+            },
+            "area_method": {
+              "type": "string"
+            },
+            "area_reference_crs": {
+              "type": "string"
+            },
+            "extent_ref": {
+              "$ref": "common.schema.json#/$defs/referencePath"
+            },
+            "valid_data_extent_ref": {
+              "$ref": "common.schema.json#/$defs/referencePath"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "area_km2",
+            "area_method",
+            "area_reference_crs",
+            "extent_ref",
+            "valid_data_extent_ref"
+          ]
+        },
+        "temporal": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "start": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "date-time"
+            },
+            "end": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "date-time"
+            },
+            "calendar": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "time_zone": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "data_completeness",
+        "spatial",
+        "temporal"
+      ]
+    },
+    "created_at": {
+      "type": "string"
+    },
+    "data_objects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "dimensions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "axis": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "unit": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false,
+              "required": [
+                "axis",
+                "name",
+                "size",
+                "unit"
+              ]
+            }
+          },
+          "geometry": {
+            "type": "object",
+            "properties": {
+              "extent": {
+                "type": "object",
+                "properties": {
+                  "centroid": {
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "properties": {
+                      "latitude": {
+                        "type": "number"
+                      },
+                      "longitude": {
+                        "type": "number"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "required": [
+                      "latitude",
+                      "longitude"
+                    ]
+                  },
+                  "extent_semantics": {
+                    "type": "string"
+                  },
+                  "footprint": {
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "properties": {
+                      "coordinates": {
+                        "type": "array",
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "type": "array",
+                            "items": {
+                              "type": "number"
+                            }
+                          }
+                        }
+                      },
+                      "crs_ref": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "required": [
+                      "coordinates",
+                      "crs_ref",
+                      "type"
+                    ]
+                  },
+                  "native": {
+                    "type": "object",
+                    "properties": {
+                      "crs_ref": {
+                        "$ref": "common.schema.json#/$defs/referencePath"
+                      },
+                      "east": {
+                        "type": "number"
+                      },
+                      "north": {
+                        "type": "number"
+                      },
+                      "origin": {
+                        "type": "string"
+                      },
+                      "source_ref": {
+                        "$ref": "common.schema.json#/$defs/referencePath"
+                      },
+                      "south": {
+                        "type": "number"
+                      },
+                      "west": {
+                        "type": "number"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "required": [
+                      "crs_ref",
+                      "east",
+                      "north",
+                      "south",
+                      "west"
+                    ]
+                  },
+                  "valid_data_bbox": {
+                    "type": "object",
+                    "properties": {
+                      "east": {
+                        "type": "number"
+                      },
+                      "north": {
+                        "type": "number"
+                      },
+                      "south": {
+                        "type": "number"
+                      },
+                      "west": {
+                        "type": "number"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "required": [
+                      "east",
+                      "north",
+                      "south",
+                      "west"
+                    ]
+                  },
+                  "wgs84": {
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "properties": {
+                      "east": {
+                        "type": "number"
+                      },
+                      "north": {
+                        "type": "number"
+                      },
+                      "south": {
+                        "type": "number"
+                      },
+                      "west": {
+                        "type": "number"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "required": [
+                      "east",
+                      "north",
+                      "south",
+                      "west"
+                    ]
+                  }
+                },
+                "additionalProperties": false,
+                "required": [
+                  "centroid",
+                  "footprint",
+                  "native",
+                  "valid_data_bbox",
+                  "wgs84"
+                ]
+              },
+              "georeferencing": {
+                "type": "object",
+                "properties": {
+                  "coordinate_axes": {
+                    "type": "object",
+                    "properties": {
+                      "x": {
+                        "type": "object",
+                        "properties": {
+                          "bounds_present": {
+                            "type": "string"
+                          },
+                          "bounds_variable_ref": {
+                            "anyOf": [
+                              {
+                                "type": "null"
+                              },
+                              {
+                                "$ref": "common.schema.json#/$defs/referencePath"
+                              }
+                            ]
+                          },
+                          "coordinate_semantics": {
+                            "type": "string"
+                          },
+                          "coordinate_values_inspected": {
+                            "type": "boolean"
+                          },
+                          "coordinate_variable": {
+                            "type": "string"
+                          }
+                        },
+                        "additionalProperties": false,
+                        "required": [
+                          "bounds_present",
+                          "bounds_variable_ref",
+                          "coordinate_semantics",
+                          "coordinate_values_inspected",
+                          "coordinate_variable"
+                        ]
+                      },
+                      "y": {
+                        "type": "object",
+                        "properties": {
+                          "bounds_present": {
+                            "type": "string"
+                          },
+                          "bounds_variable_ref": {
+                            "anyOf": [
+                              {
+                                "type": "null"
+                              },
+                              {
+                                "$ref": "common.schema.json#/$defs/referencePath"
+                              }
+                            ]
+                          },
+                          "coordinate_semantics": {
+                            "type": "string"
+                          },
+                          "coordinate_values_inspected": {
+                            "type": "boolean"
+                          },
+                          "coordinate_variable": {
+                            "type": "string"
+                          }
+                        },
+                        "additionalProperties": false,
+                        "required": [
+                          "bounds_present",
+                          "bounds_variable_ref",
+                          "coordinate_semantics",
+                          "coordinate_values_inspected",
+                          "coordinate_variable"
+                        ]
+                      }
+                    },
+                    "additionalProperties": false,
+                    "required": [
+                      "x",
+                      "y"
+                    ]
+                  },
+                  "coordinate_order": {
+                    "type": "object",
+                    "properties": {
+                      "x": {
+                        "type": "string"
+                      },
+                      "y": {
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "required": [
+                      "x",
+                      "y"
+                    ]
+                  },
+                  "north_up": {
+                    "type": "boolean"
+                  },
+                  "pixel_interpretation": {
+                    "type": "string"
+                  },
+                  "pixel_interpretation_note": {
+                    "type": "string"
+                  },
+                  "pixel_interpretation_origin": {
+                    "type": "string"
+                  },
+                  "rotation": {
+                    "type": "object",
+                    "properties": {
+                      "x": {
+                        "type": "number"
+                      },
+                      "y": {
+                        "type": "number"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "required": [
+                      "x",
+                      "y"
+                    ]
+                  },
+                  "transform": {
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "items": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "additionalProperties": false,
+                "required": [
+                  "coordinate_order",
+                  "north_up",
+                  "pixel_interpretation",
+                  "rotation",
+                  "transform"
+                ]
+              },
+              "resolution": {
+                "type": "object",
+                "properties": {
+                  "approximate_ground": {
+                    "type": "object",
+                    "properties": {
+                      "reference_latitude": {
+                        "type": "number"
+                      },
+                      "unit": {
+                        "type": "string"
+                      },
+                      "x": {
+                        "type": "number"
+                      },
+                      "y": {
+                        "type": "number"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "required": [
+                      "reference_latitude",
+                      "unit",
+                      "x",
+                      "y"
+                    ]
+                  },
+                  "native": {
+                    "type": "object",
+                    "properties": {
+                      "unit": {
+                        "type": "string"
+                      },
+                      "x": {
+                        "type": "number"
+                      },
+                      "y": {
+                        "type": "number"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "required": [
+                      "unit",
+                      "x",
+                      "y"
+                    ]
+                  }
+                },
+                "additionalProperties": false,
+                "required": [
+                  "approximate_ground",
+                  "native"
+                ]
+              },
+              "shape": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "extent",
+              "georeferencing",
+              "resolution",
+              "shape"
+            ]
+          },
+          "object_id": {
+            "type": "string"
+          },
+          "raw_object_refs": {
+            "type": "array",
+            "items": {
+              "$ref": "common.schema.json#/$defs/referencePath"
+            }
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "primary_data",
+              "coordinate_data",
+              "ancillary_data",
+              "derived_data",
+              "other"
+            ]
+          },
+          "source_refs": {
+            "type": "array",
+            "items": {
+              "$ref": "common.schema.json#/$defs/identifier"
+            }
+          },
+          "storage": {
+            "type": "object",
+            "properties": {
+              "chunk_or_tile_shape": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              },
+              "compression": {
+                "type": "string"
+              },
+              "native_layout_ref": {
+                "$ref": "common.schema.json#/$defs/referencePath"
+              },
+              "organization": {
+                "type": "string"
+              },
+              "overview_levels": {
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              },
+              "structural_metadata": {
+                "type": "object",
+                "properties": {
+                  "parsed": {
+                    "$ref": "#/$defs/parsedStructuralMetadata"
+                  }
+                },
+                "required": [
+                  "parsed"
+                ],
+                "additionalProperties": false,
+                "description": "Interpretação normalizada do GDAL_STRUCTURAL_METADATA.raw_text registrado em raw; não contém a cópia literal."
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "chunk_or_tile_shape",
+              "compression",
+              "native_layout_ref",
+              "organization",
+              "overview_levels"
+            ]
+          },
+          "structure": {
+            "type": "string",
+            "enum": [
+              "regular_grid",
+              "irregular_grid",
+              "curvilinear_grid",
+              "point_set",
+              "feature_collection",
+              "mesh",
+              "other"
+            ]
+          },
+          "validation_check_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "dimensions",
+          "geometry",
+          "object_id",
+          "raw_object_refs",
+          "role",
+          "source_refs",
+          "storage",
+          "structure",
+          "validation_check_refs"
+        ]
+      }
+    },
+    "dataset": {
+      "type": "object",
+      "properties": {
+        "data_model": {
+          "type": "string",
+          "enum": [
+            "raster_grid",
+            "multidimensional_grid",
+            "point_cloud",
+            "vector",
+            "mesh",
+            "tabular",
+            "other"
+          ]
+        },
+        "profile_ref": {
+          "type": "object",
+          "properties": {
+            "document": {
+              "type": "string"
+            },
+            "path": {
+              "$ref": "common.schema.json#/$defs/referencePath"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "document",
+            "path"
+          ]
+        },
+        "spatial_reference": {
+          "type": "object",
+          "properties": {
+            "horizontal": {
+              "type": "object",
+              "properties": {
+                "coordinate_epoch": {
+                  "type": [
+                    "number",
+                    "string",
+                    "null"
+                  ]
+                },
+                "crs": {
+                  "type": "object",
+                  "properties": {
+                    "authority": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "resolved_from": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "wkt": {
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "authority",
+                    "code",
+                    "name",
+                    "resolved_from",
+                    "type",
+                    "wkt"
+                  ]
+                }
+              },
+              "additionalProperties": false,
+              "required": [
+                "coordinate_epoch",
+                "crs"
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "horizontal"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "data_model",
+        "profile_ref",
+        "spatial_reference"
+      ]
+    },
+    "dataset_id": {
+      "type": "string"
+    },
+    "derivations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "derivation_id": {
+            "$ref": "common.schema.json#/$defs/identifier"
+          },
+          "input_refs": {
+            "type": "array",
+            "items": {
+              "$ref": "common.schema.json#/$defs/inputReference"
+            }
+          },
+          "method": {
+            "type": "string"
+          },
+          "operation": {
+            "type": "string"
+          },
+          "origin_type": {
+            "type": "string",
+            "enum": [
+              "extracted",
+              "calculated",
+              "transformed",
+              "inferred",
+              "declared",
+              "external",
+              "incomplete"
+            ]
+          },
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "reference_latitude": {
+                "type": "number"
+              }
+            },
+            "additionalProperties": true,
+            "required": [
+              "reference_latitude"
+            ]
+          },
+          "result": {
+            "type": "object",
+            "properties": {
+              "is_cog": {
+                "type": "boolean"
+              },
+              "errors": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "warnings": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "summary": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "completed",
+              "provisional",
+              "incomplete",
+              "requires_source_inspection",
+              "failed",
+              "not_started"
+            ]
+          },
+          "target_ref": {
+            "$ref": "common.schema.json#/$defs/referencePath"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "derivation_id",
+          "input_refs",
+          "method",
+          "operation",
+          "origin_type",
+          "status",
+          "target_ref"
+        ]
+      }
+    },
+    "document_id": {
+      "type": "string"
+    },
+    "document_type": {
+      "const": "refined"
+    },
+    "format_interpretations": {
+      "type": "object",
+      "properties": {
+        "geotiff": {
+          "type": "object",
+          "properties": {
+            "structural_metadata": {
+              "type": "object",
+              "properties": {
+                "interpretation_source": {
+                  "type": "string"
+                },
+                "note": {
+                  "type": "string"
+                },
+                "parsed": {
+                  "type": "object",
+                  "properties": {
+                    "BLOCK_LEADER": {
+                      "type": "string"
+                    },
+                    "BLOCK_ORDER": {
+                      "type": "string"
+                    },
+                    "BLOCK_TRAILER": {
+                      "type": "string"
+                    },
+                    "KNOWN_INCOMPATIBLE_EDITION": {
+                      "type": "string"
+                    },
+                    "LAYOUT": {
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "BLOCK_LEADER",
+                    "BLOCK_ORDER",
+                    "BLOCK_TRAILER",
+                    "KNOWN_INCOMPATIBLE_EDITION",
+                    "LAYOUT"
+                  ]
+                },
+                "raw_text_capture_status": {
+                  "type": "string"
+                },
+                "raw_text_ref": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false,
+              "required": [
+                "interpretation_source",
+                "note",
+                "parsed",
+                "raw_text_capture_status",
+                "raw_text_ref"
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "structural_metadata"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "geotiff"
+      ]
+    },
+    "inputs": {
+      "type": "object",
+      "properties": {
+        "raw": {
+          "type": "object",
+          "properties": {
+            "checksum_sha256": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "document_id": {
+              "$ref": "common.schema.json#/$defs/documentId"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "checksum_sha256",
+            "document_id"
+          ]
+        },
+        "scientific_metadata": {
+          "type": "object",
+          "properties": {
+            "checksum_sha256": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "document_id": {
+              "$ref": "common.schema.json#/$defs/documentId"
+            },
+            "schema_version": {
+              "type": "string",
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "description": "Versão declarada do documento scientific_metadata referenciado; a igualdade com o documento efetivo é verificação de consistência entre documentos."
+            },
+            "status": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "checksum_sha256",
+            "document_id",
+            "schema_version",
+            "status"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "raw",
+        "scientific_metadata"
+      ]
+    },
+    "processing": {
+      "type": "object",
+      "properties": {
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "histogram_bins": {
+              "type": "integer"
+            },
+            "statistics_mode": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true,
+          "required": [
+            "histogram_bins",
+            "statistics_mode"
+          ]
+        },
+        "processed_at": {
+          "type": "string"
+        },
+        "software": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "version": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "version"
+            ]
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "completed",
+            "partial",
+            "failed",
+            "not_started"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "parameters",
+        "processed_at",
+        "software",
+        "status"
+      ]
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "conventions": {
+          "type": "object",
+          "properties": {
+            "calculated": {
+              "type": "string"
+            },
+            "declared": {
+              "type": "string"
+            },
+            "external": {
+              "type": "string"
+            },
+            "extracted": {
+              "type": "string"
+            },
+            "inferred": {
+              "type": "string"
+            },
+            "transformed": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "calculated",
+            "declared",
+            "external",
+            "extracted",
+            "inferred",
+            "transformed"
+          ]
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "conventions",
+        "notes"
+      ]
+    },
+    "quality_assessment": {
+      "type": "object",
+      "properties": {
+        "computed_quality": {
+          "type": "object",
+          "properties": {
+            "completeness_ref": {
+              "$ref": "common.schema.json#/$defs/referencePath"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "completeness_ref"
+          ]
+        },
+        "declared_quality_ref": {
+          "type": "object",
+          "properties": {
+            "document": {
+              "type": "string"
+            },
+            "path": {
+              "$ref": "common.schema.json#/$defs/referencePath"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "document",
+            "path"
+          ]
+        },
+        "issues": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "common.schema.json#/$defs/identifier"
+              },
+              "severity": {
+                "enum": [
+                  "info",
+                  "warning",
+                  "error"
+                ]
+              },
+              "message": {
+                "type": "string"
+              },
+              "target_ref": {
+                "$ref": "common.schema.json#/$defs/referencePath"
+              }
+            },
+            "required": [
+              "id",
+              "severity",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "quality_score": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "quality_score_method": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "recommendations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "common.schema.json#/$defs/identifier"
+              },
+              "message": {
+                "type": "string"
+              },
+              "target_ref": {
+                "$ref": "common.schema.json#/$defs/referencePath"
+              }
+            },
+            "required": [
+              "id",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "not_assessed",
+            "passed",
+            "passed_with_warnings",
+            "failed",
+            "incomplete"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "computed_quality",
+        "declared_quality_ref",
+        "issues",
+        "quality_score",
+        "quality_score_method",
+        "recommendations",
+        "status"
+      ]
+    },
+    "reconciliation": {
+      "type": "object",
+      "properties": {
+        "cross_checks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "check_id": {
+                "$ref": "common.schema.json#/$defs/identifier"
+              },
+              "declared_ref": {
+                "$ref": "common.schema.json#/$defs/referencePath"
+              },
+              "extracted_ref": {
+                "$ref": "common.schema.json#/$defs/referencePath"
+              },
+              "reason": {
+                "type": "string"
+              },
+              "result": {
+                "type": "string",
+                "enum": [
+                  "match",
+                  "mismatch",
+                  "not_comparable",
+                  "missing_declared",
+                  "missing_extracted"
+                ]
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "check_id",
+              "declared_ref",
+              "extracted_ref",
+              "reason",
+              "result"
+            ]
+          }
+        },
+        "ownership": {
+          "type": "object",
+          "properties": {
+            "refined": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "scientific_metadata": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "refined",
+            "scientific_metadata"
+          ]
+        },
+        "precedence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "topic": {
+                "type": "string"
+              },
+              "wins": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "topic",
+              "wins"
+            ]
+          }
+        },
+        "rule": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "cross_checks",
+        "ownership",
+        "precedence",
+        "rule"
+      ]
+    },
+    "schema_version": {
+      "const": "3.3.0"
+    },
+    "statistics": {
+      "type": "object",
+      "properties": {
+        "variables": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "comparison_note": {
+                "type": "string"
+              },
+              "comparison_with_sources": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "keys_compared": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "matches": {
+                      "type": "boolean"
+                    },
+                    "path": {
+                      "type": "string"
+                    },
+                    "source_ref": {
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "keys_compared",
+                    "matches",
+                    "path",
+                    "source_ref"
+                  ]
+                }
+              },
+              "histogram": {
+                "type": "object",
+                "properties": {
+                  "bin_count": {
+                    "type": "integer"
+                  },
+                  "counts": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  },
+                  "maximum": {
+                    "type": "number"
+                  },
+                  "minimum": {
+                    "type": "number"
+                  }
+                },
+                "additionalProperties": false,
+                "required": [
+                  "bin_count",
+                  "counts",
+                  "maximum",
+                  "minimum"
+                ]
+              },
+              "maximum": {
+                "type": "number"
+              },
+              "mean": {
+                "type": "number"
+              },
+              "median": {
+                "type": "number"
+              },
+              "method": {
+                "type": "string",
+                "enum": [
+                  "exact",
+                  "sampled",
+                  "approximate",
+                  "source_reported",
+                  "unknown"
+                ]
+              },
+              "minimum": {
+                "type": "number"
+              },
+              "percentiles": {
+                "type": "object",
+                "properties": {
+                  "p02": {
+                    "type": "number"
+                  },
+                  "p05": {
+                    "type": "number"
+                  },
+                  "p25": {
+                    "type": "number"
+                  },
+                  "p50": {
+                    "type": "number"
+                  },
+                  "p75": {
+                    "type": "number"
+                  },
+                  "p95": {
+                    "type": "number"
+                  },
+                  "p98": {
+                    "type": "number"
+                  }
+                },
+                "additionalProperties": false,
+                "required": [
+                  "p02",
+                  "p05",
+                  "p25",
+                  "p50",
+                  "p75",
+                  "p95",
+                  "p98"
+                ]
+              },
+              "standard_deviation": {
+                "type": "number"
+              },
+              "statistics_id": {
+                "type": "string"
+              },
+              "valid_sample_count": {
+                "type": "integer"
+              },
+              "variable_key": {
+                "type": "string"
+              },
+              "variance": {
+                "type": "number"
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "comparison_with_sources",
+              "histogram",
+              "maximum",
+              "mean",
+              "median",
+              "method",
+              "minimum",
+              "percentiles",
+              "standard_deviation",
+              "statistics_id",
+              "valid_sample_count",
+              "variable_key",
+              "variance"
+            ]
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "variables"
+      ]
+    },
+    "thematic_analysis": {
+      "type": "object",
+      "properties": {
+        "confidence": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "confidence_method": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "matches_declared_profile": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "method": {
+          "type": "string",
+          "enum": [
+            "heuristic",
+            "rule_based",
+            "machine_learning",
+            "manual",
+            "unknown"
+          ]
+        },
+        "note": {
+          "type": "string"
+        },
+        "suggested_profile": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "confidence",
+        "confidence_method",
+        "evidence",
+        "matches_declared_profile",
+        "method",
+        "note",
+        "suggested_profile"
+      ]
+    },
+    "validation": {
+      "type": "object",
+      "properties": {
+        "checks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "criterion": {
+                "type": "string"
+              },
+              "details": {
+                "type": "object",
+                "properties": {
+                  "standard": {
+                    "type": "string"
+                  },
+                  "validator": {
+                    "type": "string"
+                  },
+                  "validator_version": {
+                    "type": "string"
+                  },
+                  "reason": {
+                    "type": "string"
+                  },
+                  "errors": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "warnings": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": true
+              },
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "passed": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "scope": {
+                "type": "string",
+                "enum": [
+                  "source",
+                  "dataset",
+                  "data_object",
+                  "variable",
+                  "profile"
+                ]
+              },
+              "severity": {
+                "type": "string",
+                "enum": [
+                  "info",
+                  "warning",
+                  "error"
+                ]
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "criterion",
+              "id",
+              "name",
+              "passed",
+              "scope",
+              "severity"
+            ]
+          }
+        },
+        "dimensions": {
+          "type": "object",
+          "properties": {
+            "publication_readiness": {
+              "type": "object",
+              "properties": {
+                "meaning": {
+                  "type": "string"
+                },
+                "publishable": {
+                  "type": "boolean"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "ready",
+                    "not_ready",
+                    "conditional",
+                    "not_assessed"
+                  ]
+                }
+              },
+              "additionalProperties": false,
+              "required": [
+                "meaning",
+                "publishable",
+                "status"
+              ]
+            },
+            "scientific_conformance": {
+              "type": "object",
+              "properties": {
+                "checks_ref": {
+                  "$ref": "common.schema.json#/$defs/referencePath"
+                },
+                "meaning": {
+                  "type": "string"
+                },
+                "profile_ref": {
+                  "$ref": "common.schema.json#/$defs/referencePath"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "conformant",
+                    "non_conformant",
+                    "incomplete",
+                    "not_assessed"
+                  ]
+                }
+              },
+              "additionalProperties": false,
+              "required": [
+                "checks_ref",
+                "meaning",
+                "profile_ref",
+                "status"
+              ]
+            },
+            "structural_integrity": {
+              "type": "object",
+              "properties": {
+                "checks_ref": {
+                  "$ref": "common.schema.json#/$defs/referencePath"
+                },
+                "meaning": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "passed",
+                    "passed_with_warnings",
+                    "failed",
+                    "not_assessed"
+                  ]
+                }
+              },
+              "additionalProperties": false,
+              "required": [
+                "checks_ref",
+                "meaning",
+                "status"
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "publication_readiness",
+            "scientific_conformance",
+            "structural_integrity"
+          ]
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "check_ref": {
+                "$ref": "common.schema.json#/$defs/identifier"
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "check_ref",
+              "message"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "publication_requirements": {
+          "type": "object",
+          "properties": {
+            "profile": {
+              "type": "string"
+            },
+            "publishable": {
+              "type": "boolean"
+            },
+            "required_missing": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "rule_source": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "ready",
+                "not_ready",
+                "conditional",
+                "not_assessed"
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "profile",
+            "publishable",
+            "required_missing",
+            "rule_source",
+            "status"
+          ]
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "check_ref": {
+                "$ref": "common.schema.json#/$defs/identifier"
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "check_ref",
+              "message"
+            ]
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "checks",
+        "dimensions",
+        "errors",
+        "publication_requirements",
+        "warnings"
+      ]
+    },
+    "variables": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "data_object_ref": {
+            "$ref": "common.schema.json#/$defs/identifier"
+          },
+          "data_type": {
+            "type": "string"
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "dimensions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "encoding": {
+            "type": "object",
+            "properties": {
+              "add_offset": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "nodata": {
+                "type": "integer"
+              },
+              "scale_factor": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "add_offset",
+              "nodata",
+              "scale_factor"
+            ]
+          },
+          "key": {
+            "type": "string"
+          },
+          "key_origin": {
+            "type": "string",
+            "enum": [
+              "assigned_at_ingestion",
+              "source_name",
+              "declared",
+              "derived"
+            ]
+          },
+          "label": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "semantics": {
+            "type": "object",
+            "properties": {
+              "ambiguity": {
+                "type": "object",
+                "properties": {
+                  "description": {
+                    "type": "string"
+                  },
+                  "detected": {
+                    "type": "boolean"
+                  },
+                  "requires_declaration": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false,
+                "required": [
+                  "description",
+                  "detected",
+                  "requires_declaration"
+                ]
+              },
+              "origin": {
+                "type": "string",
+                "enum": [
+                  "extracted",
+                  "calculated",
+                  "transformed",
+                  "inferred",
+                  "declared",
+                  "external",
+                  "unknown"
+                ]
+              },
+              "positive_direction": {
+                "type": "string"
+              },
+              "sign_convention": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "ambiguity",
+              "origin",
+              "positive_direction",
+              "sign_convention"
+            ]
+          },
+          "source_bindings": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "binding_origin": {
+                  "type": "string"
+                },
+                "locator": {
+                  "type": "object",
+                  "properties": {
+                    "band_index": {
+                      "type": "integer"
+                    },
+                    "netcdf_variable": {
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "source_ref": {
+                  "$ref": "common.schema.json#/$defs/identifier"
+                }
+              },
+              "additionalProperties": false,
+              "required": [
+                "binding_origin",
+                "locator",
+                "source_ref"
+              ]
+            }
+          },
+          "standard_name": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "statistics_ref": {
+            "$ref": "common.schema.json#/$defs/referencePath"
+          },
+          "unit": {
+            "type": "string"
+          },
+          "variable_id": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "data_object_ref",
+          "data_type",
+          "description",
+          "dimensions",
+          "encoding",
+          "key",
+          "key_origin",
+          "label",
+          "name",
+          "semantics",
+          "source_bindings",
+          "standard_name",
+          "statistics_ref",
+          "unit",
+          "variable_id"
+        ]
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "coverage",
+    "created_at",
+    "data_objects",
+    "dataset",
+    "dataset_id",
+    "derivations",
+    "document_id",
+    "document_type",
+    "inputs",
+    "processing",
+    "provenance",
+    "quality_assessment",
+    "reconciliation",
+    "schema_version",
+    "statistics",
+    "thematic_analysis",
+    "validation",
+    "variables"
+  ],
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.forgepack.dev/scientific/3.3.0/refined.schema.json",
+  "title": "refined.json 3.3.0",
+  "description": "Representação normalizada e independente do formato do dataset, com resultados e proveniência.",
+  "$defs": {
+    "parsedStructuralMetadata": {
+      "type": "object",
+      "properties": {
+        "layout": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "block_order": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "byte_order": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "raw_fields": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          }
+        }
+      },
+      "additionalProperties": false,
+      "description": "Interpretação estruturada do texto GDAL_STRUCTURAL_METADATA; não substitui raw_text."
+    },
+    "software": {
+      "$ref": "common.schema.json#/$defs/software"
+    }
+  },
+  "$comment": "3.3.0. This schema validates structure only. Cross-document integrity and dependency propagation are application responsibilities."
+}

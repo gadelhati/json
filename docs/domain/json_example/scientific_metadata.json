@@ -1,0 +1,220 @@
+{
+  "schema_version": "3.3.0",
+  "document_type": "scientific_metadata",
+  "document_id": "REPLACE-WITH-SCIENTIFIC-METADATA-DOCUMENT-UUID",
+  "dataset_id": "REPLACE-WITH-DATASET-UUID",
+  "applies_to": {
+    "_managed_by": "system",
+    "dataset_version": null,
+    "inputs": [
+      {
+        "raw_document_id": "REPLACE-WITH-RAW-GEOTIFF-DOCUMENT-UUID",
+        "format": "GeoTIFF",
+        "source_checksums_sha256": [],
+        "status": "current"
+      },
+      {
+        "raw_document_id": "REPLACE-WITH-RAW-NETCDF-DOCUMENT-UUID",
+        "format": "NetCDF",
+        "source_checksums_sha256": [],
+        "status": "current"
+      }
+    ],
+    "note": "Associação mantida pelo sistema entre as declarações científicas e os documentos raw efetivamente vinculados ao dataset. Um dataset pode possuir vários raw para formatos ou versões diferentes. Fontes auxiliares opcionais (.aux.xml) são componentes de um raw, não exigem um documento raw separado."
+  },
+  "profile": {
+    "domain": "hydrography",
+    "name": "bathymetry",
+    "version": "1.0.0"
+  },
+  "provenance": {
+    "type": "declared",
+    "declared_by": null,
+    "declared_at": null,
+    "source_document": null,
+    "notes": [
+      "Este documento contém declarações científicas fornecidas pelo responsável pelo dataset.",
+      "Não deve ser preenchido automaticamente com valores apenas observados nas fontes; valores sugeridos pelo sistema entram como proposta e só valem depois de confirmados.",
+      "null não distingue ausente de não aplicável: usar field_status.",
+      "Este documento é independente dos documentos raw; a associação é mantida em applies_to e consumida pelo refined."
+    ]
+  },
+  "field_status": {
+    "fields": {},
+    "default_status": "not_declared",
+    "note": "Os vocabulários e as regras de status são definidos pelo schema referenciado."
+  },
+  "metadata_record": {
+    "language": null,
+    "date_stamp": null
+  },
+  "identification": {
+    "title": null,
+    "alternate_titles": [],
+    "abstract": null,
+    "purpose": null,
+    "supplemental_information": null,
+    "language": null,
+    "status": null,
+    "keywords": [],
+    "topic_categories": [],
+    "identifiers": [],
+    "dates": {
+      "creation": null,
+      "publication": null,
+      "revision": null
+    }
+  },
+  "responsible_parties": [],
+  "spatial_reference": {
+    "horizontal": {
+      "identifier": null,
+      "name": null,
+      "coordinate_epoch": null,
+      "_nota": "Preencher só se a fonte não traz CRS ou não traz a época. O CRS extraído tem precedência técnica."
+    },
+    "vertical": {
+      "identifier": null,
+      "name": null,
+      "datum": null,
+      "datum_type": null,
+      "realization": null,
+      "reference_surface": null,
+      "unit": null,
+      "separation_model": null,
+      "separation_model_version": null,
+      "reference_epoch": null
+    }
+  },
+  "temporal_reference": {
+    "start": null,
+    "end": null,
+    "time_zone": null,
+    "calendar": null,
+    "temporal_resolution": null
+  },
+  "acquisition": {
+    "campaign_id": null,
+    "title": null,
+    "start_date": null,
+    "end_date": null,
+    "method": null,
+    "platform": {
+      "name": null,
+      "type": null,
+      "identifier": null
+    },
+    "instruments": []
+  },
+  "processing": {
+    "software": [],
+    "workflow_description": null,
+    "processing_steps": [],
+    "corrections_applied": [],
+    "filtering": [],
+    "interpolation": {
+      "applied": null,
+      "method": null,
+      "parameters": {}
+    },
+    "gridding": {
+      "applied": null,
+      "method": null,
+      "resolution": null,
+      "resolution_unit": null
+    },
+    "manual_edits": null,
+    "processing_date": null,
+    "input_datasets": []
+  },
+  "variables": [
+    {
+      "key": "depth",
+      "role": "primary",
+      "name": null,
+      "standard_name": null,
+      "description": null,
+      "unit": null,
+      "sign_convention": null,
+      "positive_direction": null,
+      "uncertainty": [],
+      "note": "Variável principal identificada no conjunto de dados de entrada; os atributos científicos permanecem não declarados até confirmação pelo responsável."
+    }
+  ],
+  "quality": {
+    "assessment_status": null,
+    "assessment_date": null,
+    "assessment_method": null,
+    "conformance_claims": [],
+    "coverage_assessment": null,
+    "known_issues": [],
+    "limitations": [],
+    "quality_report": {
+      "available": null,
+      "reference": null,
+      "summary": null
+    }
+  },
+  "constraints": {
+    "access": {
+      "classification": null,
+      "national_classification": null,
+      "classification_authority": null,
+      "handling_restrictions": [],
+      "access_constraints": []
+    },
+    "use": {
+      "license": null,
+      "copyright": null,
+      "use_constraints": [],
+      "use_limitation": null,
+      "attribution_requirements": [],
+      "distribution_statement": null
+    }
+  },
+  "references": [],
+  "extension": {
+    "bathymetry": {
+      "survey": {
+        "survey_id": null,
+        "survey_order": null,
+        "applicable_standard": null,
+        "applicable_standard_version": null,
+        "survey_area": null
+      },
+      "positioning": {
+        "system": null,
+        "correction_type": null,
+        "correction_service": null
+      },
+      "sound_velocity": {
+        "measurement_method": null,
+        "instrument": null,
+        "correction_applied": null,
+        "profile_reference": null
+      },
+      "tides_and_water_level": {
+        "method": null,
+        "reference": null,
+        "correction_applied": null,
+        "model_or_station": null
+      },
+      "feature_detection": {
+        "required": null,
+        "method": null,
+        "minimum_feature_size": null,
+        "minimum_feature_size_unit": null
+      },
+      "sounding_density": {
+        "mean_per_cell": null,
+        "min_per_cell": null,
+        "unit": null
+      }
+    }
+  },
+  "schema_reference": {
+    "schema_id": "scientific_metadata",
+    "schema_version": "3.3.0",
+    "profile_schema_ref": "profiles/hydrography/bathymetry/1.0.0"
+  }
+}

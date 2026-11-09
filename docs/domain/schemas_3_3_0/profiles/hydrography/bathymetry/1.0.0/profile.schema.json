@@ -1,0 +1,257 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.forgepack.dev/scientific/profiles/hydrography/bathymetry/1.0.0/profile.schema.json",
+  "title": "Hydrography / Bathymetry profile 1.0.0",
+  "description": "Contrato estrutural da extensão científica de batimetria. Regras de conformidade científica não são avaliadas por este schema.",
+  "$defs": {
+    "nullableString": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "nullableNumber": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "nullableBoolean": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "surveyArea": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "description": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "geometry": {
+              "type": [
+                "object",
+                "null"
+              ]
+            },
+            "crs": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "extension": {
+      "type": "object",
+      "properties": {
+        "survey": {
+          "type": "object",
+          "properties": {
+            "survey_id": {
+              "$ref": "#/$defs/nullableString"
+            },
+            "survey_order": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "enum": [
+                "order_2",
+                "order_1b",
+                "order_1a",
+                "special_order",
+                "exclusive_order",
+                "customized_specification",
+                "other",
+                null
+              ],
+              "description": "Código da ordem de levantamento. Para S-44 Ed. 6.2.0: order_2, order_1b, order_1a, special_order ou exclusive_order."
+            },
+            "applicable_standard": {
+              "$ref": "#/$defs/nullableString"
+            },
+            "applicable_standard_version": {
+              "$ref": "#/$defs/nullableString"
+            },
+            "survey_area": {
+              "$ref": "#/$defs/surveyArea"
+            }
+          },
+          "required": [
+            "survey_id",
+            "survey_order",
+            "applicable_standard",
+            "applicable_standard_version",
+            "survey_area"
+          ],
+          "additionalProperties": false
+        },
+        "positioning": {
+          "type": "object",
+          "properties": {
+            "system": {
+              "$ref": "#/$defs/nullableString"
+            },
+            "correction_type": {
+              "enum": [
+                "standalone",
+                "dgnss",
+                "rtk",
+                "ppp",
+                "network_rtk",
+                "other",
+                null
+              ]
+            },
+            "correction_service": {
+              "$ref": "#/$defs/nullableString"
+            }
+          },
+          "required": [
+            "system",
+            "correction_type",
+            "correction_service"
+          ],
+          "additionalProperties": false
+        },
+        "sound_velocity": {
+          "type": "object",
+          "properties": {
+            "measurement_method": {
+              "enum": [
+                "direct_measurement",
+                "expendable_probe",
+                "conductivity_temperature_depth",
+                "surface_sound_velocity",
+                "modelled",
+                "other",
+                null
+              ]
+            },
+            "instrument": {
+              "$ref": "#/$defs/nullableString"
+            },
+            "correction_applied": {
+              "$ref": "#/$defs/nullableBoolean"
+            },
+            "profile_reference": {
+              "$ref": "#/$defs/nullableString"
+            }
+          },
+          "required": [
+            "measurement_method",
+            "instrument",
+            "correction_applied",
+            "profile_reference"
+          ],
+          "additionalProperties": false
+        },
+        "tides_and_water_level": {
+          "type": "object",
+          "properties": {
+            "method": {
+              "enum": [
+                "tide_gauge",
+                "water_level_model",
+                "gnss_tide",
+                "zoning",
+                "no_correction",
+                "other",
+                null
+              ]
+            },
+            "reference": {
+              "$ref": "#/$defs/nullableString"
+            },
+            "correction_applied": {
+              "$ref": "#/$defs/nullableBoolean"
+            },
+            "model_or_station": {
+              "$ref": "#/$defs/nullableString"
+            }
+          },
+          "required": [
+            "method",
+            "reference",
+            "correction_applied",
+            "model_or_station"
+          ],
+          "additionalProperties": false
+        },
+        "feature_detection": {
+          "type": "object",
+          "properties": {
+            "required": {
+              "$ref": "#/$defs/nullableBoolean"
+            },
+            "method": {
+              "enum": [
+                "manual",
+                "algorithmic",
+                "automated",
+                "not_applicable",
+                "other",
+                null
+              ]
+            },
+            "minimum_feature_size": {
+              "$ref": "#/$defs/nullableNumber"
+            },
+            "minimum_feature_size_unit": {
+              "$ref": "#/$defs/nullableString"
+            }
+          },
+          "required": [
+            "required",
+            "method",
+            "minimum_feature_size",
+            "minimum_feature_size_unit"
+          ],
+          "additionalProperties": false
+        },
+        "sounding_density": {
+          "type": "object",
+          "properties": {
+            "mean_per_cell": {
+              "$ref": "#/$defs/nullableNumber"
+            },
+            "min_per_cell": {
+              "$ref": "#/$defs/nullableNumber"
+            },
+            "unit": {
+              "$ref": "#/$defs/nullableString"
+            }
+          },
+          "required": [
+            "mean_per_cell",
+            "min_per_cell",
+            "unit"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "survey",
+        "positioning",
+        "sound_velocity",
+        "tides_and_water_level",
+        "feature_detection",
+        "sounding_density"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$ref": "#/$defs/extension"
+}

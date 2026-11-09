@@ -1,0 +1,426 @@
+{
+  "schema_version": "3.3.0",
+  "document_type": "raw",
+  "document_id": "REPLACE-WITH-RAW-GEOTIFF-DOCUMENT-UUID",
+  "dataset_id": "REPLACE-WITH-DATASET-UUID",
+  "created_at": null,
+  "conventions": {
+    "values": "Valores preservados como gravados na fonte: strings permanecem strings. Objetos {value,label} trazem o valor gravado e o rótulo da especificação do formato, sem interpretação.",
+    "sources": "Cada fonte é lida separadamente. Sidecars (.aux.xml) são fontes próprias, sem fusão com a fonte principal.",
+    "nulls": "null indica ausência na fonte; não significa zero nem falso.",
+    "language": "Chaves em inglês; textos descritivos em português.",
+    "cardinality": "1 dataset tem n raw; cada raw tem 1 refined; 1 scientific_metadata por dataset é referenciado por n raw."
+  },
+  "sources": [
+    {
+      "source_id": "source-001",
+      "name": "batimetria.tif",
+      "media_type": "image/tiff",
+      "format": "GeoTIFF",
+      "format_version": null,
+      "size_bytes": 125829120,
+      "role": "primary_data",
+      "sidecar_of": null,
+      "checksum": {
+        "algorithm": "sha256",
+        "value": null
+      },
+      "location": {
+        "path": null,
+        "uri": null
+      },
+      "file_metadata": {
+        "last_modified": null,
+        "created_at": null
+      },
+      "format_metadata": {
+        "tiff": {
+          "byte_order": "little-endian",
+          "big_tiff": false,
+          "ifds": [
+            {
+              "ifd": 0,
+              "tags": {
+                "NewSubfileType": {
+                  "value": 0,
+                  "label": "full-resolution"
+                },
+                "ImageWidth": 10000,
+                "ImageLength": 8000,
+                "BitsPerSample": [
+                  32
+                ],
+                "SampleFormat": {
+                  "value": [
+                    3
+                  ],
+                  "label": "IEEE floating point"
+                },
+                "SamplesPerPixel": 1,
+                "Compression": {
+                  "value": 5,
+                  "label": "LZW"
+                },
+                "Predictor": {
+                  "value": 3,
+                  "label": "floating point"
+                },
+                "PhotometricInterpretation": {
+                  "value": 1,
+                  "label": "MinIsBlack"
+                },
+                "PlanarConfiguration": {
+                  "value": 1,
+                  "label": "Chunky"
+                },
+                "Orientation": {
+                  "value": 1,
+                  "label": "top-left"
+                },
+                "TileWidth": 256,
+                "TileLength": 256,
+                "Software": "GDAL 3.8.0",
+                "DateTime": "2026:11:05 18:20:00",
+                "ModelPixelScaleTag": [
+                  0.0001,
+                  0.0001,
+                  0.0
+                ],
+                "ModelTiepointTag": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  -45.0,
+                  -20.0,
+                  0.0
+                ],
+                "ModelTransformationTag": null,
+                "GeoKeyDirectoryTag": {
+                  "KeyDirectoryVersion": 1,
+                  "KeyRevision": 1,
+                  "MinorRevision": 0,
+                  "keys": [
+                    {
+                      "id": 1024,
+                      "name": "GTModelTypeGeoKey",
+                      "value": 2,
+                      "label": "ModelTypeGeographic"
+                    },
+                    {
+                      "id": 1025,
+                      "name": "GTRasterTypeGeoKey",
+                      "value": 1,
+                      "label": "RasterPixelIsArea"
+                    },
+                    {
+                      "id": 2048,
+                      "name": "GeographicTypeGeoKey",
+                      "value": 4326,
+                      "label": null
+                    },
+                    {
+                      "id": 2049,
+                      "name": "GeogCitationGeoKey",
+                      "value": "WGS 84",
+                      "label": null
+                    },
+                    {
+                      "id": 2054,
+                      "name": "GeogAngularUnitsGeoKey",
+                      "value": 9102,
+                      "label": "Angular_Degree"
+                    }
+                  ]
+                },
+                "GeoDoubleParamsTag": [],
+                "GeoAsciiParamsTag": [
+                  "WGS 84|"
+                ],
+                "GDAL_NODATA": "-9999",
+                "GDAL_METADATA": "<GDALMetadata>\n  <Item name=\"DESCRIPTION\" sample=\"0\" role=\"description\">Profundidade</Item>\n  <Item name=\"UNITTYPE\" sample=\"0\" role=\"unittype\">m</Item>\n  <Item name=\"SCALE\" sample=\"0\" role=\"scale\">1</Item>\n  <Item name=\"OFFSET\" sample=\"0\" role=\"offset\">0</Item>\n</GDALMetadata>"
+              }
+            },
+            {
+              "ifd": 1,
+              "tags": {
+                "NewSubfileType": {
+                  "value": 1,
+                  "label": "reduced-resolution"
+                },
+                "ImageWidth": 5000,
+                "ImageLength": 4000,
+                "BitsPerSample": [
+                  32
+                ],
+                "SampleFormat": {
+                  "value": [
+                    3
+                  ],
+                  "label": "IEEE floating point"
+                },
+                "SamplesPerPixel": 1,
+                "Compression": {
+                  "value": 5,
+                  "label": "LZW"
+                },
+                "Predictor": {
+                  "value": 3,
+                  "label": "floating point"
+                },
+                "PhotometricInterpretation": {
+                  "value": 1,
+                  "label": "MinIsBlack"
+                },
+                "PlanarConfiguration": {
+                  "value": 1,
+                  "label": "Chunky"
+                },
+                "Orientation": {
+                  "value": 1,
+                  "label": "top-left"
+                },
+                "TileWidth": 256,
+                "TileLength": 256
+              }
+            },
+            {
+              "ifd": 2,
+              "tags": {
+                "NewSubfileType": {
+                  "value": 1,
+                  "label": "reduced-resolution"
+                },
+                "ImageWidth": 2500,
+                "ImageLength": 2000,
+                "BitsPerSample": [
+                  32
+                ],
+                "SampleFormat": {
+                  "value": [
+                    3
+                  ],
+                  "label": "IEEE floating point"
+                },
+                "SamplesPerPixel": 1,
+                "Compression": {
+                  "value": 5,
+                  "label": "LZW"
+                },
+                "Predictor": {
+                  "value": 3,
+                  "label": "floating point"
+                },
+                "PhotometricInterpretation": {
+                  "value": 1,
+                  "label": "MinIsBlack"
+                },
+                "PlanarConfiguration": {
+                  "value": 1,
+                  "label": "Chunky"
+                },
+                "Orientation": {
+                  "value": 1,
+                  "label": "top-left"
+                },
+                "TileWidth": 256,
+                "TileLength": 256
+              }
+            },
+            {
+              "ifd": 3,
+              "tags": {
+                "NewSubfileType": {
+                  "value": 1,
+                  "label": "reduced-resolution"
+                },
+                "ImageWidth": 1250,
+                "ImageLength": 1000,
+                "BitsPerSample": [
+                  32
+                ],
+                "SampleFormat": {
+                  "value": [
+                    3
+                  ],
+                  "label": "IEEE floating point"
+                },
+                "SamplesPerPixel": 1,
+                "Compression": {
+                  "value": 5,
+                  "label": "LZW"
+                },
+                "Predictor": {
+                  "value": 3,
+                  "label": "floating point"
+                },
+                "PhotometricInterpretation": {
+                  "value": 1,
+                  "label": "MinIsBlack"
+                },
+                "PlanarConfiguration": {
+                  "value": 1,
+                  "label": "Chunky"
+                },
+                "Orientation": {
+                  "value": 1,
+                  "label": "top-left"
+                },
+                "TileWidth": 256,
+                "TileLength": 256
+              }
+            },
+            {
+              "ifd": 4,
+              "tags": {
+                "NewSubfileType": {
+                  "value": 1,
+                  "label": "reduced-resolution"
+                },
+                "ImageWidth": 625,
+                "ImageLength": 500,
+                "BitsPerSample": [
+                  32
+                ],
+                "SampleFormat": {
+                  "value": [
+                    3
+                  ],
+                  "label": "IEEE floating point"
+                },
+                "SamplesPerPixel": 1,
+                "Compression": {
+                  "value": 5,
+                  "label": "LZW"
+                },
+                "Predictor": {
+                  "value": 3,
+                  "label": "floating point"
+                },
+                "PhotometricInterpretation": {
+                  "value": 1,
+                  "label": "MinIsBlack"
+                },
+                "PlanarConfiguration": {
+                  "value": 1,
+                  "label": "Chunky"
+                },
+                "Orientation": {
+                  "value": 1,
+                  "label": "top-left"
+                },
+                "TileWidth": 256,
+                "TileLength": 256
+              }
+            }
+          ]
+        },
+        "gdal": {
+          "_nota": "Visão do driver GDAL sobre a fonte; não é o conteúdo literal das tags.",
+          "driver": "GTiff",
+          "metadata_items": {
+            "": {
+              "AREA_OR_POINT": "Area"
+            },
+            "IMAGE_STRUCTURE": {
+              "COMPRESSION": "LZW",
+              "INTERLEAVE": "PIXEL",
+              "LAYOUT": "COG",
+              "PREDICTOR": "3"
+            }
+          },
+          "bands": [
+            {
+              "index": 1,
+              "data_type": "Float32",
+              "description": "Profundidade",
+              "unit_type": "m",
+              "scale": "1",
+              "offset": "0",
+              "no_data_value": "-9999",
+              "color_interpretation": "Gray",
+              "mask_flags": [
+                "GMF_NODATA"
+              ],
+              "metadata": {}
+            }
+          ],
+          "structural_metadata": {
+            "raw_text": null,
+            "capture_status": "not_captured",
+            "note": "O conteúdo textual original de GDAL_STRUCTURAL_METADATA não foi fornecido nesta instância. Não é reconstruído a partir dos campos interpretados."
+          }
+        }
+      }
+    },
+    {
+      "source_id": "source-002",
+      "name": "batimetria.tif.aux.xml",
+      "media_type": "application/xml",
+      "format": "GDAL PAM",
+      "format_version": null,
+      "size_bytes": null,
+      "role": "sidecar",
+      "sidecar_of": "source-001",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": null
+      },
+      "location": {
+        "path": null,
+        "uri": null
+      },
+      "file_metadata": {
+        "last_modified": null,
+        "created_at": null
+      },
+      "format_metadata": {
+        "pam": {
+          "srs": null,
+          "geotransform": null,
+          "bands": [
+            {
+              "index": 1,
+              "no_data_value": null,
+              "histogram": null,
+              "metadata": {
+                "STATISTICS_MINIMUM": "-3850.5",
+                "STATISTICS_MAXIMUM": "-2.1",
+                "STATISTICS_MEAN": "-1240.7",
+                "STATISTICS_STDDEV": "980.3",
+                "STATISTICS_VALID_PERCENT": "92"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "components": [],
+  "data_objects": [
+    {
+      "object_id": "raw-object-001",
+      "source_id": "source-001",
+      "object_type": "raster_band_collection",
+      "native_reference": {
+        "format": "GeoTIFF",
+        "locator": {
+          "ifd": 0,
+          "band_indices": [
+            1
+          ]
+        }
+      }
+    }
+  ],
+  "extraction": {
+    "tool": "GDAL",
+    "tool_version": "3.8.0",
+    "executed_at": null,
+    "parameters": {},
+    "status": "completed"
+  },
+  "limitations": [
+    "Nenhum valor de pixel é incorporado a este documento.",
+    "Fontes auxiliares, como arquivos .aux.xml, são opcionais e só aparecem em sources quando efetivamente encontradas."
+  ]
+}

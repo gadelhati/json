@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.forgepack.dev/scientific/3.3.0/common.schema.json",
+  "title": "Scientific data common definitions",
+  "description": "Definições reutilizáveis compartilhadas pelos documentos científicos 3.3.0.",
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "documentId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "checksum": {
+      "type": "object",
+      "properties": {
+        "algorithm": {
+          "const": "sha256"
+        },
+        "value": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[a-fA-F0-9]{64}$"
+        }
+      },
+      "required": [
+        "algorithm",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-fA-F0-9]{64}$"
+    },
+    "referencePath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z_][A-Za-z0-9_-]*(?:(?:\\.[A-Za-z_][A-Za-z0-9_-]*)|(?:\\[(?:[0-9]+|[A-Za-z_][A-Za-z0-9_-]*(?:=[A-Za-z0-9_.:-]+)?)\\]))*$",
+      "description": "Caminho interno: raiz.propriedade, arrays por índice [0], por identificador [source-001] ou por seletor [key=depth]. O token entre colchetes sem chave é o identificador estável do item."
+    },
+    "inputReference": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?:[A-Za-z_][A-Za-z0-9_-]*(?:(?:\\.[A-Za-z_][A-Za-z0-9_-]*)|(?:\\[(?:[0-9]+|[A-Za-z_][A-Za-z0-9_-]*(?:=[A-Za-z0-9_.:-]+)?)\\]))*|source_file:[A-Za-z0-9_./:-]+)$",
+      "description": "Referência interna conforme referencePath ou referência explícita a arquivo-fonte ainda não materializado no raw (source_file:...)."
+    },
+    "software": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "party": {
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": "string"
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "organization": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "email": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "email"
+        },
+        "identifier": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "role",
+        "name",
+        "organization",
+        "email",
+        "identifier"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

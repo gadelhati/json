@@ -1,0 +1,199 @@
+{
+  "schema_version": "3.3.0",
+  "document_type": "raw",
+  "document_id": "REPLACE-WITH-RAW-NETCDF-DOCUMENT-UUID",
+  "dataset_id": "REPLACE-WITH-DATASET-UUID",
+  "created_at": null,
+  "conventions": {
+    "values": "Valores preservados como gravados na fonte: strings permanecem strings. Objetos {value,label} trazem o valor gravado e o rótulo da especificação do formato, sem interpretação.",
+    "sources": "Cada fonte é lida separadamente. Sidecars (.aux.xml) são fontes próprias, sem fusão com a fonte principal.",
+    "nulls": "null indica ausência na fonte; não significa zero nem falso.",
+    "language": "Chaves em inglês; textos descritivos em português.",
+    "cardinality": "1 dataset tem n raw; cada raw tem 1 refined; 1 scientific_metadata por dataset é referenciado por n raw."
+  },
+  "sources": [
+    {
+      "source_id": "source-001",
+      "name": "batimetria.nc",
+      "media_type": "application/x-netcdf",
+      "format": "NetCDF",
+      "format_version": "NetCDF-4",
+      "size_bytes": null,
+      "role": "primary_data",
+      "sidecar_of": null,
+      "checksum": {
+        "algorithm": "sha256",
+        "value": null
+      },
+      "location": {
+        "path": null,
+        "uri": null
+      },
+      "file_metadata": {
+        "last_modified": null,
+        "created_at": null
+      },
+      "format_metadata": {
+        "netcdf": {
+          "data_model": "NETCDF4",
+          "disk_format": "HDF5",
+          "dimensions": [
+            {
+              "name": "lat",
+              "size": 8000,
+              "unlimited": false
+            },
+            {
+              "name": "lon",
+              "size": 10000,
+              "unlimited": false
+            }
+          ],
+          "groups": [],
+          "global_attributes": {
+            "Conventions": "CF-1.8, ACDD-1.3",
+            "dataset_id": "REPLACE-WITH-DATASET-UUID",
+            "history": "2026-11-07T12:00:00Z: exportado do dataset REPLACE-WITH-DATASET-UUID pelo sistema",
+            "date_created": "2026-11-07T12:00:00Z",
+            "geospatial_lat_min": -20.8,
+            "geospatial_lat_max": -20.0,
+            "geospatial_lat_units": "degrees_north",
+            "geospatial_lon_min": -45.0,
+            "geospatial_lon_max": -44.0,
+            "geospatial_lon_units": "degrees_east"
+          },
+          "variables": [
+            {
+              "name": "lat",
+              "dtype": "float64",
+              "dimensions": [
+                "lat"
+              ],
+              "shape": [
+                8000
+              ],
+              "storage": "contiguous",
+              "chunking": null,
+              "filters": null,
+              "endianness": "native",
+              "attributes": {
+                "standard_name": "latitude",
+                "long_name": "latitude",
+                "units": "degrees_north",
+                "axis": "Y"
+              },
+              "coordinate_values": {
+                "included": false,
+                "inspection_status": "not_recorded_in_this_raw_document",
+                "note": "A definição e os atributos da variável são preservados; os valores do array de coordenadas não estão materializados nesta instância raw."
+              }
+            },
+            {
+              "name": "lon",
+              "dtype": "float64",
+              "dimensions": [
+                "lon"
+              ],
+              "shape": [
+                10000
+              ],
+              "storage": "contiguous",
+              "chunking": null,
+              "filters": null,
+              "endianness": "native",
+              "attributes": {
+                "standard_name": "longitude",
+                "long_name": "longitude",
+                "units": "degrees_east",
+                "axis": "X"
+              },
+              "coordinate_values": {
+                "included": false,
+                "inspection_status": "not_recorded_in_this_raw_document",
+                "note": "A definição e os atributos da variável são preservados; os valores do array de coordenadas não estão materializados nesta instância raw."
+              }
+            },
+            {
+              "name": "crs",
+              "dtype": "int32",
+              "dimensions": [],
+              "shape": [],
+              "storage": "contiguous",
+              "chunking": null,
+              "filters": null,
+              "endianness": "native",
+              "attributes": {
+                "grid_mapping_name": "latitude_longitude",
+                "longitude_of_prime_meridian": 0.0,
+                "semi_major_axis": 6378137.0,
+                "inverse_flattening": 298.257223563,
+                "crs_wkt": "GEOGCS[\"WGS 84\",DATUM[\"WGS_1984\",SPHEROID[\"WGS 84\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433]]"
+              }
+            },
+            {
+              "name": "depth",
+              "dtype": "float32",
+              "dimensions": [
+                "lat",
+                "lon"
+              ],
+              "shape": [
+                8000,
+                10000
+              ],
+              "storage": "chunked",
+              "chunking": [
+                256,
+                256
+              ],
+              "filters": {
+                "deflate": 4,
+                "shuffle": true,
+                "fletcher32": false
+              },
+              "endianness": "native",
+              "attributes": {
+                "long_name": "Profundidade",
+                "units": "m",
+                "_FillValue": -9999.0,
+                "grid_mapping": "crs"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "components": [],
+  "data_objects": [
+    {
+      "object_id": "raw-object-001",
+      "source_id": "source-001",
+      "object_type": "multidimensional_dataset",
+      "native_reference": {
+        "format": "NetCDF",
+        "locator": {
+          "group": "/",
+          "variables": [
+            "lat",
+            "lon",
+            "crs",
+            "depth"
+          ]
+        }
+      }
+    }
+  ],
+  "extraction": {
+    "tool": "netCDF4 (Python)",
+    "tool_version": "1.6.5",
+    "executed_at": null,
+    "parameters": {},
+    "status": "completed"
+  },
+  "limitations": [
+    "Valores dos arrays (variáveis e coordenadas) não são incorporados a este documento.",
+    "O atributo dataset_id foi gravado pelo exportador: é a ligação desta fonte com o mesmo conjunto de dados em outros formatos.",
+    "Os arrays de coordenadas NetCDF não estão incorporados nesta instância raw; qualquer derivação que dependa de seus valores deve registrar leitura direta da fonte e seus resultados/proveniência, ou ampliar a captura raw."
+  ]
+}
